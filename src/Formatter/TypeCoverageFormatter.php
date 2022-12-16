@@ -30,12 +30,7 @@ final class TypeCoverageFormatter
             return [];
         }
 
-        $errorMessage = sprintf(
-            $message,
-            $propertyCount,
-            $propertyTypeDeclarationSeaLevel,
-            $minimalLevel
-        );
+        $errorMessage = sprintf($message, $propertyCount, $propertyTypeDeclarationSeaLevel, $minimalLevel);
 
         if ($errors !== []) {
             $errorMessage .= PHP_EOL . PHP_EOL;

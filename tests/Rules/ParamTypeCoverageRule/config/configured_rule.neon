@@ -1,2 +1,7 @@
 includes:
     - ../../../../config/extension.neon
+
+parameters:
+    type_coverage:
+        param_type: 80
+        print_suggestions: false
