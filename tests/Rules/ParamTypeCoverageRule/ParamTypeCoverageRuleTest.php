@@ -9,7 +9,7 @@ use PHPStan\Collectors\Collector;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 use TomasVotruba\TypeCoverage\Collectors\ParamTypeDeclarationCollector;
-use TomasVotruba\TypeCoverage\Rules\ParamTypeCoverageRule;
+use TomasVotruba\TypeCoverage\Tests\Rules\ParamTypeCoverageRule;
 
 /**
  * @extends RuleTestCase<ParamTypeCoverageRule>

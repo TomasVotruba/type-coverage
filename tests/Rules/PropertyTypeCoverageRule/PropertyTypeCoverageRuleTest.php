@@ -9,7 +9,7 @@ use PHPStan\Collectors\Collector;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 use TomasVotruba\TypeCoverage\Collectors\ClassLike\PropertyTypeDeclarationCollector;
-use TomasVotruba\TypeCoverage\Rules\PropertyTypeCoverageRule;
+use TomasVotruba\TypeCoverage\Tests\Rules\PropertyTypeCoverageRule;
 
 /**
  * @extends RuleTestCase<PropertyTypeCoverageRule>

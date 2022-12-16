@@ -16,7 +16,7 @@ services:
     -
         factory: TomasVotruba\TypeCoverage\Configuration
         arguments:
-            - %unused_public%
+            - %type_coverage%
 
     # collectors
 

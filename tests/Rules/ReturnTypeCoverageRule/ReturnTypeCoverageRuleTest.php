@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TomasVotruba\TypeCoverage\ReturnTypeDeclarationSeaLevelRule;
+namespace TomasVotruba\TypeCoverage\Tests\Rules\ReturnTypeCoverageRule;
 
 use Iterator;
 use PHPStan\Collectors\Collector;
@@ -11,7 +11,7 @@ use PHPStan\Testing\RuleTestCase;
 use TomasVotruba\TypeCoverage\Collectors\FunctionLike\ReturnTypeDeclarationCollector;
 
 /**
- * @extends RuleTestCase<ReturnTypeDeclarationSeaLevelRule>
+ * @extends RuleTestCase<ReturnTypeCoverageRule>
  */
 final class ReturnTypeCoverageRuleTest extends RuleTestCase
 {
@@ -34,7 +34,7 @@ final class ReturnTypeCoverageRuleTest extends RuleTestCase
         yield [[__DIR__ . '/Fixture/SkipKnownReturnType.php', __DIR__ . '/Fixture/SkipAgainKnownReturnType.php'], []];
         yield [[__DIR__ . '/Fixture/SkipConstructor.php'], []];
 
-        $errorMessage = sprintf(ReturnTypeDeclarationSeaLevelRule::ERROR_MESSAGE, 2, 0, 80);
+        $errorMessage = sprintf(ReturnTypeCoverageRule::ERROR_MESSAGE, 2, 0, 80);
         $errorMessage .= '
 
 public function run()
@@ -59,7 +59,7 @@ public function again()
 
     protected function getRule(): Rule
     {
-        return self::getContainer()->getByType(ReturnTypeDeclarationSeaLevelRule::class);
+        return self::getContainer()->getByType(ReturnTypeCoverageRule::class);
     }
 
     /**
