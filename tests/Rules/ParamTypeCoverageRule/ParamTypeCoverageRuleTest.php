@@ -70,8 +70,6 @@ public function again($city)
      */
     protected function getCollectors(): array
     {
-        return [
-            self::getContainer()->getByType(ParamTypeDeclarationCollector::class)
-        ];
+        return [self::getContainer()->getByType(ParamTypeDeclarationCollector::class)];
     }
 }

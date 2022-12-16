@@ -66,8 +66,6 @@ public $surname;
      */
     protected function getCollectors(): array
     {
-        return [
-            self::getContainer()->getByType(PropertyTypeDeclarationCollector::class),
-        ];
+        return [self::getContainer()->getByType(PropertyTypeDeclarationCollector::class)];
     }
 }

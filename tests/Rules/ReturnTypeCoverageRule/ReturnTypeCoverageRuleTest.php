@@ -67,8 +67,6 @@ public function again()
      */
     protected function getCollectors(): array
     {
-        return [
-            self::getContainer()->getByType(ReturnTypeDeclarationCollector::class),
-        ];
+        return [self::getContainer()->getByType(ReturnTypeDeclarationCollector::class)];
     }
 }

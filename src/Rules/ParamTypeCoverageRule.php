@@ -8,12 +8,8 @@ use PhpParser\Node;
 use PHPStan\Analyser\Scope;
 use PHPStan\Node\CollectedDataNode;
 use PHPStan\Rules\Rule;
-use TomasVotruba\TypeCoverage\Collectors\FunctionLike\ParamTypeSeaLevelCollector;
 use TomasVotruba\TypeCoverage\Collectors\ParamTypeDeclarationCollector;
 use TomasVotruba\TypeCoverage\Formatter\TypeCoverageFormatter;
-use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
-use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
-use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
 /**
  * @see \TomasVotruba\TypeCoverage\Tests\Rules\ParamTypeCoverageRule\ParamTypeCoverageRuleTest

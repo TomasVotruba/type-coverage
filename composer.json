@@ -24,10 +24,7 @@
     "autoload-dev": {
         "psr-4": {
             "TomasVotruba\\TypeCoverage\\Tests\\": "tests"
-        },
-        "classmap": [
-            "stubs"
-        ]
+        }
     },
     "scripts": {
         "check-cs": "vendor/bin/ecs check --ansi",

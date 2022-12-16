@@ -6,7 +6,7 @@ namespace TomasVotruba\TypeCoverage\ParamTypeCoverageRule\Fixture;
 
 final class SkipVariadic
 {
-    public function run(... $items)
+    public function run(...$items)
     {
     }
 }
