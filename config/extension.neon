@@ -21,6 +21,20 @@ services:
             - %type_coverage%
 
     # collectors
+    -
+        class: TomasVotruba\TypeCoverage\Collectors\ReturnTypeDeclarationCollector
+        tags:
+            - phpstan.collector
+
+    -
+        class: TomasVotruba\TypeCoverage\Collectors\ParamTypeDeclarationCollector
+        tags:
+            - phpstan.collector
+
+    -
+        class: TomasVotruba\TypeCoverage\Collectors\PropertyTypeDeclarationCollector
+        tags:
+            - phpstan.collector
 
     # methods
 
