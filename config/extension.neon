@@ -13,6 +13,8 @@ parameters:
         property_type: 0
 
 services:
+    - TomasVotruba\TypeCoverage\Formatter\TypeCoverageFormatter
+
     -
         factory: TomasVotruba\TypeCoverage\Configuration
         arguments:
@@ -21,50 +23,8 @@ services:
     # collectors
 
     # methods
-    -
-        class: TomasVotruba\TypeCoverage\Collectors\PublicClassMethodCollector
-        tags:
-            - phpstan.collector
 
-    -
-        class: TomasVotruba\TypeCoverage\Collectors\MethodCallCollector
-        tags:
-            - phpstan.collector
-
-    # static_properties
-    -
-        class: TomasVotruba\TypeCoverage\Collectors\PublicStaticPropertyCollector
-        tags:
-            - phpstan.collector
-
-    -
-        class: TomasVotruba\TypeCoverage\Collectors\PublicStaticPropertyFetchCollector
-        tags:
-            - phpstan.collector
-
-    -
-        class: TomasVotruba\TypeCoverage\Collectors\PublicClassLikeConstCollector
-        tags:
-            - phpstan.collector
-
-    -
-        class: TomasVotruba\TypeCoverage\Collectors\ClassConstFetchCollector
-        tags:
-            - phpstan.collector
-
-    -
-        class: TomasVotruba\TypeCoverage\Collectors\PublicPropertyCollector
-        tags:
-            - phpstan.collector
-
-    -
-        class: TomasVotruba\TypeCoverage\Collectors\PublicPropertyFetchCollector
-        tags:
-            - phpstan.collector
-
-# rules
 rules:
-    - TomasVotruba\TypeCoverage\Rules\TypeCoverageClassMethodRule
-    - TomasVotruba\TypeCoverage\Rules\TypeCoverageStaticPropertyRule
-    - TomasVotruba\TypeCoverage\Rules\TypeCoverageClassConstRule
-    - TomasVotruba\TypeCoverage\Rules\TypeCoveragePropertyRule
+    - TomasVotruba\TypeCoverage\Rules\ParamTypeCoverageRule
+    - TomasVotruba\TypeCoverage\Rules\ReturnTypeCoverageRule
+    - TomasVotruba\TypeCoverage\Rules\PropertyTypeCoverageRule

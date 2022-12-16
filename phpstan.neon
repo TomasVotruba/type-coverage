@@ -4,9 +4,9 @@ includes:
 parameters:
     # parameters of this extension
     type_coverage:
-        methods: true
-        properties: true
-        constants: true
+        return_type: 0
+        param_type: 0
+        property_type: 0
 
     level: 8
 
@@ -19,8 +19,3 @@ parameters:
     excludePaths:
         - "*/Fixture/*"
         - "*/Source/*"
-
-    ignoreErrors:
-        # collectors generics
-        - '#Parameter (.*?) of method (.*?)Collector::processNode\(\) should be compatible with parameter#'
-        - '#Method (.*?)Collector::processNode\(\) should return#'

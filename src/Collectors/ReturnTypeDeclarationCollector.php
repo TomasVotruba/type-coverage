@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TomasVotruba\TypeCoverage\Collectors\FunctionLike;
+namespace TomasVotruba\TypeCoverage\Collectors;
 
 use PhpParser\Node;
 use PhpParser\Node\Stmt\ClassMethod;

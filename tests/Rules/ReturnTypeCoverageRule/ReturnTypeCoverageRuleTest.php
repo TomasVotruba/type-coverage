@@ -8,7 +8,8 @@ use Iterator;
 use PHPStan\Collectors\Collector;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
-use TomasVotruba\TypeCoverage\Collectors\FunctionLike\ReturnTypeDeclarationCollector;
+use TomasVotruba\TypeCoverage\Collectors\ReturnTypeDeclarationCollector;
+use TomasVotruba\TypeCoverage\Rules\ReturnTypeCoverageRule;
 
 /**
  * @extends RuleTestCase<ReturnTypeCoverageRule>

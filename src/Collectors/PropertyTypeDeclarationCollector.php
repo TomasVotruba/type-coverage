@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TomasVotruba\TypeCoverage\Collectors\ClassLike;
+namespace TomasVotruba\TypeCoverage\Collectors;
 
 use PhpParser\Comment\Doc;
 use PhpParser\Node;

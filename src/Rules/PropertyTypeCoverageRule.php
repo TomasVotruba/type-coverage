@@ -8,11 +8,11 @@ use PhpParser\Node;
 use PHPStan\Analyser\Scope;
 use PHPStan\Node\CollectedDataNode;
 use PHPStan\Rules\Rule;
-use TomasVotruba\TypeCoverage\Collectors\ClassLike\PropertyTypeDeclarationCollector;
+use TomasVotruba\TypeCoverage\Collectors\PropertyTypeDeclarationCollector;
 use TomasVotruba\TypeCoverage\Formatter\TypeCoverageFormatter;
 
 /**
- * @see \TomasVotruba\TypeCoverage\Tests\Rules\PropertyTypeDeclarationSeaLevelRule\PropertyTypeDeclarationSeaLevelRuleTest
+ * @see \TomasVotruba\TypeCoverage\Tests\Rules\PropertyTypeCoverageRule\PropertyTypeCoverageRuleTest
  *
  * @implements Rule<CollectedDataNode>
  */
@@ -44,14 +44,14 @@ final class PropertyTypeCoverageRule implements Rule
      */
     public function processNode(Node $node, Scope $scope): array
     {
-        $propertySeaLevelDataByFilePath = $node->get(PropertyTypeDeclarationCollector::class);
+        $propertyTypeDeclarationCollector = $node->get(PropertyTypeDeclarationCollector::class);
 
         $typedPropertyCount = 0;
         $propertyCount = 0;
 
         $printedUntypedPropertiesContents = [];
 
-        foreach ($propertySeaLevelDataByFilePath as $propertySeaLevelData) {
+        foreach ($propertyTypeDeclarationCollector as $propertySeaLevelData) {
             foreach ($propertySeaLevelData as $nestedPropertySeaLevelData) {
                 $typedPropertyCount += $nestedPropertySeaLevelData[0];
                 $propertyCount += $nestedPropertySeaLevelData[1];

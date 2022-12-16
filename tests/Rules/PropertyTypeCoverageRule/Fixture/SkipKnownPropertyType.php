@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TomasVotruba\TypeCoverage\PropertyTypeDeclarationSeaLevelRule\Fixture;
+namespace TomasVotruba\TypeCoverage\PropertyTypeCoverageRule\Fixture;
 
 final class SkipKnownPropertyType
 {

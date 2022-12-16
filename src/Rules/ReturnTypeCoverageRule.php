@@ -8,11 +8,11 @@ use PhpParser\Node;
 use PHPStan\Analyser\Scope;
 use PHPStan\Node\CollectedDataNode;
 use PHPStan\Rules\Rule;
-use TomasVotruba\TypeCoverage\Collectors\FunctionLike\ReturnTypeDeclarationCollector;
+use TomasVotruba\TypeCoverage\Collectors\ReturnTypeDeclarationCollector;
 use TomasVotruba\TypeCoverage\Formatter\TypeCoverageFormatter;
 
 /**
- * @see \TomasVotruba\TypeCoverage\Tests\Rules\ReturnTypeDeclarationSeaLevelRule\ReturnTypeDeclarationSeaLevelRuleTest
+ * @see \TomasVotruba\TypeCoverage\Tests\Rules\ReturnTypeCoverageRule\ReturnTypeCoverageRuleTest
  *
  * @implements Rule<CollectedDataNode>
  */

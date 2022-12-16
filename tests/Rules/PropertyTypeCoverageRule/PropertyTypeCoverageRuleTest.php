@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace TomasVotruba\TypeCoverage\PropertyTypeDeclarationSeaLevelRule;
+namespace TomasVotruba\TypeCoverage\Tests\Rules\PropertyTypeCoverageRule;
 
 use Iterator;
 use PHPStan\Collectors\Collector;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
-use TomasVotruba\TypeCoverage\Collectors\ClassLike\PropertyTypeDeclarationCollector;
-use TomasVotruba\TypeCoverage\Tests\Rules\PropertyTypeCoverageRule;
+use TomasVotruba\TypeCoverage\Collectors\PropertyTypeDeclarationCollector;
+use TomasVotruba\TypeCoverage\Rules\PropertyTypeCoverageRule;
 
 /**
  * @extends RuleTestCase<PropertyTypeCoverageRule>
@@ -36,7 +36,7 @@ final class PropertyTypeCoverageRuleTest extends RuleTestCase
         yield [[__DIR__ . '/Fixture/SkipCallableProperty.php'], []];
         yield [[__DIR__ . '/Fixture/SkipResource.php'], []];
 
-        $errorMessage = sprintf(PropertyTypeDeclarationSeaLevelRule::ERROR_MESSAGE, 2, 0, 80);
+        $errorMessage = sprintf(PropertyTypeCoverageRule::ERROR_MESSAGE, 2, 0, 80);
 
         $errorMessage .= '
 

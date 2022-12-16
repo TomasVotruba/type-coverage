@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace TomasVotruba\TypeCoverage\ParamTypeCoverageRule;
+namespace TomasVotruba\TypeCoverage\Tests\Rules\ParamTypeCoverageRule;
 
 use Iterator;
 use PHPStan\Collectors\Collector;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 use TomasVotruba\TypeCoverage\Collectors\ParamTypeDeclarationCollector;
-use TomasVotruba\TypeCoverage\Tests\Rules\ParamTypeCoverageRule;
+use TomasVotruba\TypeCoverage\Rules\ParamTypeCoverageRule;
 
 /**
  * @extends RuleTestCase<ParamTypeCoverageRule>
