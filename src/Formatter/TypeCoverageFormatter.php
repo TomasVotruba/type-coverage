@@ -14,7 +14,7 @@ final class TypeCoverageFormatter
      */
     public function formatErrors(
         string $message,
-        float $minimalLevel,
+        int $minimalLevel,
         int $propertyCount,
         int $typedPropertyCount,
         array $errors
@@ -23,7 +23,7 @@ final class TypeCoverageFormatter
             return [];
         }
 
-        $propertyTypeDeclarationSeaLevel = $typedPropertyCount / $propertyCount;
+        $propertyTypeDeclarationSeaLevel = 100 * ($typedPropertyCount / $propertyCount);
 
         // has the code met the minimal sea level of types?
         if ($propertyTypeDeclarationSeaLevel >= $minimalLevel) {
@@ -33,8 +33,8 @@ final class TypeCoverageFormatter
         $errorMessage = sprintf(
             $message,
             $propertyCount,
-            $propertyTypeDeclarationSeaLevel * 100,
-            $minimalLevel * 100
+            $propertyTypeDeclarationSeaLevel,
+            $minimalLevel
         );
 
         if ($errors !== []) {

@@ -9,6 +9,7 @@ use PHPStan\Analyser\Scope;
 use PHPStan\Node\CollectedDataNode;
 use PHPStan\Rules\Rule;
 use TomasVotruba\TypeCoverage\Collectors\PropertyTypeDeclarationCollector;
+use TomasVotruba\TypeCoverage\Configuration;
 use TomasVotruba\TypeCoverage\Formatter\TypeCoverageFormatter;
 
 /**
@@ -24,9 +25,8 @@ final class PropertyTypeCoverageRule implements Rule
     public const ERROR_MESSAGE = 'Out of %d possible property types, only %d %% actually have it. Add more property types to get over %d %%';
 
     public function __construct(
-        private TypeCoverageFormatter $seaLevelRuleErrorFormatter,
-        private float $minimalLevel = 0.80,
-        private bool $printSuggestions = true
+        private readonly TypeCoverageFormatter $typeCoverageFormatter,
+        private readonly Configuration $configuration
     ) {
     }
 
@@ -44,6 +44,10 @@ final class PropertyTypeCoverageRule implements Rule
      */
     public function processNode(Node $node, Scope $scope): array
     {
+        if ($this->configuration->getRequiredPropertyTypeLevel() === 0) {
+            return [];
+        }
+
         $propertyTypeDeclarationCollector = $node->get(PropertyTypeDeclarationCollector::class);
 
         $typedPropertyCount = 0;
@@ -56,7 +60,7 @@ final class PropertyTypeCoverageRule implements Rule
                 $typedPropertyCount += $nestedPropertySeaLevelData[0];
                 $propertyCount += $nestedPropertySeaLevelData[1];
 
-                if (! $this->printSuggestions) {
+                if (! $this->configuration->shouldPrintSuggestions()) {
                     continue;
                 }
 
@@ -68,9 +72,9 @@ final class PropertyTypeCoverageRule implements Rule
             }
         }
 
-        return $this->seaLevelRuleErrorFormatter->formatErrors(
+        return $this->typeCoverageFormatter->formatErrors(
             self::ERROR_MESSAGE,
-            $this->minimalLevel,
+            $this->configuration->getRequiredPropertyTypeLevel(),
             $propertyCount,
             $typedPropertyCount,
             $printedUntypedPropertiesContents

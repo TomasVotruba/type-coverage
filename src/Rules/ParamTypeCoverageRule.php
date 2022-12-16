@@ -9,6 +9,7 @@ use PHPStan\Analyser\Scope;
 use PHPStan\Node\CollectedDataNode;
 use PHPStan\Rules\Rule;
 use TomasVotruba\TypeCoverage\Collectors\ParamTypeDeclarationCollector;
+use TomasVotruba\TypeCoverage\Configuration;
 use TomasVotruba\TypeCoverage\Formatter\TypeCoverageFormatter;
 
 /**
@@ -24,9 +25,8 @@ final class ParamTypeCoverageRule implements Rule
     public const ERROR_MESSAGE = 'Out of %d possible param types, only %d %% actually have it. Add more param types to get over %d %%';
 
     public function __construct(
-        private TypeCoverageFormatter $seaLevelRuleErrorFormatter,
-        private float $minimalLevel = 0.80,
-        private bool $printSuggestions = true
+        private readonly TypeCoverageFormatter $typeCoverageFormatter,
+        private readonly Configuration $configuration,
     ) {
     }
 
@@ -44,19 +44,23 @@ final class ParamTypeCoverageRule implements Rule
      */
     public function processNode(Node $node, Scope $scope): array
     {
-        $paramSeaLevelDataByFilePath = $node->get(ParamTypeDeclarationCollector::class);
+        if ($this->configuration->getRequiredParamTypeLevel() === 0) {
+            return [];
+        }
+
+        $paramTypeDeclarationCollector = $node->get(ParamTypeDeclarationCollector::class);
 
         $typedParamCount = 0;
         $paramCount = 0;
 
         $printedClassMethods = [];
 
-        foreach ($paramSeaLevelDataByFilePath as $paramSeaLevelData) {
+        foreach ($paramTypeDeclarationCollector as $paramSeaLevelData) {
             foreach ($paramSeaLevelData as $nestedParamSeaLevelData) {
                 $typedParamCount += $nestedParamSeaLevelData[0];
                 $paramCount += $nestedParamSeaLevelData[1];
 
-                if (! $this->printSuggestions) {
+                if (! $this->configuration->shouldPrintSuggestions()) {
                     continue;
                 }
 
@@ -68,9 +72,9 @@ final class ParamTypeCoverageRule implements Rule
             }
         }
 
-        return $this->seaLevelRuleErrorFormatter->formatErrors(
+        return $this->typeCoverageFormatter->formatErrors(
             self::ERROR_MESSAGE,
-            $this->minimalLevel,
+            $this->configuration->getRequiredParamTypeLevel(),
             $paramCount,
             $typedParamCount,
             $printedClassMethods

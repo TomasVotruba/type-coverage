@@ -3,6 +3,7 @@ parametersSchema:
         return_type: int()
         param_type: int()
         property_type: int()
+        print_suggestions: bool()
     ])
 
 # default parameters
@@ -11,6 +12,7 @@ parameters:
         return_type: 0
         param_type: 0
         property_type: 0
+        print_suggestions: false
 
 services:
     - TomasVotruba\TypeCoverage\Formatter\TypeCoverageFormatter

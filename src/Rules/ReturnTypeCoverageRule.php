@@ -9,6 +9,7 @@ use PHPStan\Analyser\Scope;
 use PHPStan\Node\CollectedDataNode;
 use PHPStan\Rules\Rule;
 use TomasVotruba\TypeCoverage\Collectors\ReturnTypeDeclarationCollector;
+use TomasVotruba\TypeCoverage\Configuration;
 use TomasVotruba\TypeCoverage\Formatter\TypeCoverageFormatter;
 
 /**
@@ -24,9 +25,8 @@ final class ReturnTypeCoverageRule implements Rule
     public const ERROR_MESSAGE = 'Out of %d possible return types, only %d %% actually have it. Add more return types to get over %d %%';
 
     public function __construct(
-        private TypeCoverageFormatter $seaLevelRuleErrorFormatter,
-        private float $minimalLevel = 0.80,
-        private bool $printSuggestions = true
+        private readonly TypeCoverageFormatter $typeCoverageFormatter,
+        private readonly Configuration $configuration
     ) {
     }
 
@@ -56,7 +56,7 @@ final class ReturnTypeCoverageRule implements Rule
                 $typedReturnCount += $nestedReturnSeaLevelData[0];
                 $returnCount += $nestedReturnSeaLevelData[1];
 
-                if (! $this->printSuggestions) {
+                if (! $this->configuration->shouldPrintSuggestions()) {
                     continue;
                 }
 
@@ -68,9 +68,9 @@ final class ReturnTypeCoverageRule implements Rule
             }
         }
 
-        return $this->seaLevelRuleErrorFormatter->formatErrors(
+        return $this->typeCoverageFormatter->formatErrors(
             self::ERROR_MESSAGE,
-            $this->minimalLevel,
+            $this->configuration->getRequiredReturnTypeLevel(),
             $returnCount,
             $typedReturnCount,
             $printedClassMethods
