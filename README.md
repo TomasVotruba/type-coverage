@@ -3,51 +3,63 @@
 <br>
 
 <div align="center">
-    <img src="/docs/unused_public.jpg" style="width: 10em">
+    <img src="/docs/required_type_level.jpg" style="width: 10em">
 </div>
 
 <br>
 
-It's easy to find unused private class elements, because they're not used in the class itself:
+PHPStan uses type declarations to determine the type of variables, properties and other expression. Sometimes it's hard to see what PHPStan errors are the important ones among thousands of others.
 
-```diff
- final class Book
- {
-     public function getTitle(): string
-     {
-         // ...
-     }
+Instead of fixing all PHPStan errors at once, we can start with minimal require type coverage.
 
--    private function getSubtitle(): string
--    {
--        // ...
--    }
+<br>
+
+What is the type coverage you ask? We have 3 type possible declarations in total here:
+
+```php
+final class ConferenceFactory
+{
+    private $talkFactory;
+
+    public function createConference(array $data)
+    {
+        $talks = $this->talkFactory->create($data);
+
+        return new Confernece($talks);
+    }
 }
 ```
 
-But what about public class elements?
+The param type is defined, but property and return types are missing.
 
-<br>
+* 1 out of 3 = 33 % coverage
 
-**How can we detect such element?**
+How do we get to the 100 %?
 
-* find a e.g. public method
-* find all public method calls
-* compare those in simple diff
-* if the public method is not found, it probably unused
+```diff
+ final class ConferenceFactory
+ {
+-    private $talkFactory;
++    private TalkFactory $talkFactory;
 
-That's exactly what this package does.
+-    public function createConference(array $data)
++    public function createConference(array $data): Conference
+     {
+         $talks = $this->talkFactory->create($data);
 
-<br>
+         return new Confernece($talks);
+     }
+ }
+```
 
-This technique is very useful for private projects and to detect accidentally open public API that should be used only locally.
+This technique is very simple and useful to start with even on legacy project. You also know, how high coverage your project has right now.
 
 <br>
 
 ## Install
 
 ```bash
-composer require tomasvotruba/unused-public --dev
+composer require tomasvotruba/type-coverage --dev
 ```
 
 The package is available on PHP 7.2-8.1 versions in tagged releases.
@@ -63,40 +75,9 @@ Enable each item on their own with simple configuration:
 ```neon
 # phpstan.neon
 parameters:
-    unused_public:
-        methods: true
-        properties: true
-        constants: true
-        static_properties: true
-```
-
-<br>
-
-## Known Limitations
-
-In some cases, the method reports false positives:
-
-* it's not possible to detect unused public method that are called only in Twig templates
-* following cases are skipped
-    * public function in Twig extensions - those are functions/filters callable
-
-<br>
-
-## Skip False Positives
-
-Is element reported as unused, but it's actually used?
-
-Mark the class or element wit `@api` to declare it as public API and skip it:
-
-```php
-final class Book
-{
-    /**
-     * @api
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-}
+    type_coverage:
+        return_type: 50
+        param_type: 30
+        property_type: 70
+        print_suggestions: false
 ```

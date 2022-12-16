@@ -4,9 +4,10 @@ includes:
 parameters:
     # parameters of this extension
     type_coverage:
-        return_type: 50
-        param_type: 50
-        property_type: 50
+        return_type: 95
+        param_type: 95
+        property_type: 95
+        print_suggestions: false
 
     level: 8
 
