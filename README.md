@@ -1,4 +1,4 @@
-# Find Unused Public Elements in Your Code
+# Require Minimal Type Coverage
 
 <br>
 
