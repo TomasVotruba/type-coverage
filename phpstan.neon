@@ -1,0 +1,26 @@
+includes:
+    - config/extension.neon
+
+parameters:
+    # parameters of this extension
+    type_coverage:
+        methods: true
+        properties: true
+        constants: true
+
+    level: 8
+
+    paths:
+        - src
+        - tests
+
+    checkGenericClassInNonGenericObjectType: false
+
+    excludePaths:
+        - "*/Fixture/*"
+        - "*/Source/*"
+
+    ignoreErrors:
+        # collectors generics
+        - '#Parameter (.*?) of method (.*?)Collector::processNode\(\) should be compatible with parameter#'
+        - '#Method (.*?)Collector::processNode\(\) should return#'

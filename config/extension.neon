@@ -1,0 +1,70 @@
+parametersSchema:
+    type_coverage: structure([
+        return_type: int()
+        param_type: int()
+        property_type: int()
+    ])
+
+# default parameters
+parameters:
+    type_coverage:
+        return_type: 0
+        param_type: 0
+        property_type: 0
+
+services:
+    -
+        factory: TomasVotruba\TypeCoverage\Configuration
+        arguments:
+            - %unused_public%
+
+    # collectors
+
+    # methods
+    -
+        class: TomasVotruba\TypeCoverage\Collectors\PublicClassMethodCollector
+        tags:
+            - phpstan.collector
+
+    -
+        class: TomasVotruba\TypeCoverage\Collectors\MethodCallCollector
+        tags:
+            - phpstan.collector
+
+    # static_properties
+    -
+        class: TomasVotruba\TypeCoverage\Collectors\PublicStaticPropertyCollector
+        tags:
+            - phpstan.collector
+
+    -
+        class: TomasVotruba\TypeCoverage\Collectors\PublicStaticPropertyFetchCollector
+        tags:
+            - phpstan.collector
+
+    -
+        class: TomasVotruba\TypeCoverage\Collectors\PublicClassLikeConstCollector
+        tags:
+            - phpstan.collector
+
+    -
+        class: TomasVotruba\TypeCoverage\Collectors\ClassConstFetchCollector
+        tags:
+            - phpstan.collector
+
+    -
+        class: TomasVotruba\TypeCoverage\Collectors\PublicPropertyCollector
+        tags:
+            - phpstan.collector
+
+    -
+        class: TomasVotruba\TypeCoverage\Collectors\PublicPropertyFetchCollector
+        tags:
+            - phpstan.collector
+
+# rules
+rules:
+    - TomasVotruba\TypeCoverage\Rules\TypeCoverageClassMethodRule
+    - TomasVotruba\TypeCoverage\Rules\TypeCoverageStaticPropertyRule
+    - TomasVotruba\TypeCoverage\Rules\TypeCoverageClassConstRule
+    - TomasVotruba\TypeCoverage\Rules\TypeCoveragePropertyRule
