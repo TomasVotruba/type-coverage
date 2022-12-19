@@ -3,7 +3,7 @@
 <br>
 
 <div align="center">
-    <img src="/docs/required_type_level.jpg" style="width: 20em">
+    <img src="/docs/required_type_level.jpg" style="width: 25em" alt="AI abilities sea level rising... as way to rise type coverage for class elements">
 </div>
 
 <br>
