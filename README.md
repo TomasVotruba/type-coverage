@@ -25,7 +25,7 @@ final class ConferenceFactory
     {
         $talks = $this->talkFactory->create($data);
 
-        return new Confernece($talks);
+        return new Conference($talks);
     }
 }
 ```
@@ -47,7 +47,7 @@ How do we get to the 100 %?
      {
          $talks = $this->talkFactory->create($data);
 
-         return new Confernece($talks);
+         return new Conference($talks);
      }
  }
 ```
