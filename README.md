@@ -3,7 +3,7 @@
 <br>
 
 <div align="center">
-    <img src="/docs/required_type_level.jpg" style="width: 10em">
+    <img src="/docs/required_type_level.jpg" style="width: 15em">
 </div>
 
 <br>
