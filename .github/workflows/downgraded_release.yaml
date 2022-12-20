@@ -37,7 +37,7 @@ jobs:
 
             # copy metafiles to repository as well
             -   run: cp -R build/target-repository/. .
-            -   run: rm -rf build .github tests stubs
+            -   run: rm -rf build .github tests stubs ecs.php phpstan.neon phpunit.xml
 
             # setup git user
             -
