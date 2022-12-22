@@ -48,14 +48,7 @@ jobs:
             # publish it to local repository to new branch with a tag
             -
                 name: "Commit Downgraded - tag"
-                # if: "startsWith(github.ref, 'refs/tags/')"
                 run: |
-                    # create new tag-based branch
-                    git checkout -b "release-${GITHUB_REF#refs/tags/}"
-                    git add --all
-                    git commit -m "${{ matrix.tools.name }} ${GITHUB_REF#refs/tags/}" -m "release downgraded version" --allow-empty
-                    git push --set-upstream origin "release-${GITHUB_REF#refs/tags/}"
-
-                    # available for PHP 7.2
-                    git tag "${GITHUB_REF#refs/tags/}.72" -m "${GITHUB_REF#refs/tags/}.72"
-                    git push --quiet origin "${GITHUB_REF#refs/tags/}.72"
+                    git commit -a -m "release PHP 7.2 downgraded ${GITHUB_REF#refs/tags/}"
+                    git tag "${GITHUB_REF#refs/tags/}.72"
+                    git push origin "${GITHUB_REF#refs/tags/}.72"
