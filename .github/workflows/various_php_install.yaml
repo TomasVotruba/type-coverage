@@ -25,5 +25,4 @@ jobs:
                     php-version: ${{ matrix.php }}
                     coverage: none
 
-            # composer install cache - https://github.com/ramsey/composer-install
             -   run: composer require tomasvotruba/type-coverage --dev --ansi
