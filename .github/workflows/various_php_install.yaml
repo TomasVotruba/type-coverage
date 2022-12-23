@@ -14,7 +14,9 @@ jobs:
             matrix:
                 actions:
                     php:
+                        - 7.2
                         - 8.0
+                        - 8.1
 
         steps:
             -   uses: shivammathur/setup-php@v2
