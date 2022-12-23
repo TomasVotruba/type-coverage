@@ -6,7 +6,7 @@ on:
             - main
 
 jobs:
-    code_analysis:
+    various_php_install:
         runs-on: ubuntu-latest
 
         strategy:
@@ -17,9 +17,9 @@ jobs:
                     - 8.0
                     - 8.1
 
-        steps:
-            -   name: "Install on PHP ${{ matrix.php }}"
+        name: "Install on PHP ${{ matrix.php }}"
 
+        steps:
             -   uses: shivammathur/setup-php@v2
                 with:
                     php-version: ${{ matrix.php }}
