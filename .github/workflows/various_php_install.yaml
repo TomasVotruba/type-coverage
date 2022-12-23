@@ -9,10 +9,17 @@ jobs:
     code_analysis:
         runs-on: ubuntu-latest
 
+        strategy:
+            fail-fast: false
+            matrix:
+                actions:
+                    php:
+                        - 8.0
+
         steps:
             -   uses: shivammathur/setup-php@v2
                 with:
-                    php-version: 8.0
+                    php-version: ${{ matrix.php }}
                     coverage: none
 
             # composer install cache - https://github.com/ramsey/composer-install
