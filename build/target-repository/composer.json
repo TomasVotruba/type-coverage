@@ -4,7 +4,7 @@
     "description": "Measure type coverage of your project",
     "license": "MIT",
     "require": {
-        "php": "^7.2|8.0",
+        "php": "^7.2|^8.0",
         "phpstan/phpstan": "^1.9.3",
         "nette/utils": "^3.2"
     },
