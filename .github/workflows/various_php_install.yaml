@@ -18,7 +18,7 @@ jobs:
                     - 8.1
 
         steps:
-            -   name: "Install on PHP ${{ matrix.actions.name }}"
+            -   name: "Install on PHP ${{ matrix.php }}"
 
             -   uses: shivammathur/setup-php@v2
                 with:
