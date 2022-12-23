@@ -23,11 +23,21 @@ final class ReturnTypeCoverageRule implements Rule
      * @var string
      */
     public const ERROR_MESSAGE = 'Out of %d possible return types, only %d %% actually have it. Add more return types to get over %d %%';
+    /**
+     * @readonly
+     * @var \TomasVotruba\TypeCoverage\Formatter\TypeCoverageFormatter
+     */
+    private $typeCoverageFormatter;
+    /**
+     * @readonly
+     * @var \TomasVotruba\TypeCoverage\Configuration
+     */
+    private $configuration;
 
-    public function __construct(
-        private readonly TypeCoverageFormatter $typeCoverageFormatter,
-        private readonly Configuration $configuration
-    ) {
+    public function __construct(TypeCoverageFormatter $typeCoverageFormatter, Configuration $configuration)
+    {
+        $this->typeCoverageFormatter = $typeCoverageFormatter;
+        $this->configuration = $configuration;
     }
 
     /**
