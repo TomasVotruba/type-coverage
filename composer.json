@@ -31,7 +31,8 @@
         "check-cs": "vendor/bin/ecs check --ansi",
         "fix-cs": "vendor/bin/ecs check --fix --ansi",
         "phpstan": "vendor/bin/phpstan --ansi",
-        "rector": "vendor/bin/rector --dry-run --ansi"
+        "rector": "vendor/bin/rector --dry-run --ansi",
+        "release": "vendor/bin/monorepo-builder release patch --ansi"
     },
     "config": {
         "allow-plugins": {
