@@ -18,4 +18,4 @@ jobs:
                     coverage: none
 
             # composer install cache - https://github.com/ramsey/composer-install
-            -   run: composer require tomasvoturba/type-coverage --dev
+            -   run: composer require tomasvotruba/type-coverage --dev
