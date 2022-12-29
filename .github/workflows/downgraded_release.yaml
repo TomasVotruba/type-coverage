@@ -1,13 +1,7 @@
-# builds the content of:
-# * https://github.com/symplify/phpstan-rules
-
-# inspired by https://raw.githubusercontent.com/symplify/symplify/38d5929624d0ceb47d25d97ab020d685ac7b39a5/.github/workflows/downgrade_packages.yaml
-
 name: Downgraded Release
 
 on:
     push:
-        # see https://github.community/t/how-to-run-github-actions-workflow-only-for-new-tags/16075/10?u=tomasvotruba
         tags:
             - '*'
 
@@ -16,12 +10,7 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            -
-                uses: "actions/checkout@v2"
-                # this is required for "WyriHaximus/github-action-get-previous-tag" workflow
-                # see https://github.com/actions/checkout#fetch-all-history-for-all-tags-and-branches
-                with:
-                    fetch-depth: 0
+            -   uses: "actions/checkout@v2"
 
             -
                 uses: "shivammathur/setup-php@v2"
@@ -29,14 +18,16 @@ jobs:
                     php-version: 8.1
                     coverage: none
 
-            # to have all local tools available
-            -   run: composer update --no-progress --ansi
+            -   uses: "ramsey/composer-install@v2"
 
-            # 3. downgrade directly
-            -   run: vendor/bin/rector process src --config build/config/rector-downgrade.php --ansi
+            # downgrade /src to PHP 7.2
+            -   run: vendor/bin/rector process src --config build/rector-downgrade-php-72.php --ansi
+            -   run: vendor/bin/ecs check src --fix --ansi
 
-            # copy metafiles to repository as well
-            -   run: cp -R build/target-repository/. .
+            # copy PHP 7.2 composer
+            -   run: cp build/composer-php-72.json composer.json
+
+            # clear the dev files
             -   run: rm -rf build .github tests stubs ecs.php phpstan.neon phpunit.xml
 
             # setup git user
@@ -45,9 +36,9 @@ jobs:
                     git config user.email "action@github.com"
                     git config user.name "GitHub Action"
 
-            # publish it to local repository to new branch with a tag
+            # publish to the same repository with a new tag
             -
-                name: "Commit Downgraded - tag"
+                name: "Tag Downgraded Code"
                 run: |
                     git commit -a -m "release PHP 7.2 downgraded ${GITHUB_REF#refs/tags/}"
                     git tag "${GITHUB_REF#refs/tags/}.72"
