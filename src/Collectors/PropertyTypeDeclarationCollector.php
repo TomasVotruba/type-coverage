@@ -18,9 +18,15 @@ use PHPStan\Collectors\Collector;
  */
 final class PropertyTypeDeclarationCollector implements Collector
 {
-    public function __construct(
-        private readonly Standard $printerStandard
-    ) {
+    /**
+     * @readonly
+     * @var \PhpParser\PrettyPrinter\Standard
+     */
+    private $printerStandard;
+
+    public function __construct(Standard $printerStandard)
+    {
+        $this->printerStandard = $printerStandard;
     }
 
     public function getNodeType(): string
@@ -32,7 +38,7 @@ final class PropertyTypeDeclarationCollector implements Collector
      * @param ClassLike $node
      * @return array{int, int, string}
      */
-    public function processNode(Node $node, Scope $scope): array
+    public function processNode(Node $node, Scope $scope): ?array
     {
         $printedProperties = '';
 
@@ -52,7 +58,7 @@ final class PropertyTypeDeclarationCollector implements Collector
                 $docCommentText = $docComment->getText();
 
                 // skip as unable to type
-                if (str_contains($docCommentText, 'callable') || str_contains($docCommentText, 'resource')) {
+                if (strpos($docCommentText, 'callable') !== false || strpos($docCommentText, 'resource') !== false) {
                     ++$typedPropertyCount;
                     continue;
                 }
