@@ -68,7 +68,7 @@ The package is available on PHP 7.2-8.1 versions in tagged releases.
 
 ## Usage
 
-With PHPStan extension installer, everything is ready to run.
+With [PHPStan extension installer](https://github.com/phpstan/extension-installer), everything is ready to run.
 
 Enable each item on their own with simple configuration:
 
