@@ -3,7 +3,7 @@
     "type": "phpstan-extension",
     "description": "Measure type coverage of your project",
     "license": "MIT",
-    "keywords": ["dev"],
+    "keywords": ["dev", "static analysis", "phpstan-extension"],
     "require": {
         "php": "^7.2 || 8.0.*",
         "phpstan/phpstan": "^1.9.3",
