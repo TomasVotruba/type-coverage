@@ -7,7 +7,7 @@ on:
 jobs:
     rector:
         # Don't run on forks.
-        if: github.repository == 'tomasvotruba/punchcard'
+        if: github.repository == 'tomasvotruba/type-coverage'
 
         runs-on: ubuntu-latest
 
