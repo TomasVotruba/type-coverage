@@ -18,9 +18,15 @@ use PHPStan\Reflection\ClassReflection;
  */
 final class PropertyTypeDeclarationCollector implements Collector
 {
-    public function __construct(
-        private readonly Standard $printerStandard
-    ) {
+    /**
+     * @readonly
+     * @var \PhpParser\PrettyPrinter\Standard
+     */
+    private $printerStandard;
+
+    public function __construct(Standard $printerStandard)
+    {
+        $this->printerStandard = $printerStandard;
     }
 
     /**
@@ -81,7 +87,7 @@ final class PropertyTypeDeclarationCollector implements Collector
         $docCommentText = $docComment->getText();
 
         // skip as unable to type
-        return str_contains($docCommentText, 'callable') || str_contains($docCommentText, 'resource');
+        return strpos($docCommentText, 'callable') !== false || strpos($docCommentText, 'resource') !== false;
     }
 
     private function isGuardedByParentClassProperty(Scope $scope, Property $property): bool
