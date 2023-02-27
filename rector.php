@@ -17,6 +17,7 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->importNames();
 
     $rectorConfig->sets([
+        \Rector\PHPUnit\Set\PHPUnitSetList::PHPUNIT_100,
         LevelSetList::UP_TO_PHP_81,
         SetList::TYPE_DECLARATION,
         SetList::PRIVATIZATION,

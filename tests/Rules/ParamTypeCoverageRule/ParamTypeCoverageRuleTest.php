@@ -8,29 +8,23 @@ use Iterator;
 use PHPStan\Collectors\Collector;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use TomasVotruba\TypeCoverage\Collectors\ParamTypeDeclarationCollector;
 use TomasVotruba\TypeCoverage\Rules\ParamTypeCoverageRule;
 
-/**
- * @extends RuleTestCase<ParamTypeCoverageRule>
- */
 final class ParamTypeCoverageRuleTest extends RuleTestCase
 {
     /**
-     * @dataProvider provideData()
-     *
      * @param string[] $filePaths
      * @param mixed[] $expectedErrorsWithLines
      */
+    #[DataProvider('provideData')]
     public function testRule(array $filePaths, array $expectedErrorsWithLines): void
     {
         $this->analyse($filePaths, $expectedErrorsWithLines);
     }
 
-    /**
-     * @return Iterator<mixed>
-     */
-    public function provideData(): Iterator
+    public static function provideData(): Iterator
     {
         yield [[__DIR__ . '/Fixture/SkipKnownParamType.php', __DIR__ . '/Fixture/SkipAgainKnownParamType.php'], []];
         yield [[__DIR__ . '/Fixture/SkipVariadic.php'], []];

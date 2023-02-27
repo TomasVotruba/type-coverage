@@ -8,33 +8,28 @@ use Iterator;
 use PHPStan\Collectors\Collector;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use TomasVotruba\TypeCoverage\Collectors\PropertyTypeDeclarationCollector;
 use TomasVotruba\TypeCoverage\Rules\PropertyTypeCoverageRule;
 
-/**
- * @extends RuleTestCase<PropertyTypeCoverageRule>
- */
 final class PropertyTypeCoverageRuleTest extends RuleTestCase
 {
     /**
-     * @dataProvider provideData()
-     *
      * @param string[] $filePaths
      * @param mixed[] $expectedErrorsWithLines
      */
+    #[DataProvider('provideData')]
     public function testRule(array $filePaths, array $expectedErrorsWithLines): void
     {
         $this->analyse($filePaths, $expectedErrorsWithLines);
     }
 
-    /**
-     * @return Iterator<mixed>
-     */
-    public function provideData(): Iterator
+    public static function provideData(): Iterator
     {
         yield [[__DIR__ . '/Fixture/SkipKnownPropertyType.php'], []];
         yield [[__DIR__ . '/Fixture/SkipCallableProperty.php'], []];
         yield [[__DIR__ . '/Fixture/SkipResource.php'], []];
+        yield [[__DIR__ . '/Fixture/SkipParentBlockingProperty.php'], []];
 
         $errorMessage = sprintf(PropertyTypeCoverageRule::ERROR_MESSAGE, 2, 0, 80);
 

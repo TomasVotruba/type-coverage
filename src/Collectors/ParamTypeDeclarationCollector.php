@@ -12,8 +12,6 @@ use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
 
 /**
- * @implements Collector<FunctionLike, array{int, int, string}>>
- *
  * @see \TomasVotruba\TypeCoverage\Rules\ParamTypeCoverageRule
  */
 final class ParamTypeDeclarationCollector implements Collector
