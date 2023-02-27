@@ -11,8 +11,6 @@ use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
 
 /**
- * @implements Collector<ClassMethod, array{int, int, string}>>
- *
  * @see \TomasVotruba\TypeCoverage\Rules\ReturnTypeCoverageRule
  */
 final class ReturnTypeDeclarationCollector implements Collector
