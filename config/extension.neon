@@ -38,8 +38,6 @@ services:
         tags:
             - phpstan.collector
 
-    # methods
-
 rules:
     - TomasVotruba\TypeCoverage\Rules\ParamTypeCoverageRule
     - TomasVotruba\TypeCoverage\Rules\ReturnTypeCoverageRule
