@@ -16,9 +16,15 @@ use PHPStan\Collectors\Collector;
  */
 final class ParamTypeDeclarationCollector implements Collector
 {
-    public function __construct(
-        private readonly Standard $printerStandard
-    ) {
+    /**
+     * @readonly
+     * @var \PhpParser\PrettyPrinter\Standard
+     */
+    private $printerStandard;
+
+    public function __construct(Standard $printerStandard)
+    {
+        $this->printerStandard = $printerStandard;
     }
 
     public function getNodeType(): string
@@ -78,6 +84,6 @@ final class ParamTypeDeclarationCollector implements Collector
         }
 
         $docCommentText = $docComment->getText();
-        return str_contains($docCommentText, '@param callable');
+        return strpos($docCommentText, '@param callable') !== false;
     }
 }
