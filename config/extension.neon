@@ -9,9 +9,9 @@ parametersSchema:
 # default parameters
 parameters:
     type_coverage:
-        return_type: 0
-        param_type: 0
-        property_type: 0
+        return_type: 99
+        param_type: 99
+        property_type: 99
         print_suggestions: false
 
 services:
