@@ -7,7 +7,7 @@
     "require": {
         "php": "^8.1",
         "phpstan/phpstan": "^1.9.3",
-        "nette/utils": "^4.0"
+        "nette/utils": "^4.0.0"
     },
     "require-dev": {
         "phpstan/extension-installer": "^1.2",
