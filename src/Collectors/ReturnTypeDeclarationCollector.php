@@ -15,9 +15,15 @@ use PHPStan\Collectors\Collector;
  */
 final class ReturnTypeDeclarationCollector implements Collector
 {
-    public function __construct(
-        private readonly Standard $printerStandard
-    ) {
+    /**
+     * @readonly
+     * @var \PhpParser\PrettyPrinter\Standard
+     */
+    private $printerStandard;
+
+    public function __construct(Standard $printerStandard)
+    {
+        $this->printerStandard = $printerStandard;
     }
 
     public function getNodeType(): string
