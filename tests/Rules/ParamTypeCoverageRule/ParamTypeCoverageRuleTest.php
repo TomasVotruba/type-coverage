@@ -30,8 +30,14 @@ final class ParamTypeCoverageRuleTest extends RuleTestCase
         yield [[__DIR__ . '/Fixture/SkipVariadic.php'], []];
         yield [[__DIR__ . '/Fixture/SkipCallableParam.php'], []];
 
-        $errorMessage = sprintf(ParamTypeCoverageRule::ERROR_MESSAGE, 3, 0, 80);
-        yield [[__DIR__ . '/Fixture/UnknownParamType.php'], [[$errorMessage, -1]]];
+        $firstErrorMessage = sprintf(ParamTypeCoverageRule::ERROR_MESSAGE, 3, 0, 80);
+        $secondErrorMessage = sprintf(ParamTypeCoverageRule::ERROR_MESSAGE, 3, 0, 80);
+        $thirdErrorMessage = sprintf(ParamTypeCoverageRule::ERROR_MESSAGE, 3, 0, 80);
+        yield [[__DIR__ . '/Fixture/UnknownParamType.php'], [
+            [$firstErrorMessage, 9],
+            [$secondErrorMessage, 9],
+            [$thirdErrorMessage, 13],
+        ]];
     }
 
     /**

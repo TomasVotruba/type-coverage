@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TomasVotruba\TypeCoverage\ParamTypeCoverageRule\Fixture;
+namespace TomasVotruba\TypeCoverage\Tests\Rules\ParamTypeCoverageRule\Fixture;
 
 final class SkipCallableParam
 {

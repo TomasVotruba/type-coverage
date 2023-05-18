@@ -7,7 +7,6 @@ namespace TomasVotruba\TypeCoverage\Collectors;
 use PhpParser\Comment\Doc;
 use PhpParser\Node;
 use PhpParser\Node\FunctionLike;
-use PhpParser\PrettyPrinter\Standard;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
 
@@ -16,11 +15,6 @@ use PHPStan\Collectors\Collector;
  */
 final class ParamTypeDeclarationCollector implements Collector
 {
-    public function __construct(
-        private readonly Standard $printerStandard
-    ) {
-    }
-
     public function getNodeType(): string
     {
         return FunctionLike::class;
@@ -28,17 +22,17 @@ final class ParamTypeDeclarationCollector implements Collector
 
     /**
      * @param FunctionLike $node
-     * @return array{int, int, string}
+     * @return mixed[]|null
      */
-    public function processNode(Node $node, Scope $scope): array
+    public function processNode(Node $node, Scope $scope): ?array
     {
         if ($this->shouldSkipFunctionLike($node)) {
-            return [0, 0, ''];
+            return null;
         }
 
+        $missingTypeLines = [];
         $paramCount = count($node->getParams());
 
-        $typedParamCount = 0;
         foreach ($node->getParams() as $param) {
             if ($param->variadic) {
                 // skip variadic
@@ -47,16 +41,12 @@ final class ParamTypeDeclarationCollector implements Collector
             }
 
             if ($param->type === null) {
+                $missingTypeLines[] = $param->getLine();
                 continue;
             }
-
-            ++$typedParamCount;
         }
 
-        // missing at least 1 type
-        $printedClassMethod = $paramCount !== $typedParamCount ? $this->printerStandard->prettyPrint([$node]) : '';
-
-        return [$typedParamCount, $paramCount, $printedClassMethod];
+        return [$paramCount, $missingTypeLines];
     }
 
     private function shouldSkipFunctionLike(FunctionLike $functionLike): bool

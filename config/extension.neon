@@ -12,10 +12,12 @@ parameters:
         return_type: 99
         param_type: 99
         property_type: 99
-        print_suggestions: false
+        # default, yet deprecated
+        print_suggestions: true
 
 services:
     - TomasVotruba\TypeCoverage\Formatter\TypeCoverageFormatter
+    - TomasVotruba\TypeCoverage\CollectorDataNormalizer
 
     -
         factory: TomasVotruba\TypeCoverage\Configuration

@@ -4,4 +4,3 @@ includes:
 parameters:
     type_coverage:
         return_type: 80
-        print_suggestions: true

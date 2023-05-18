@@ -28,9 +28,4 @@ final class Configuration
     {
         return $this->parameters['return_type'];
     }
-
-    public function shouldPrintSuggestions(): bool
-    {
-        return $this->parameters['print_suggestions'];
-    }
 }
