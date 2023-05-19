@@ -6,7 +6,6 @@ namespace TomasVotruba\TypeCoverage\Collectors;
 
 use PhpParser\Node;
 use PhpParser\Node\Stmt\ClassMethod;
-use PhpParser\PrettyPrinter\Standard;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
 
@@ -15,11 +14,6 @@ use PHPStan\Collectors\Collector;
  */
 final class ReturnTypeDeclarationCollector implements Collector
 {
-    public function __construct(
-        private readonly Standard $printerStandard
-    ) {
-    }
-
     public function getNodeType(): string
     {
         return ClassMethod::class;
@@ -27,23 +21,21 @@ final class ReturnTypeDeclarationCollector implements Collector
 
     /**
      * @param ClassMethod $node
-     * @return array{int, int, string}
+     * @return mixed[]|null
      */
-    public function processNode(Node $node, Scope $scope): array
+    public function processNode(Node $node, Scope $scope): ?array
     {
         // skip magic
         if ($node->isMagic()) {
-            return [0, 0, ''];
+            return null;
         }
 
-        if ($node->returnType instanceof Node) {
-            $typedReturnCount = 1;
-            $printedNode = '';
-        } else {
-            $typedReturnCount = 0;
-            $printedNode = $this->printerStandard->prettyPrint([$node]);
+        $missingTypeLines = [];
+
+        if (! $node->returnType instanceof Node) {
+            $missingTypeLines[] = $node->getLine();
         }
 
-        return [$typedReturnCount, 1, $printedNode];
+        return [1, $missingTypeLines];
     }
 }

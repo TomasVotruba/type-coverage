@@ -30,18 +30,7 @@ final class ReturnTypeCoverageRuleTest extends RuleTestCase
         yield [[__DIR__ . '/Fixture/SkipConstructor.php'], []];
 
         $errorMessage = sprintf(ReturnTypeCoverageRule::ERROR_MESSAGE, 2, 0, 80);
-        $errorMessage .= '
-
-public function run()
-{
-}
-
-public function again()
-{
-}
-';
-
-        yield [[__DIR__ . '/Fixture/UnknownReturnType.php'], [[$errorMessage, -1]]];
+        yield [[__DIR__ . '/Fixture/UnknownReturnType.php'], [[$errorMessage, 9], [$errorMessage, 13]]];
     }
 
     /**

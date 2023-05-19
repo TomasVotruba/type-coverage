@@ -79,5 +79,4 @@ parameters:
         return_type: 50
         param_type: 30
         property_type: 70
-        print_suggestions: false
 ```

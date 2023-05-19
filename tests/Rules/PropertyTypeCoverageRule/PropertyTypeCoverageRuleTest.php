@@ -32,15 +32,7 @@ final class PropertyTypeCoverageRuleTest extends RuleTestCase
         yield [[__DIR__ . '/Fixture/SkipParentBlockingProperty.php'], []];
 
         $errorMessage = sprintf(PropertyTypeCoverageRule::ERROR_MESSAGE, 2, 0, 80);
-
-        $errorMessage .= '
-
-public $name;
-
-public $surname;
-';
-
-        yield [[__DIR__ . '/Fixture/UnknownPropertyType.php'], [[$errorMessage, -1]]];
+        yield [[__DIR__ . '/Fixture/UnknownPropertyType.php'], [[$errorMessage, 9], [$errorMessage, 11]]];
     }
 
     /**

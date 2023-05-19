@@ -7,7 +7,6 @@ namespace TomasVotruba\TypeCoverage\Collectors;
 use PhpParser\Comment\Doc;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Property;
-use PhpParser\PrettyPrinter\Standard;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
 use PHPStan\Node\InClassNode;
@@ -18,11 +17,6 @@ use PHPStan\Reflection\ClassReflection;
  */
 final class PropertyTypeDeclarationCollector implements Collector
 {
-    public function __construct(
-        private readonly Standard $printerStandard
-    ) {
-    }
-
     /**
      * @return class-string<Node>
      */
@@ -33,42 +27,37 @@ final class PropertyTypeDeclarationCollector implements Collector
 
     /**
      * @param InClassNode $node
-     * @return array{int, int, string}
+     * @return mixed[]
      */
     public function processNode(Node $node, Scope $scope): array
     {
-        $printedProperties = '';
-
         // return typed properties/all properties
         $classLike = $node->getOriginalNode();
 
         $propertyCount = count($classLike->getProperties());
 
-        $typedPropertyCount = 0;
+        $missingTypeLines = [];
 
         foreach ($classLike->getProperties() as $property) {
             // blocked by parent type
             if ($this->isGuardedByParentClassProperty($scope, $property)) {
-                ++$typedPropertyCount;
                 continue;
             }
 
             // already typed
             if ($property->type instanceof Node) {
-                ++$typedPropertyCount;
                 continue;
             }
 
             if ($this->isPropertyDocTyped($property)) {
-                ++$typedPropertyCount;
                 continue;
             }
 
             // give useful context
-            $printedProperties .= PHP_EOL . PHP_EOL . $this->printerStandard->prettyPrint([$property]);
+            $missingTypeLines[] = $property->getLine();
         }
 
-        return [$typedPropertyCount, $propertyCount, $printedProperties];
+        return [$propertyCount, $missingTypeLines];
     }
 
     private function isPropertyDocTyped(Property $property): bool
