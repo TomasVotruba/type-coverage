@@ -7,12 +7,24 @@ namespace TomasVotruba\TypeCoverage\ValueObject;
 final class TypeCountAndMissingTypes
 {
     /**
+     * @readonly
+     * @var int
+     */
+    private $totalCount;
+
+    /**
+     * @var array<string, int[]>
+     * @readonly
+     */
+    private $missingTypeLinesByFilePath;
+
+    /**
      * @param array<string, int[]> $missingTypeLinesByFilePath
      */
-    public function __construct(
-        private readonly int $totalCount,
-        private readonly array $missingTypeLinesByFilePath
-    ) {
+    public function __construct(int $totalCount, array $missingTypeLinesByFilePath)
+    {
+        $this->totalCount = $totalCount;
+        $this->missingTypeLinesByFilePath = $missingTypeLinesByFilePath;
     }
 
     public function getTotalCount(): int
