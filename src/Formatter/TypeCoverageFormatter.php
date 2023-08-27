@@ -35,6 +35,7 @@ final class TypeCoverageFormatter
             $errorMessage = sprintf(
                 $message,
                 $typeCountAndMissingTypes->getTotalCount(),
+                $typeCountAndMissingTypes->getFilledCount(),
                 $typeCoveragePercentage,
                 $minimalLevel
             );

@@ -42,7 +42,6 @@ final class ParamTypeDeclarationCollector implements Collector
 
             if ($param->type === null) {
                 $missingTypeLines[] = $param->getLine();
-                continue;
             }
         }
 
