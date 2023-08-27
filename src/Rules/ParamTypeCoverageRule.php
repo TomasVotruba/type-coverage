@@ -25,11 +25,29 @@ final class ParamTypeCoverageRule implements Rule
      */
     public const ERROR_MESSAGE = 'Out of %d possible param types, only %d - %.1f %% actually have it. Add more param types to get over %d %%';
 
-    public function __construct(
-        private readonly TypeCoverageFormatter $typeCoverageFormatter,
-        private readonly Configuration $configuration,
-        private readonly CollectorDataNormalizer $collectorDataNormalizer,
-    ) {
+    /**
+     * @readonly
+     * @var \TomasVotruba\TypeCoverage\Formatter\TypeCoverageFormatter
+     */
+    private $typeCoverageFormatter;
+
+    /**
+     * @readonly
+     * @var \TomasVotruba\TypeCoverage\Configuration
+     */
+    private $configuration;
+
+    /**
+     * @readonly
+     * @var \TomasVotruba\TypeCoverage\CollectorDataNormalizer
+     */
+    private $collectorDataNormalizer;
+
+    public function __construct(TypeCoverageFormatter $typeCoverageFormatter, Configuration $configuration, CollectorDataNormalizer $collectorDataNormalizer)
+    {
+        $this->typeCoverageFormatter = $typeCoverageFormatter;
+        $this->configuration = $configuration;
+        $this->collectorDataNormalizer = $collectorDataNormalizer;
     }
 
     /**
