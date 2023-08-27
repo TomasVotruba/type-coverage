@@ -23,7 +23,7 @@ final class PropertyTypeCoverageRule implements Rule
     /**
      * @var string
      */
-    public const ERROR_MESSAGE = 'Out of %d possible property types, only %d %% actually have it. Add more property types to get over %d %%';
+    public const ERROR_MESSAGE = 'Out of %d possible property types, only %d - %.1f %% actually have it. Add more property types to get over %d %%';
 
     public function __construct(
         private readonly TypeCoverageFormatter $typeCoverageFormatter,
