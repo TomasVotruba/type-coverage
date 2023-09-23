@@ -29,8 +29,11 @@ final class ReturnTypeCoverageRuleTest extends RuleTestCase
         yield [[__DIR__ . '/Fixture/SkipKnownReturnType.php', __DIR__ . '/Fixture/SkipAgainKnownReturnType.php'], []];
         yield [[__DIR__ . '/Fixture/SkipConstructor.php'], []];
 
-        $errorMessage = sprintf(ReturnTypeCoverageRule::ERROR_MESSAGE, 2, 0, 0, 80);
-        yield [[__DIR__ . '/Fixture/UnknownReturnType.php'], [[$errorMessage, 9], [$errorMessage, 13]]];
+        $tipMsg = sprintf(ReturnTypeCoverageRule::TIP_MESSAGE, 2, 0, 0, 80);
+        yield [[__DIR__ . '/Fixture/UnknownReturnType.php'], [
+            [ReturnTypeCoverageRule::ERROR_MESSAGE, 9, $tipMsg],
+            [ReturnTypeCoverageRule::ERROR_MESSAGE, 13, $tipMsg]
+        ]];
     }
 
     /**

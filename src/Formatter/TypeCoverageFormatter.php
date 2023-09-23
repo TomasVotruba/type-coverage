@@ -15,6 +15,7 @@ final class TypeCoverageFormatter
      */
     public function formatErrors(
         string $message,
+        string $tip,
         int $minimalLevel,
         TypeCountAndMissingTypes $typeCountAndMissingTypes
     ): array {
@@ -32,8 +33,8 @@ final class TypeCoverageFormatter
         $ruleErrors = [];
 
         foreach ($typeCountAndMissingTypes->getMissingTypeLinesByFilePath() as $filePath => $lines) {
-            $errorMessage = sprintf(
-                $message,
+            $tipMessage = sprintf(
+                $tip,
                 $typeCountAndMissingTypes->getTotalCount(),
                 $typeCountAndMissingTypes->getFilledCount(),
                 $typeCoveragePercentage,
@@ -41,10 +42,12 @@ final class TypeCoverageFormatter
             );
 
             foreach ($lines as $line) {
-                $ruleErrors[] = RuleErrorBuilder::message($errorMessage)
+                $ruleErrors[] = RuleErrorBuilder::message($message)
                     ->file($filePath)
                     ->line($line)
-                    ->build();
+                    ->addTip($tipMessage)
+                    ->build()
+                ;
             }
         }
 
