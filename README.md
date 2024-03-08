@@ -62,7 +62,7 @@ This technique is very simple and useful to start with even on legacy project. Y
 composer require tomasvotruba/type-coverage --dev
 ```
 
-The package is available on PHP 7.2-8.1 versions in tagged releases.
+The package is available on PHP 7.2+ version in tagged releases.
 
 <br>
 
