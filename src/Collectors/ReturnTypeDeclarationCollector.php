@@ -30,12 +30,12 @@ final class ReturnTypeDeclarationCollector implements Collector
             return null;
         }
 
-		if ($scope->isInTrait()) {
-			$originalMethodName = $node->getAttribute('originalTraitMethodName');
-			if ($originalMethodName === '__construct') {
-				return null;
-			}
-		}
+        if ($scope->isInTrait()) {
+            $originalMethodName = $node->getAttribute('originalTraitMethodName');
+            if ($originalMethodName === '__construct') {
+                return null;
+            }
+        }
 
         $missingTypeLines = [];
 

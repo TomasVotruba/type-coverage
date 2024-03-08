@@ -7,7 +7,7 @@ namespace TomasVotruba\TypeCoverage\Tests\Rules\ReturnTypeCoverageRule\Fixture;
 final class SkipTraitConstructor
 {
     use TraitWithConstructor {
-		TraitWithConstructor::__construct as traitConstruct;
+        TraitWithConstructor::__construct as traitConstruct;
     }
 
     public function __construct()
