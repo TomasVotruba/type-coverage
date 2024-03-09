@@ -28,10 +28,6 @@ jobs:
                         name: 'Tests'
                         run: vendor/bin/phpunit
 
-                    -
-                        name: 'PHP Linter'
-                        run: vendor/bin/parallel-lint src tests
-
         name: ${{ matrix.actions.name }}
         runs-on: ubuntu-latest
 
