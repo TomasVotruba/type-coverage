@@ -1,10 +1,12 @@
 parametersSchema:
     # see https://doc.nette.org/en/schema for configuration
     type_coverage: structure([
-        return_type: anyOf(float(), int())
+        return_type: anyOf(float(), int()->min(0)->max(100))
         param_type: anyOf(float(), int())
         property_type: anyOf(float(), int())
         print_suggestions: bool()
+        # aliases to avoid typos
+        # return: anyOf(float(), int())
     ])
 
 # default parameters
