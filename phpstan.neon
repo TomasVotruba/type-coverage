@@ -9,7 +9,7 @@ parameters:
         - tests
 
     type_coverage:
-        return_type: 85.5
+        return_type: 99.9
         param_type: 100
         property_type: 100
 
