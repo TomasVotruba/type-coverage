@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace TomasVotruba\TypeCoverage\ValueObject;
 
-final class TypeCountAndMissingTypes
+final readonly class TypeCountAndMissingTypes
 {
     /**
      * @param array<string, int[]> $missingTypeLinesByFilePath
      */
     public function __construct(
-        private readonly int $totalCount,
-        private readonly int $missingCount,
-        private readonly array $missingTypeLinesByFilePath
+        private int $totalCount,
+        private int $missingCount,
+        private array $missingTypeLinesByFilePath
     ) {
     }
 

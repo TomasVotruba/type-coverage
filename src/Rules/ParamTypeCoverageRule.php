@@ -18,7 +18,7 @@ use TomasVotruba\TypeCoverage\Formatter\TypeCoverageFormatter;
  *
  * @implements Rule<CollectedDataNode>
  */
-final class ParamTypeCoverageRule implements Rule
+final readonly class ParamTypeCoverageRule implements Rule
 {
     /**
      * @var string
@@ -26,9 +26,9 @@ final class ParamTypeCoverageRule implements Rule
     public const ERROR_MESSAGE = 'Out of %d possible param types, only %d - %.1f %% actually have it. Add more param types to get over %d %%';
 
     public function __construct(
-        private readonly TypeCoverageFormatter $typeCoverageFormatter,
-        private readonly Configuration $configuration,
-        private readonly CollectorDataNormalizer $collectorDataNormalizer,
+        private TypeCoverageFormatter $typeCoverageFormatter,
+        private Configuration $configuration,
+        private CollectorDataNormalizer $collectorDataNormalizer,
     ) {
     }
 

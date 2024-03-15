@@ -18,7 +18,7 @@ use TomasVotruba\TypeCoverage\Formatter\TypeCoverageFormatter;
  *
  * @implements Rule<CollectedDataNode>
  */
-final class ReturnTypeCoverageRule implements Rule
+final readonly class ReturnTypeCoverageRule implements Rule
 {
     /**
      * @var string
@@ -26,9 +26,9 @@ final class ReturnTypeCoverageRule implements Rule
     public const ERROR_MESSAGE = 'Out of %d possible return types, only %d - %.1f %% actually have it. Add more return types to get over %d %%';
 
     public function __construct(
-        private readonly TypeCoverageFormatter $typeCoverageFormatter,
-        private readonly Configuration $configuration,
-        private readonly CollectorDataNormalizer $collectorDataNormalizer,
+        private TypeCoverageFormatter $typeCoverageFormatter,
+        private Configuration $configuration,
+        private CollectorDataNormalizer $collectorDataNormalizer,
     ) {
     }
 
