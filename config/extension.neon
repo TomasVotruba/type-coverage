@@ -1,4 +1,5 @@
 parametersSchema:
+    # see https://doc.nette.org/en/schema for configuration
     type_coverage: structure([
         return_type: anyOf(float(), int())
         param_type: anyOf(float(), int())

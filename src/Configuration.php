@@ -14,17 +14,17 @@ final readonly class Configuration
     ) {
     }
 
-    public function getRequiredPropertyTypeLevel(): float
+    public function getRequiredPropertyTypeLevel(): float|int
     {
         return $this->parameters['property_type'];
     }
 
-    public function getRequiredParamTypeLevel(): float
+    public function getRequiredParamTypeLevel(): float|int
     {
         return $this->parameters['param_type'];
     }
 
-    public function getRequiredReturnTypeLevel(): float
+    public function getRequiredReturnTypeLevel(): float|int
     {
         return $this->parameters['return_type'];
     }
