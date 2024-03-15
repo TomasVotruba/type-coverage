@@ -4,28 +4,28 @@ declare(strict_types=1);
 
 namespace TomasVotruba\TypeCoverage;
 
-final class Configuration
+final readonly class Configuration
 {
     /**
      * @param array<string, mixed> $parameters
      */
     public function __construct(
-        private readonly array $parameters
+        private array $parameters
     ) {
     }
 
-    public function getRequiredPropertyTypeLevel(): int
+    public function getRequiredPropertyTypeLevel(): float|int
     {
-        return $this->parameters['property_type'];
+        return $this->parameters['property'] ?? $this->parameters['property_type'];
     }
 
-    public function getRequiredParamTypeLevel(): int
+    public function getRequiredParamTypeLevel(): float|int
     {
-        return $this->parameters['param_type'];
+        return $this->parameters['param'] ?? $this->parameters['param_type'];
     }
 
-    public function getRequiredReturnTypeLevel(): int
+    public function getRequiredReturnTypeLevel(): float|int
     {
-        return $this->parameters['return_type'];
+        return $this->parameters['return'] ?? $this->parameters['return_type'];
     }
 }

@@ -15,7 +15,7 @@ final class TypeCoverageFormatter
      */
     public function formatErrors(
         string $message,
-        int $minimalLevel,
+        float|int $minimalLevel,
         TypeCountAndMissingTypes $typeCountAndMissingTypes
     ): array {
         if ($typeCountAndMissingTypes->getTotalCount() === 0) {

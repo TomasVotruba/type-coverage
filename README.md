@@ -76,7 +76,7 @@ Enable each item on their own with simple configuration:
 # phpstan.neon
 parameters:
     type_coverage:
-        return_type: 50
-        param_type: 30
-        property_type: 70
+        return: 50
+        param: 35.5
+        property: 70
 ```

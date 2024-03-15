@@ -1,9 +1,14 @@
 parametersSchema:
+    # see https://doc.nette.org/en/schema for configuration
     type_coverage: structure([
-        return_type: int()
-        param_type: int()
-        property_type: int()
+        return_type: anyOf(float(), int())
+        param_type: anyOf(float(), int())
+        property_type: anyOf(float(), int())
         print_suggestions: bool()
+        # aliases to avoid typos
+        return: anyOf(schema(float(), nullable()), schema(int(), nullable()))
+        param: anyOf(schema(float(), nullable()), schema(int(), nullable()))
+        property: anyOf(schema(float(), nullable()), schema(int(), nullable()))
     ])
 
 # default parameters
@@ -14,6 +19,10 @@ parameters:
         property_type: 99
         # default, yet deprecated
         print_suggestions: true
+        # aliases
+        return: null
+        param: null
+        property: null
 
 services:
     - TomasVotruba\TypeCoverage\Formatter\TypeCoverageFormatter
