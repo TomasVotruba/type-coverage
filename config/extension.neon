@@ -1,8 +1,8 @@
 parametersSchema:
     type_coverage: structure([
-        return_type: int()
-        param_type: int()
-        property_type: int()
+        return_type: anyOf(float(), int())
+        param_type: anyOf(float(), int())
+        property_type: anyOf(float(), int())
         print_suggestions: bool()
     ])
 

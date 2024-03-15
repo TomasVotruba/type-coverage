@@ -77,6 +77,6 @@ Enable each item on their own with simple configuration:
 parameters:
     type_coverage:
         return_type: 50
-        param_type: 30
+        param_type: 35.5
         property_type: 70
 ```
