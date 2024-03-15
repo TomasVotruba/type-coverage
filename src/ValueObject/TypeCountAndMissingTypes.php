@@ -36,7 +36,10 @@ final readonly class TypeCountAndMissingTypes
 
     public function getCoveragePercentage(): float
     {
-        return 100 * ($this->getTypedCount() / $this->totalCount);
+        $relative = 100 * ($this->getTypedCount() / $this->totalCount);
+
+        // round down, to make error message clear that required value is not reached yet
+        return round($relative, 1, PHP_ROUND_HALF_DOWN);
     }
 
     private function getTypedCount(): int
