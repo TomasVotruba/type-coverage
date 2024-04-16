@@ -9,7 +9,6 @@ use PhpParser\Node\Stmt\Declare_;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
 use PHPStan\Node\FileNode;
-use PHPStan\Rules\RuleErrorBuilder;
 
 final class DeclareCollector implements Collector
 {
