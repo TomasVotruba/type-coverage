@@ -2,7 +2,7 @@ parametersSchema:
     # see https://doc.nette.org/en/schema for configuration
     type_coverage: structure([
         declare: anyOf(float(), int())
-        # type declaratoins
+        # type declarations
         return_type: anyOf(float(), int())
         param_type: anyOf(float(), int())
         property_type: anyOf(float(), int())
