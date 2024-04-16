@@ -9,6 +9,7 @@ use PhpParser\Node\Stmt\Declare_;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
 use PHPStan\Node\FileNode;
+use PHPStan\Rules\RuleErrorBuilder;
 
 final class DeclareCollector implements Collector
 {
@@ -23,7 +24,24 @@ final class DeclareCollector implements Collector
     public function processNode(Node $node, Scope $scope): bool
     {
         foreach ($node->getNodes() as $node) {
-            if ($node instanceof Declare_) {
+            if (!$node instanceof Declare_) {
+                continue;
+            }
+
+            foreach ($node->declares as $declare) {
+                if (
+                    $declare->key->name !== 'strict_types'
+                ) {
+                    continue;
+                }
+
+                if (
+                    !$declare->value instanceof Node\Scalar\LNumber
+                    || $declare->value->value !== 1
+                ) {
+                    return false;
+                }
+
                 return true;
             }
         }
