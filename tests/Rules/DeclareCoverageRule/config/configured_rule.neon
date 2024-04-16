@@ -1,0 +1,6 @@
+includes:
+    - ../../../../config/extension.neon
+
+parameters:
+    type_coverage:
+        declare: 50

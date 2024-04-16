@@ -28,4 +28,9 @@ final readonly class Configuration
     {
         return $this->parameters['return'] ?? $this->parameters['return_type'];
     }
+
+    public function getRequiredDeclareLevel(): float|int
+    {
+        return $this->parameters['declare'];
+    }
 }
