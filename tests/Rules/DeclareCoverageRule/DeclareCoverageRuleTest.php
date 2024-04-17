@@ -28,6 +28,8 @@ final class DeclareCoverageRuleTest extends RuleTestCase
     {
         $expectedErrorMessage = sprintf(DeclareCoverageRule::ERROR_MESSAGE, 1, 0, 0.0, 50);
         yield [[__DIR__ . '/Fixture/SomeFileWithoutDeclares.php'], [[$expectedErrorMessage, -1]]];
+        yield [[__DIR__ . '/Fixture/SkipDeclareTicks.php'], [[$expectedErrorMessage, -1]]];
+        yield [[__DIR__ . '/Fixture/SkipDeclareStrictTypesZero.php'], [[$expectedErrorMessage, -1]]];
 
         yield [[__DIR__ . '/Fixture/DeclareCovered.php', __DIR__ . '/Fixture/SomeFileWithoutDeclares.php'], []];
     }
