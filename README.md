@@ -80,5 +80,5 @@ parameters:
         param: 35.5
         property: 70
         # also, how many files has declare strict types
-        declares: 40
+        declare: 40
 ```
