@@ -23,7 +23,7 @@ final class DeclareCollector implements Collector
     public function processNode(Node $node, Scope $scope): bool
     {
         foreach ($node->getNodes() as $node) {
-            if (!$node instanceof Declare_) {
+            if (! $node instanceof Declare_) {
                 continue;
             }
 
@@ -35,7 +35,7 @@ final class DeclareCollector implements Collector
                 }
 
                 if (
-                    !$declare->value instanceof Node\Scalar\LNumber
+                    ! $declare->value instanceof Node\Scalar\LNumber
                     || $declare->value->value !== 1
                 ) {
                     return false;
