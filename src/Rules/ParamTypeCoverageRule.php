@@ -54,6 +54,16 @@ final readonly class ParamTypeCoverageRule implements Rule
 
         $typeCountAndMissingTypes = $this->collectorDataNormalizer->normalize($paramTypeDeclarationCollector);
 
+        if ($this->configuration->showOnlyMeasure()) {
+            return [
+                sprintf(
+                    'Param type coverage is %.1f %% out of %d possible',
+                    $typeCountAndMissingTypes->getCoveragePercentage(),
+                    $typeCountAndMissingTypes->getTotalCount()
+                ),
+            ];
+        }
+
         return $this->typeCoverageFormatter->formatErrors(
             self::ERROR_MESSAGE,
             $this->configuration->getRequiredParamTypeLevel(),

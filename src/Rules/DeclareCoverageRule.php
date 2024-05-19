@@ -72,6 +72,16 @@ final readonly class DeclareCoverageRule implements Rule
 
         $declareCoverage = ($coveredDeclares / $totalPossibleDeclares) * 100;
 
+        if ($this->configuration->showOnlyMeasure()) {
+            return [
+                sprintf(
+                    'Strict declares coverage is %.1f %% out of %d possible',
+                    $declareCoverage,
+                    $totalPossibleDeclares
+                ),
+            ];
+        }
+
         // we meet the limit, all good
         if ($declareCoverage >= $requiredDeclareLevel) {
             return [];

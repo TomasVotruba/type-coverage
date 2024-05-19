@@ -36,6 +36,10 @@ final readonly class TypeCountAndMissingTypes
 
     public function getCoveragePercentage(): float
     {
+        if ($this->totalCount === 0) {
+            return 100.0;
+        }
+
         $relative = 100 * ($this->getTypedCount() / $this->totalCount);
 
         // round down with one decimal, to make error message clear that required value is not reached yet

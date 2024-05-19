@@ -34,7 +34,7 @@ The param type is defined, but property and return types are missing.
 
 * 1 out of 3 = 33 % coverage
 
-How do we get to the 100 %?
+Our code has only one third quality it could have. Let's get to 100 %!
 
 ```diff
  final class ConferenceFactory
@@ -52,7 +52,7 @@ How do we get to the 100 %?
  }
 ```
 
-This technique is very simple and useful to start with even on legacy project. You also know, how high coverage your project has right now.
+This technique is very simple to start even on legacy project. Also, you're now aware exactly how high coverage your project has.
 
 <br>
 
@@ -70,15 +70,35 @@ The package is available on PHP 7.2+ version in tagged releases.
 
 With [PHPStan extension installer](https://github.com/phpstan/extension-installer), everything is ready to run.
 
-Enable each item on their own with simple configuration:
+Enable each item on their own:
 
-```neon
+```yaml
 # phpstan.neon
 parameters:
     type_coverage:
         return: 50
         param: 35.5
         property: 70
-        # also, how many files has declare strict types
+```
+
+## Measure Strict Declares coverage
+
+Once you've reached 100 % type coverage, make use [your code is strict and uses types](https://tomasvotruba.com/blog/how-adding-type-declarations-makes-your-code-dangerous):
+
+```php
+<?php
+
+declare(strict_types=1);
+```
+
+Again, raise level percent by percent in your own pace:
+
+```yaml
+parameters:
+    type_coverage:
         declare: 40
 ```
+
+<br>
+
+Happy coding!

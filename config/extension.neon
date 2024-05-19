@@ -11,6 +11,9 @@ parametersSchema:
         return: anyOf(schema(float(), nullable()), schema(int(), nullable()))
         param: anyOf(schema(float(), nullable()), schema(int(), nullable()))
         property: anyOf(schema(float(), nullable()), schema(int(), nullable()))
+
+        # measure
+        measure: bool()
     ])
 
 # default parameters
@@ -27,6 +30,8 @@ parameters:
         return: null
         param: null
         property: null
+
+        measure: false
 
 services:
     - TomasVotruba\TypeCoverage\Formatter\TypeCoverageFormatter

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace TomasVotruba\TypeCoverage\Collectors;
 
 use PhpParser\Node;
+use PhpParser\Node\Scalar\LNumber;
 use PhpParser\Node\Stmt\Declare_;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
@@ -35,7 +36,7 @@ final class DeclareCollector implements Collector
                 }
 
                 if (
-                    ! $declare->value instanceof Node\Scalar\LNumber
+                    ! $declare->value instanceof LNumber
                     || $declare->value->value !== 1
                 ) {
                     return false;

@@ -46,8 +46,22 @@ final readonly class ReturnTypeCoverageRule implements Rule
      */
     public function processNode(Node $node, Scope $scope): array
     {
+        if ($this->configuration->getRequiredReturnTypeLevel() === 0) {
+            return [];
+        }
+
         $returnSeaLevelDataByFilePath = $node->get(ReturnTypeDeclarationCollector::class);
         $typeCountAndMissingTypes = $this->collectorDataNormalizer->normalize($returnSeaLevelDataByFilePath);
+
+        if ($this->configuration->showOnlyMeasure()) {
+            return [
+                sprintf(
+                    'Return type coverage is %.1f %% out of %d possible',
+                    $typeCountAndMissingTypes->getCoveragePercentage(),
+                    $typeCountAndMissingTypes->getTotalCount()
+                ),
+            ];
+        }
 
         return $this->typeCoverageFormatter->formatErrors(
             self::ERROR_MESSAGE,
