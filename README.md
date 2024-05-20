@@ -81,6 +81,8 @@ parameters:
         property: 70
 ```
 
+<br>
+
 ## Measure Strict Declares coverage
 
 Once you've reached 100 % type coverage, make use [your code is strict and uses types](https://tomasvotruba.com/blog/how-adding-type-declarations-makes-your-code-dangerous):
