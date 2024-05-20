@@ -46,12 +46,22 @@ final readonly class PropertyTypeCoverageRule implements Rule
      */
     public function processNode(Node $node, Scope $scope): array
     {
+        $propertyTypeDeclarationCollector = $node->get(PropertyTypeDeclarationCollector::class);
+        $typeCountAndMissingTypes = $this->collectorDataNormalizer->normalize($propertyTypeDeclarationCollector);
+
+        if ($this->configuration->showOnlyMeasure()) {
+            return [
+                sprintf(
+                    'Property type coverage is %.1f %% out of %d possible',
+                    $typeCountAndMissingTypes->getCoveragePercentage(),
+                    $typeCountAndMissingTypes->getTotalCount()
+                ),
+            ];
+        }
+
         if ($this->configuration->getRequiredPropertyTypeLevel() === 0) {
             return [];
         }
-
-        $propertyTypeDeclarationCollector = $node->get(PropertyTypeDeclarationCollector::class);
-        $typeCountAndMissingTypes = $this->collectorDataNormalizer->normalize($propertyTypeDeclarationCollector);
 
         return $this->typeCoverageFormatter->formatErrors(
             self::ERROR_MESSAGE,

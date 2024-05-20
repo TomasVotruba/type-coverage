@@ -17,8 +17,11 @@ parameters:
         param_type: 100
         property_type: 100
 
+        # only show final data, no error report
+        # measure: true
 
-    checkGenericClassInNonGenericObjectType: false
+    ignoreErrors:
+        - identifier: missingType.generics
 
     excludePaths:
         - "*/Fixture/*"

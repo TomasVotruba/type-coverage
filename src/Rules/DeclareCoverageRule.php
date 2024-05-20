@@ -45,18 +45,8 @@ final readonly class DeclareCoverageRule implements Rule
     {
         $requiredDeclareLevel = $this->configuration->getRequiredDeclareLevel();
 
-        // not enabled
-        if ($requiredDeclareLevel === 0) {
-            return [];
-        }
-
         $declareCollector = $node->get(DeclareCollector::class);
         $totalPossibleDeclares = count($declareCollector);
-
-        // nothing to handle
-        if ($totalPossibleDeclares === 0) {
-            return [];
-        }
 
         $coveredDeclares = 0;
         $notCoveredDeclareFilePaths = [];
@@ -71,6 +61,26 @@ final readonly class DeclareCoverageRule implements Rule
         }
 
         $declareCoverage = ($coveredDeclares / $totalPossibleDeclares) * 100;
+
+        if ($this->configuration->showOnlyMeasure()) {
+            return [
+                sprintf(
+                    'Strict declares coverage is %.1f %% out of %d possible',
+                    $declareCoverage,
+                    $totalPossibleDeclares
+                ),
+            ];
+        }
+
+        // not enabled
+        if ($requiredDeclareLevel === 0) {
+            return [];
+        }
+
+        // nothing to handle
+        if ($totalPossibleDeclares === 0) {
+            return [];
+        }
 
         // we meet the limit, all good
         if ($declareCoverage >= $requiredDeclareLevel) {
