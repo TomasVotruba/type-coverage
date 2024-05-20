@@ -70,7 +70,7 @@ final class PropertyTypeDeclarationCollector implements Collector
         $docCommentText = $docComment->getText();
 
         // skip as unable to type
-        return str_contains($docCommentText, 'callable') || str_contains($docCommentText, 'resource');
+        return strpos($docCommentText, 'callable') !== false || strpos($docCommentText, 'resource') !== false;
     }
 
     private function isGuardedByParentClassProperty(Scope $scope, Property $property): bool
