@@ -18,7 +18,7 @@ parameters:
         property_type: 100
 
         # only show final data, no error report
-        measure: true
+        # measure: true
 
     ignoreErrors:
         - identifier: missingType.generics

@@ -46,10 +46,6 @@ final readonly class PropertyTypeCoverageRule implements Rule
      */
     public function processNode(Node $node, Scope $scope): array
     {
-        if ($this->configuration->getRequiredPropertyTypeLevel() === 0) {
-            return [];
-        }
-
         $propertyTypeDeclarationCollector = $node->get(PropertyTypeDeclarationCollector::class);
         $typeCountAndMissingTypes = $this->collectorDataNormalizer->normalize($propertyTypeDeclarationCollector);
 
@@ -61,6 +57,10 @@ final readonly class PropertyTypeCoverageRule implements Rule
                     $typeCountAndMissingTypes->getTotalCount()
                 ),
             ];
+        }
+
+        if ($this->configuration->getRequiredPropertyTypeLevel() === 0) {
+            return [];
         }
 
         return $this->typeCoverageFormatter->formatErrors(

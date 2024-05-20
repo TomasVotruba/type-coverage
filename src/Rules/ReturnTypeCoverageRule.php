@@ -46,10 +46,6 @@ final readonly class ReturnTypeCoverageRule implements Rule
      */
     public function processNode(Node $node, Scope $scope): array
     {
-        if ($this->configuration->getRequiredReturnTypeLevel() === 0) {
-            return [];
-        }
-
         $returnSeaLevelDataByFilePath = $node->get(ReturnTypeDeclarationCollector::class);
         $typeCountAndMissingTypes = $this->collectorDataNormalizer->normalize($returnSeaLevelDataByFilePath);
 
@@ -61,6 +57,10 @@ final readonly class ReturnTypeCoverageRule implements Rule
                     $typeCountAndMissingTypes->getTotalCount()
                 ),
             ];
+        }
+
+        if ($this->configuration->getRequiredReturnTypeLevel() === 0) {
+            return [];
         }
 
         return $this->typeCoverageFormatter->formatErrors(

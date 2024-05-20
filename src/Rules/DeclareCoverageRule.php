@@ -45,18 +45,8 @@ final readonly class DeclareCoverageRule implements Rule
     {
         $requiredDeclareLevel = $this->configuration->getRequiredDeclareLevel();
 
-        // not enabled
-        if ($requiredDeclareLevel === 0) {
-            return [];
-        }
-
         $declareCollector = $node->get(DeclareCollector::class);
         $totalPossibleDeclares = count($declareCollector);
-
-        // nothing to handle
-        if ($totalPossibleDeclares === 0) {
-            return [];
-        }
 
         $coveredDeclares = 0;
         $notCoveredDeclareFilePaths = [];
@@ -80,6 +70,16 @@ final readonly class DeclareCoverageRule implements Rule
                     $totalPossibleDeclares
                 ),
             ];
+        }
+
+        // not enabled
+        if ($requiredDeclareLevel === 0) {
+            return [];
+        }
+
+        // nothing to handle
+        if ($totalPossibleDeclares === 0) {
+            return [];
         }
 
         // we meet the limit, all good

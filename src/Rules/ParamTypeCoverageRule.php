@@ -46,10 +46,6 @@ final readonly class ParamTypeCoverageRule implements Rule
      */
     public function processNode(Node $node, Scope $scope): array
     {
-        if ($this->configuration->getRequiredParamTypeLevel() === 0) {
-            return [];
-        }
-
         $paramTypeDeclarationCollector = $node->get(ParamTypeDeclarationCollector::class);
 
         $typeCountAndMissingTypes = $this->collectorDataNormalizer->normalize($paramTypeDeclarationCollector);
@@ -62,6 +58,10 @@ final readonly class ParamTypeCoverageRule implements Rule
                     $typeCountAndMissingTypes->getTotalCount()
                 ),
             ];
+        }
+
+        if ($this->configuration->getRequiredParamTypeLevel() === 0) {
+            return [];
         }
 
         return $this->typeCoverageFormatter->formatErrors(
