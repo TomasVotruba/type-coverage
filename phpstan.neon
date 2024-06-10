@@ -16,6 +16,7 @@ parameters:
         return_type: 99.9
         param_type: 100
         property_type: 100
+        constant_type: 0 # requires PHP 8.3
 
         # only show final data, no error report
         # measure: true
