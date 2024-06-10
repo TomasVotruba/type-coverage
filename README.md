@@ -35,7 +35,7 @@ The param type is defined, but property and return types are missing.
 
 * 1 out of 4 = 25 % coverage
 
-Our code has only one third quality it could have. Let's get to 100 %!
+Our code quality is only at one-quarter of its potential. Let's get to 100 %!
 
 ```diff
  final class ConferenceFactory
