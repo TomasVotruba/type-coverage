@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace TomasVotruba\TypeCoverage\Collectors;
 
-use PhpParser\Comment\Doc;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\ClassConst;
 use PHPStan\Analyser\Scope;
@@ -32,7 +31,7 @@ final class ConstantTypeDeclarationCollector implements Collector
     public function processNode(Node $node, Scope $scope): array
     {
         // return typed properties/all properties
-        if (!$node instanceof ClassConstantsNode) {
+        if (! $node instanceof ClassConstantsNode) {
             throw new \LogicException('Node is ' . $node::class . ' instead of ' . ClassConstantsNode::class);
         }
 

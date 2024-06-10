@@ -14,7 +14,6 @@ use TomasVotruba\TypeCoverage\Rules\ConstantTypeCoverageRule;
 
 final class ConstantTypeCoverageRuleTest extends RuleTestCase
 {
-
     public static function setUpBeforeClass(): void
     {
         if (PHP_VERSION_ID < 80300) {
