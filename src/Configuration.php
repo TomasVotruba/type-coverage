@@ -19,6 +19,11 @@ final readonly class Configuration
         return $this->parameters['property'] ?? $this->parameters['property_type'];
     }
 
+    public function getRequiredConstantTypeLevel(): float|int
+    {
+        return $this->parameters['constant'] ?? $this->parameters['constant_type'];
+    }
+
     public function getRequiredParamTypeLevel(): float|int
     {
         return $this->parameters['param'] ?? $this->parameters['param_type'];
