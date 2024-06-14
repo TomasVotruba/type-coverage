@@ -6,11 +6,13 @@ parametersSchema:
         return_type: anyOf(float(), int())
         param_type: anyOf(float(), int())
         property_type: anyOf(float(), int())
+        constant_type: anyOf(float(), int())
         print_suggestions: bool()
         # aliases to avoid typos
         return: anyOf(schema(float(), nullable()), schema(int(), nullable()))
         param: anyOf(schema(float(), nullable()), schema(int(), nullable()))
         property: anyOf(schema(float(), nullable()), schema(int(), nullable()))
+        constant: anyOf(schema(float(), nullable()), schema(int(), nullable()))
 
         # measure
         measure: bool()
@@ -24,12 +26,14 @@ parameters:
         return_type: 99
         param_type: 99
         property_type: 99
+        constant_type: 99
         # default, yet deprecated
         print_suggestions: true
         # aliases
         return: null
         param: null
         property: null
+        constant: null
 
         measure: false
 
@@ -57,6 +61,10 @@ services:
         class: TomasVotruba\TypeCoverage\Collectors\PropertyTypeDeclarationCollector
         tags:
             - phpstan.collector
+    -
+        class: TomasVotruba\TypeCoverage\Collectors\ConstantTypeDeclarationCollector
+        tags:
+            - phpstan.collector
 
     -
         class: TomasVotruba\TypeCoverage\Collectors\DeclareCollector
@@ -67,4 +75,5 @@ rules:
     - TomasVotruba\TypeCoverage\Rules\ParamTypeCoverageRule
     - TomasVotruba\TypeCoverage\Rules\ReturnTypeCoverageRule
     - TomasVotruba\TypeCoverage\Rules\PropertyTypeCoverageRule
+    - TomasVotruba\TypeCoverage\Rules\ConstantTypeCoverageRule
     - TomasVotruba\TypeCoverage\Rules\DeclareCoverageRule
