@@ -39,27 +39,27 @@ final class ConstantTypeDeclarationCollector implements Collector
 
         $missingTypeLines = [];
 
-        foreach ($node->getConstants() as $constant) {
+        foreach ($node->getConstants() as $classConst) {
             // blocked by parent type
-            if ($this->isGuardedByParentClassConstant($scope, $constant)) {
+            if ($this->isGuardedByParentClassConstant($scope, $classConst)) {
                 continue;
             }
 
             // already typed
-            if ($constant->type instanceof Node) {
+            if ($classConst->type instanceof Node) {
                 continue;
             }
 
             // give useful context
-            $missingTypeLines[] = $constant->getLine();
+            $missingTypeLines[] = $classConst->getLine();
         }
 
         return [$constantCount, $missingTypeLines];
     }
 
-    private function isGuardedByParentClassConstant(Scope $scope, ClassConst $const): bool
+    private function isGuardedByParentClassConstant(Scope $scope, ClassConst $classConst): bool
     {
-        $constName = $const->consts[0]->name->toString();
+        $constName = $classConst->consts[0]->name->toString();
 
         $classReflection = $scope->getClassReflection();
         if (! $classReflection instanceof ClassReflection) {
