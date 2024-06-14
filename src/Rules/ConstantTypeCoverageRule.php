@@ -14,7 +14,7 @@ use TomasVotruba\TypeCoverage\Configuration;
 use TomasVotruba\TypeCoverage\Formatter\TypeCoverageFormatter;
 
 /**
- * @see \TomasVotruba\TypeCoverage\Tests\Rules\PropertyTypeCoverageRule\ConstantTypeCoverageRuleTest
+ * @see \TomasVotruba\TypeCoverage\Tests\Rules\ConstantTypeCoverageRule\ConstantTypeCoverageRuleTest
  *
  * @implements Rule<CollectedDataNode>
  */
@@ -59,7 +59,7 @@ final readonly class ConstantTypeCoverageRule implements Rule
             ];
         }
 
-        if ($this->configuration->getRequiredConstantTypeLevel() === 0) {
+        if (! $this->configuration->isConstantTypeCoverageEnabled()) {
             return [];
         }
 

@@ -30,36 +30,36 @@ final class ConstantTypeDeclarationCollector implements Collector
      */
     public function processNode(Node $node, Scope $scope): array
     {
-        // return typed properties/all properties
-        if (! $node instanceof ClassConstantsNode) {
-            throw new \LogicException('Node is ' . $node::class . ' instead of ' . ClassConstantsNode::class);
+        // enable only on PHP 8.3+
+        if (PHP_VERSION_ID < 80300) {
+            return [0, []];
         }
 
         $constantCount = count($node->getConstants());
 
         $missingTypeLines = [];
 
-        foreach ($node->getConstants() as $constant) {
+        foreach ($node->getConstants() as $classConst) {
             // blocked by parent type
-            if ($this->isGuardedByParentClassConstant($scope, $constant)) {
+            if ($this->isGuardedByParentClassConstant($scope, $classConst)) {
                 continue;
             }
 
             // already typed
-            if ($constant->type instanceof Node) {
+            if ($classConst->type instanceof Node) {
                 continue;
             }
 
             // give useful context
-            $missingTypeLines[] = $constant->getLine();
+            $missingTypeLines[] = $classConst->getLine();
         }
 
         return [$constantCount, $missingTypeLines];
     }
 
-    private function isGuardedByParentClassConstant(Scope $scope, ClassConst $const): bool
+    private function isGuardedByParentClassConstant(Scope $scope, ClassConst $classConst): bool
     {
-        $constName = $const->consts[0]->name->toString();
+        $constName = $classConst->consts[0]->name->toString();
 
         $classReflection = $scope->getClassReflection();
         if (! $classReflection instanceof ClassReflection) {
