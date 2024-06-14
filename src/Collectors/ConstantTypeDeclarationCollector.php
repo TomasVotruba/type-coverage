@@ -30,11 +30,6 @@ final class ConstantTypeDeclarationCollector implements Collector
      */
     public function processNode(Node $node, Scope $scope): array
     {
-        // return typed properties/all properties
-        if (! $node instanceof ClassConstantsNode) {
-            throw new \LogicException('Node is ' . $node::class . ' instead of ' . ClassConstantsNode::class);
-        }
-
         $constantCount = count($node->getConstants());
 
         $missingTypeLines = [];

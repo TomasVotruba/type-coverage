@@ -19,8 +19,9 @@ What is the type coverage you ask? We have 4 type possible declarations in total
 ```php
 final class ConferenceFactory
 {
+    const SPEAKER_TAG = 'speaker';
+
     private $talkFactory;
-    public const SPEAKER_TAG = 'speaker';
 
     public function createConference(array $data)
     {
@@ -31,7 +32,9 @@ final class ConferenceFactory
 }
 ```
 
-The param type is defined, but property and return types are missing.
+*Note: Class constant types require PHP 8.3 to run.*
+
+The param type is defined. But the property, return and constant types are missing.
 
 * 1 out of 4 = 25 % coverage
 
@@ -40,12 +43,11 @@ Our code quality is only at one-quarter of its potential. Let's get to 100 %!
 ```diff
  final class ConferenceFactory
  {
--    private $talkFactory;
-+    private TalkFactory $talkFactory;
-
 -    public const SPEAKER_TAG = 'speaker';
 +    public const string SPEAKER_TAG = 'speaker';
 
+-    private $talkFactory;
++    private TalkFactory $talkFactory;
 
 -    public function createConference(array $data)
 +    public function createConference(array $data): Conference

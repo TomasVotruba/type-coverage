@@ -59,7 +59,7 @@ final readonly class ConstantTypeCoverageRule implements Rule
             ];
         }
 
-        if ($this->configuration->getRequiredConstantTypeLevel() === 0) {
+        if (! $this->configuration->isConstantTypeCoverageEnabled()) {
             return [];
         }
 
