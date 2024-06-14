@@ -14,7 +14,7 @@ use TomasVotruba\TypeCoverage\Configuration;
 use TomasVotruba\TypeCoverage\Formatter\TypeCoverageFormatter;
 
 /**
- * @see \TomasVotruba\TypeCoverage\Tests\Rules\PropertyTypeCoverageRule\ConstantTypeCoverageRuleTest
+ * @see \TomasVotruba\TypeCoverage\Tests\Rules\ConstantTypeCoverageRule\ConstantTypeCoverageRuleTest
  *
  * @implements Rule<CollectedDataNode>
  */
