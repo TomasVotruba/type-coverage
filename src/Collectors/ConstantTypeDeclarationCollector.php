@@ -30,6 +30,11 @@ final class ConstantTypeDeclarationCollector implements Collector
      */
     public function processNode(Node $node, Scope $scope): array
     {
+        // enable only on PHP 8.3+
+        if (PHP_VERSION_ID < 80300) {
+            return [0, []];
+        }
+
         $constantCount = count($node->getConstants());
 
         $missingTypeLines = [];
