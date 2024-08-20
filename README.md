@@ -93,7 +93,7 @@ parameters:
 
 ## Measure Strict Declares coverage
 
-Once you've reached 100 % type coverage, make use [your code is strict and uses types](https://tomasvotruba.com/blog/how-adding-type-declarations-makes-your-code-dangerous):
+Once you've reached 100 % type coverage, make sure [your code is strict and uses types](https://tomasvotruba.com/blog/how-adding-type-declarations-makes-your-code-dangerous):
 
 ```php
 <?php
