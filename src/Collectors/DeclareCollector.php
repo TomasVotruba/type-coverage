@@ -21,7 +21,7 @@ final class DeclareCollector implements Collector
     /**
      * @param FileNode $node
      */
-    public function processNode(Node $node, Scope $scope): bool
+    public function processNode(Node $node, Scope $scope): ?true
     {
         foreach ($node->getNodes() as $node) {
             if (! $node instanceof Declare_) {
@@ -39,13 +39,13 @@ final class DeclareCollector implements Collector
                     ! $declare->value instanceof LNumber
                     || $declare->value->value !== 1
                 ) {
-                    return false;
+                    return null;
                 }
 
                 return true;
             }
         }
 
-        return false;
+        return null;
     }
 }
