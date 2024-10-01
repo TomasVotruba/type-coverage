@@ -67,6 +67,6 @@ final class ParamTypeDeclarationCollector implements Collector
         }
 
         $docCommentText = $docComment->getText();
-        return str_contains($docCommentText, '@param callable');
+        return strpos($docCommentText, '@param callable') !== false;
     }
 }

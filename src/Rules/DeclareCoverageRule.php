@@ -17,16 +17,22 @@ use TomasVotruba\TypeCoverage\Configuration;
  *
  * @implements Rule<CollectedDataNode>
  */
-final readonly class DeclareCoverageRule implements Rule
+final class DeclareCoverageRule implements Rule
 {
     /**
      * @var string
      */
     public const ERROR_MESSAGE = 'Out of %d possible declare(strict_types=1), only %d - %.1f %% actually have it. Add more declares to get over %s %%';
 
-    public function __construct(
-        private Configuration $configuration,
-    ) {
+    /**
+     * @readonly
+     * @var \TomasVotruba\TypeCoverage\Configuration
+     */
+    private $configuration;
+
+    public function __construct(Configuration $configuration)
+    {
+        $this->configuration = $configuration;
     }
 
     /**
@@ -94,7 +100,7 @@ final readonly class DeclareCoverageRule implements Rule
                 $totalPossibleDeclares,
                 $coveredDeclares,
                 $declareCoverage,
-                $requiredDeclareLevel,
+                $requiredDeclareLevel
             );
 
             $ruleErrors[] = RuleErrorBuilder::message($errorMessage)->file($notCoveredDeclareFilePath)->build();
