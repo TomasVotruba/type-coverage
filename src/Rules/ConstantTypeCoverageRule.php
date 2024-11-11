@@ -22,6 +22,7 @@ final readonly class ConstantTypeCoverageRule implements Rule
 {
     /**
      * @var string
+     * @api
      */
     public const ERROR_MESSAGE = 'Out of %d possible constant types, only %d - %.1f %% actually have it. Add more constant types to get over %s %%';
 

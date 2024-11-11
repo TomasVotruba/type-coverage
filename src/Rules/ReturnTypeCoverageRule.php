@@ -22,6 +22,7 @@ final readonly class ReturnTypeCoverageRule implements Rule
 {
     /**
      * @var string
+     * @api
      */
     public const ERROR_MESSAGE = 'Out of %d possible return types, only %d - %.1f %% actually have it. Add more return types to get over %s %%';
 

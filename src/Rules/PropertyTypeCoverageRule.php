@@ -22,6 +22,7 @@ final readonly class PropertyTypeCoverageRule implements Rule
 {
     /**
      * @var string
+     * @api
      */
     public const ERROR_MESSAGE = 'Out of %d possible property types, only %d - %.1f %% actually have it. Add more property types to get over %s %%';
 
