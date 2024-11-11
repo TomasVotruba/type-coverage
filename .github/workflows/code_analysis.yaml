@@ -32,6 +32,8 @@ jobs:
                         name: 'Tests PHPStan 2.x'
                         run: |
                             composer remove rector/rector --dev # rector atm enforces PHPStan 1.x
+                            composer remove tomasvotruba/unused-public --dev # unused-public atm enforces PHPStan 1.x
+                            composer update phpstan/phpstan:^2
                             vendor/bin/phpunit
 
         name: ${{ matrix.actions.name }}
