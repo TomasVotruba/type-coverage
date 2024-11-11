@@ -6,7 +6,7 @@
     "keywords": ["static analysis", "phpstan-extension"],
     "require": {
         "php": "^8.2",
-        "phpstan/phpstan": "^1.10.67 || ^2"
+        "phpstan/phpstan": "^2"
     },
     "require-dev": {
         "phpstan/extension-installer": "^1.3",
