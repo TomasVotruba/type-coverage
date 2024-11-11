@@ -25,8 +25,14 @@ jobs:
                         run: composer fix-cs --ansi
 
                     -
-                        name: 'Tests'
+                        name: 'Tests PHPStan 1.x'
                         run: vendor/bin/phpunit
+
+                    -
+                        name: 'Tests PHPStan 2.x'
+                        run: |
+                            composer remove rector/rector --dev # rector atm enforces PHPStan 1.x
+                            vendor/bin/phpunit
 
         name: ${{ matrix.actions.name }}
         runs-on: ubuntu-latest
