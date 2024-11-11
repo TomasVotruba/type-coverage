@@ -26,7 +26,9 @@ jobs:
 
                     -
                         name: 'Tests PHPStan 1.x'
-                        run: vendor/bin/phpunit
+                        run: |
+                            composer update phpstan/phpstan:^1
+                            vendor/bin/phpunit
 
                     -
                         name: 'Tests PHPStan 2.x'
