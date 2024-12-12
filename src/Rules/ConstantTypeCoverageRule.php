@@ -18,18 +18,33 @@ use TomasVotruba\TypeCoverage\Formatter\TypeCoverageFormatter;
  *
  * @implements Rule<CollectedDataNode>
  */
-final readonly class ConstantTypeCoverageRule implements Rule
+final class ConstantTypeCoverageRule implements Rule
 {
     /**
      * @var string
      */
     public const ERROR_MESSAGE = 'Out of %d possible constant types, only %d - %.1f %% actually have it. Add more constant types to get over %s %%';
 
-    public function __construct(
-        private TypeCoverageFormatter $typeCoverageFormatter,
-        private Configuration $configuration,
-        private CollectorDataNormalizer $collectorDataNormalizer,
-    ) {
+    /**
+     * @readonly
+     */
+    private TypeCoverageFormatter $typeCoverageFormatter;
+
+    /**
+     * @readonly
+     */
+    private Configuration $configuration;
+
+    /**
+     * @readonly
+     */
+    private CollectorDataNormalizer $collectorDataNormalizer;
+
+    public function __construct(TypeCoverageFormatter $typeCoverageFormatter, Configuration $configuration, CollectorDataNormalizer $collectorDataNormalizer)
+    {
+        $this->typeCoverageFormatter = $typeCoverageFormatter;
+        $this->configuration = $configuration;
+        $this->collectorDataNormalizer = $collectorDataNormalizer;
     }
 
     /**
