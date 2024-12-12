@@ -20,12 +20,12 @@ jobs:
 
             -   uses: "ramsey/composer-install@v2"
 
-            # downgrade /src to PHP 7.2
-            -   run: vendor/bin/rector process src --config build/rector-downgrade-php-72.php --ansi
+            # downgrade /src to PHP 7.4
+            -   run: vendor/bin/rector process src --config build/rector-downgrade-php-74.php --ansi
             -   run: vendor/bin/ecs check src --fix --ansi
 
-            # copy PHP 7.2 composer
-            -   run: cp build/composer-php-72.json composer.json
+            # copy PHP 7.4 composer
+            -   run: cp build/composer-php-74.json composer.json
 
             # clear the dev files
             -   run: rm -rf build .github tests stubs ecs.php phpstan.neon phpunit.xml
@@ -42,7 +42,7 @@ jobs:
                 run: |
                     # separate a "git add" to add untracked (new) files too
                     git add --all
-                    git commit -m "release PHP 7.2 downgraded"
+                    git commit -m "release PHP 7.4 downgraded"
 
                     # force push tag, so there is only 1 version
                     git tag "${GITHUB_REF#refs/tags/}" --force
