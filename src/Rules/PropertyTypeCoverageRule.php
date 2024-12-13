@@ -25,6 +25,11 @@ final readonly class PropertyTypeCoverageRule implements Rule
      */
     public const ERROR_MESSAGE = 'Out of %d possible property types, only %d - %.1f %% actually have it. Add more property types to get over %s %%';
 
+    /**
+     * @var string
+     */
+    private const IDENTIFIER = 'typeCoverage.propertyTypeCoverage';
+
     public function __construct(
         private TypeCoverageFormatter $typeCoverageFormatter,
         private Configuration $configuration,
@@ -65,6 +70,7 @@ final readonly class PropertyTypeCoverageRule implements Rule
 
         return $this->typeCoverageFormatter->formatErrors(
             self::ERROR_MESSAGE,
+            self::IDENTIFIER,
             $this->configuration->getRequiredPropertyTypeLevel(),
             $typeCountAndMissingTypes
         );

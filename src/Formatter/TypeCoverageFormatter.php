@@ -15,6 +15,7 @@ final class TypeCoverageFormatter
      */
     public function formatErrors(
         string $message,
+        string $identifier,
         float|int $minimalLevel,
         TypeCountAndMissingTypes $typeCountAndMissingTypes
     ): array {
@@ -42,6 +43,7 @@ final class TypeCoverageFormatter
 
             foreach ($lines as $line) {
                 $ruleErrors[] = RuleErrorBuilder::message($errorMessage)
+                    ->identifier($identifier)
                     ->file($filePath)
                     ->line($line)
                     ->build();
