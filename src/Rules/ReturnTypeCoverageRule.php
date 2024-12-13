@@ -25,6 +25,11 @@ final readonly class ReturnTypeCoverageRule implements Rule
      */
     public const ERROR_MESSAGE = 'Out of %d possible return types, only %d - %.1f %% actually have it. Add more return types to get over %s %%';
 
+    /**
+     * @var string
+     */
+    private const IDENTIFIER = 'typeCoverage.returnTypeCoverage';
+
     public function __construct(
         private TypeCoverageFormatter $typeCoverageFormatter,
         private Configuration $configuration,
@@ -65,6 +70,7 @@ final readonly class ReturnTypeCoverageRule implements Rule
 
         return $this->typeCoverageFormatter->formatErrors(
             self::ERROR_MESSAGE,
+            self::IDENTIFIER,
             $this->configuration->getRequiredReturnTypeLevel(),
             $typeCountAndMissingTypes
         );

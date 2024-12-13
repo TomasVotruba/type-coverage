@@ -25,6 +25,11 @@ final readonly class ParamTypeCoverageRule implements Rule
      */
     public const ERROR_MESSAGE = 'Out of %d possible param types, only %d - %.1f %% actually have it. Add more param types to get over %s %%';
 
+    /**
+     * @var string
+     */
+    private const IDENTIFIER = 'typeCoverage.paramTypeCoverage';
+
     public function __construct(
         private TypeCoverageFormatter $typeCoverageFormatter,
         private Configuration $configuration,
@@ -66,6 +71,7 @@ final readonly class ParamTypeCoverageRule implements Rule
 
         return $this->typeCoverageFormatter->formatErrors(
             self::ERROR_MESSAGE,
+            self::IDENTIFIER,
             $this->configuration->getRequiredParamTypeLevel(),
             $typeCountAndMissingTypes
         );
