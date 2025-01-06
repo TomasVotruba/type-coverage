@@ -53,6 +53,11 @@ final readonly class ParamTypeCoverageRule implements Rule
      */
     public function processNode(Node $node, Scope $scope): array
     {
+        // if only subpaths are analysed, skip as data will be false positive
+        if (! Configuration\ScopeConfigurationResolver::areFullPathsAnalysed($scope)) {
+            return [];
+        }
+
         $paramTypeDeclarationCollector = $node->get(ParamTypeDeclarationCollector::class);
 
         $typeCountAndMissingTypes = $this->collectorDataNormalizer->normalize($paramTypeDeclarationCollector);

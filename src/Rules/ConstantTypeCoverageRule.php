@@ -53,6 +53,11 @@ final readonly class ConstantTypeCoverageRule implements Rule
      */
     public function processNode(Node $node, Scope $scope): array
     {
+        // if only subpaths are analysed, skip as data will be false positive
+        if (! Configuration\ScopeConfigurationResolver::areFullPathsAnalysed($scope)) {
+            return [];
+        }
+
         $constantTypeDeclarationCollector = $node->get(ConstantTypeDeclarationCollector::class);
         $typeCountAndMissingTypes = $this->collectorDataNormalizer->normalize($constantTypeDeclarationCollector);
 

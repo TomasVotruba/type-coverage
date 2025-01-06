@@ -44,6 +44,11 @@ final readonly class DeclareCoverageRule implements Rule
      */
     public function processNode(Node $node, Scope $scope): array
     {
+        // if only subpaths are analysed, skip as data will be false positive
+        if (! Configuration\ScopeConfigurationResolver::areFullPathsAnalysed($scope)) {
+            return [];
+        }
+
         $requiredDeclareLevel = $this->configuration->getRequiredDeclareLevel();
 
         $declareCollector = $node->get(DeclareCollector::class);

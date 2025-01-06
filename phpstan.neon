@@ -27,6 +27,15 @@ parameters:
         # used in tests
         - message: '#Public constant "TomasVotruba\\TypeCoverage\\(.*?)::ERROR_MESSAGE" is never#'
 
+        # needed to access metadata about paths
+        -
+            message: '#PHPStan\\DependencyInjection\\Nette\\NetteContainer#'
+            identifier: phpstanApi.method
+
+        -
+            message: '#PHPStan\\DependencyInjection\\MemoizingContainer#'
+            identifier: phpstanApi.class
+
     excludePaths:
         - "*/Fixture/*"
         - "*/Source/*"

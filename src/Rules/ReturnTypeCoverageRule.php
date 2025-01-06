@@ -53,6 +53,11 @@ final readonly class ReturnTypeCoverageRule implements Rule
      */
     public function processNode(Node $node, Scope $scope): array
     {
+        // if only subpaths are analysed, skip as data will be false positive
+        if (! Configuration\ScopeConfigurationResolver::areFullPathsAnalysed($scope)) {
+            return [];
+        }
+
         $returnSeaLevelDataByFilePath = $node->get(ReturnTypeDeclarationCollector::class);
         $typeCountAndMissingTypes = $this->collectorDataNormalizer->normalize($returnSeaLevelDataByFilePath);
 

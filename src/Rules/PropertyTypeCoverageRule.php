@@ -53,6 +53,11 @@ final readonly class PropertyTypeCoverageRule implements Rule
      */
     public function processNode(Node $node, Scope $scope): array
     {
+        // if only subpaths are analysed, skip as data will be false positive
+        if (! Configuration\ScopeConfigurationResolver::areFullPathsAnalysed($scope)) {
+            return [];
+        }
+
         $propertyTypeDeclarationCollector = $node->get(PropertyTypeDeclarationCollector::class);
         $typeCountAndMissingTypes = $this->collectorDataNormalizer->normalize($propertyTypeDeclarationCollector);
 
