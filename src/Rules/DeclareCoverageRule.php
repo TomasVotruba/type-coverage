@@ -8,6 +8,7 @@ use PhpParser\Node;
 use PHPStan\Analyser\Scope;
 use PHPStan\Node\CollectedDataNode;
 use PHPStan\Rules\Rule;
+use PHPStan\Rules\RuleError;
 use PHPStan\Rules\RuleErrorBuilder;
 use TomasVotruba\TypeCoverage\Collectors\DeclareCollector;
 use TomasVotruba\TypeCoverage\Configuration;
@@ -39,7 +40,7 @@ final readonly class DeclareCoverageRule implements Rule
 
     /**
      * @param CollectedDataNode $node
-     * @return mixed[]
+     * @return RuleError[]
      */
     public function processNode(Node $node, Scope $scope): array
     {
@@ -63,13 +64,12 @@ final readonly class DeclareCoverageRule implements Rule
         $declareCoverage = ($coveredDeclares / $totalPossibleDeclares) * 100;
 
         if ($this->configuration->showOnlyMeasure()) {
-            return [
-                sprintf(
-                    'Strict declares coverage is %.1f %% out of %d possible',
-                    $declareCoverage,
-                    $totalPossibleDeclares
-                ),
-            ];
+            $errorMessage = sprintf(
+                'Strict declares coverage is %.1f %% out of %d possible',
+                $declareCoverage,
+                $totalPossibleDeclares
+            );
+            return [RuleErrorBuilder::message($errorMessage)->build()];
         }
 
         // not enabled

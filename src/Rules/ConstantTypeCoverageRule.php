@@ -8,6 +8,8 @@ use PhpParser\Node;
 use PHPStan\Analyser\Scope;
 use PHPStan\Node\CollectedDataNode;
 use PHPStan\Rules\Rule;
+use PHPStan\Rules\RuleError;
+use PHPStan\Rules\RuleErrorBuilder;
 use TomasVotruba\TypeCoverage\CollectorDataNormalizer;
 use TomasVotruba\TypeCoverage\Collectors\ConstantTypeDeclarationCollector;
 use TomasVotruba\TypeCoverage\Configuration;
@@ -47,7 +49,7 @@ final readonly class ConstantTypeCoverageRule implements Rule
 
     /**
      * @param CollectedDataNode $node
-     * @return mixed[]
+     * @return RuleError[]
      */
     public function processNode(Node $node, Scope $scope): array
     {
@@ -55,13 +57,13 @@ final readonly class ConstantTypeCoverageRule implements Rule
         $typeCountAndMissingTypes = $this->collectorDataNormalizer->normalize($constantTypeDeclarationCollector);
 
         if ($this->configuration->showOnlyMeasure()) {
-            return [
-                sprintf(
-                    'Class constant type coverage is %.1f %% out of %d possible',
-                    $typeCountAndMissingTypes->getCoveragePercentage(),
-                    $typeCountAndMissingTypes->getTotalCount()
-                ),
-            ];
+            $errorMessage = sprintf(
+                'Class constant type coverage is %.1f %% out of %d possible',
+                $typeCountAndMissingTypes->getCoveragePercentage(),
+                $typeCountAndMissingTypes->getTotalCount()
+            );
+
+            return [RuleErrorBuilder::message($errorMessage)->build()];
         }
 
         if (! $this->configuration->isConstantTypeCoverageEnabled()) {
