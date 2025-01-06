@@ -12,6 +12,7 @@ use PHPStan\Rules\RuleError;
 use PHPStan\Rules\RuleErrorBuilder;
 use TomasVotruba\TypeCoverage\Collectors\DeclareCollector;
 use TomasVotruba\TypeCoverage\Configuration;
+use TomasVotruba\TypeCoverage\Configuration\ScopeConfigurationResolver;
 
 /**
  * @see \TomasVotruba\TypeCoverage\Tests\Rules\DeclareCoverageRule\DeclareCoverageRuleTest
@@ -45,7 +46,7 @@ final readonly class DeclareCoverageRule implements Rule
     public function processNode(Node $node, Scope $scope): array
     {
         // if only subpaths are analysed, skip as data will be false positive
-        if (! Configuration\ScopeConfigurationResolver::areFullPathsAnalysed($scope)) {
+        if (! ScopeConfigurationResolver::areFullPathsAnalysed($scope)) {
             return [];
         }
 

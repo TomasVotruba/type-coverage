@@ -29,6 +29,10 @@ parameters:
 
         # needed to access metadata about paths
         -
+            message: '#PHPStan\\Analyser\\LazyInternalScopeFactory#'
+            identifier: phpstanApi.class
+
+        -
             message: '#PHPStan\\DependencyInjection\\Nette\\NetteContainer#'
             identifier: phpstanApi.method
 

@@ -13,6 +13,7 @@ use PHPStan\Rules\RuleErrorBuilder;
 use TomasVotruba\TypeCoverage\CollectorDataNormalizer;
 use TomasVotruba\TypeCoverage\Collectors\ParamTypeDeclarationCollector;
 use TomasVotruba\TypeCoverage\Configuration;
+use TomasVotruba\TypeCoverage\Configuration\ScopeConfigurationResolver;
 use TomasVotruba\TypeCoverage\Formatter\TypeCoverageFormatter;
 
 /**
@@ -54,7 +55,7 @@ final readonly class ParamTypeCoverageRule implements Rule
     public function processNode(Node $node, Scope $scope): array
     {
         // if only subpaths are analysed, skip as data will be false positive
-        if (! Configuration\ScopeConfigurationResolver::areFullPathsAnalysed($scope)) {
+        if (! ScopeConfigurationResolver::areFullPathsAnalysed($scope)) {
             return [];
         }
 

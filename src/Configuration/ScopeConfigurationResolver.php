@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace TomasVotruba\TypeCoverage\Configuration;
 
+use PHPStan\Analyser\LazyInternalScopeFactory;
 use PHPStan\Analyser\Scope;
 use PHPStan\DependencyInjection\MemoizingContainer;
 use PHPStan\DependencyInjection\Nette\NetteContainer;
@@ -17,11 +18,16 @@ final class ScopeConfigurationResolver
     public static function areFullPathsAnalysed(Scope $scope): bool
     {
         $scopeFactory = self::getPrivateProperty($scope, 'scopeFactory');
-        $scopeFactoryContainer = self::getPrivateProperty($scopeFactory, 'container');
 
+        // different types are used in tests, there we want to always analyse everything
+        if (! $scopeFactory instanceof LazyInternalScopeFactory) {
+            return true;
+        }
+
+        $scopeFactoryContainer = self::getPrivateProperty($scopeFactory, 'container');
         if (! $scopeFactoryContainer instanceof MemoizingContainer) {
             // edge case, unable to analyse
-            return false;
+            return true;
         }
 
         /** @var NetteContainer $originalContainer */
@@ -35,8 +41,8 @@ final class ScopeConfigurationResolver
 
     private static function getPrivateProperty(object $object, string $propertyName): object
     {
-        $propertyReflection = new ReflectionProperty($object, $propertyName);
+        $reflectionProperty = new ReflectionProperty($object, $propertyName);
 
-        return $propertyReflection->getValue($object);
+        return $reflectionProperty->getValue($object);
     }
 }
