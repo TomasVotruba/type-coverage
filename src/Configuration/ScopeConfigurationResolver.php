@@ -15,8 +15,15 @@ use ReflectionProperty;
  */
 final class ScopeConfigurationResolver
 {
+    private static ?bool $areFullPathsAnalysed = null;
+
     public static function areFullPathsAnalysed(Scope $scope): bool
     {
+        // cache for speed
+        if (self::$areFullPathsAnalysed !== null) {
+            return self::$areFullPathsAnalysed;
+        }
+
         $scopeFactory = self::getPrivateProperty($scope, 'scopeFactory');
 
         // different types are used in tests, there we want to always analyse everything
@@ -36,7 +43,9 @@ final class ScopeConfigurationResolver
         $analysedPaths = $originalContainer->getParameter('analysedPaths');
         $analysedPathsFromConfig = $originalContainer->getParameter('analysedPathsFromConfig');
 
-        return $analysedPathsFromConfig === $analysedPaths;
+        self::$areFullPathsAnalysed = $analysedPathsFromConfig === $analysedPaths;
+
+        return self::$areFullPathsAnalysed;
     }
 
     private static function getPrivateProperty(object $object, string $propertyName): object
