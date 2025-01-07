@@ -51,6 +51,7 @@ final class ScopeConfigurationResolver
     private static function getPrivateProperty(object $object, string $propertyName): object
     {
         $reflectionProperty = new ReflectionProperty($object, $propertyName);
+        $reflectionProperty->setAccessible(true);
 
         return $reflectionProperty->getValue($object);
     }
