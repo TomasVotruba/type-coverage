@@ -8,9 +8,12 @@ use PhpParser\Node;
 use PHPStan\Analyser\Scope;
 use PHPStan\Node\CollectedDataNode;
 use PHPStan\Rules\Rule;
+use PHPStan\Rules\RuleError;
+use PHPStan\Rules\RuleErrorBuilder;
 use TomasVotruba\TypeCoverage\CollectorDataNormalizer;
 use TomasVotruba\TypeCoverage\Collectors\ParamTypeDeclarationCollector;
 use TomasVotruba\TypeCoverage\Configuration;
+use TomasVotruba\TypeCoverage\Configuration\ScopeConfigurationResolver;
 use TomasVotruba\TypeCoverage\Formatter\TypeCoverageFormatter;
 
 /**
@@ -47,22 +50,30 @@ final readonly class ParamTypeCoverageRule implements Rule
 
     /**
      * @param CollectedDataNode $node
-     * @return mixed[]
+     * @return RuleError[]
      */
     public function processNode(Node $node, Scope $scope): array
     {
+        // if only subpaths are analysed, skip as data will be false positive
+        if (! ScopeConfigurationResolver::areFullPathsAnalysed($scope)) {
+            return [];
+        }
+
         $paramTypeDeclarationCollector = $node->get(ParamTypeDeclarationCollector::class);
 
         $typeCountAndMissingTypes = $this->collectorDataNormalizer->normalize($paramTypeDeclarationCollector);
 
         if ($this->configuration->showOnlyMeasure()) {
-            return [
-                sprintf(
-                    'Param type coverage is %.1f %% out of %d possible',
-                    $typeCountAndMissingTypes->getCoveragePercentage(),
-                    $typeCountAndMissingTypes->getTotalCount()
-                ),
-            ];
+            $errorMessage = sprintf(
+                'Param type coverage is %.1f %% out of %d possible',
+                $typeCountAndMissingTypes->getCoveragePercentage(),
+                $typeCountAndMissingTypes->getTotalCount()
+            );
+
+            $ruleError = RuleErrorBuilder::message($errorMessage)
+                ->build();
+
+            return [$ruleError];
         }
 
         if ($this->configuration->getRequiredParamTypeLevel() === 0) {

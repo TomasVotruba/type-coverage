@@ -111,4 +111,22 @@ parameters:
 
 <br>
 
+## Full Paths only
+
+If you run PHPStan only on some subpaths that are different from your setup in `phpstan.neon`, e.g.:
+
+```bash
+vendor/bin/phpstan analyze src/Controller
+```
+
+This package could show false positives, as classes in the `src/Controller` could be slightly less typed. This would be spamming whole PHPStan output and make hard to see any other errors you look for.
+
+That's why this package only triggers if there are full paths, e.g.:
+
+```bash
+vendor/bin/phpstan
+````
+
+<br>
+
 Happy coding!

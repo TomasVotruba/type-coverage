@@ -8,9 +8,12 @@ use PhpParser\Node;
 use PHPStan\Analyser\Scope;
 use PHPStan\Node\CollectedDataNode;
 use PHPStan\Rules\Rule;
+use PHPStan\Rules\RuleError;
+use PHPStan\Rules\RuleErrorBuilder;
 use TomasVotruba\TypeCoverage\CollectorDataNormalizer;
 use TomasVotruba\TypeCoverage\Collectors\ReturnTypeDeclarationCollector;
 use TomasVotruba\TypeCoverage\Configuration;
+use TomasVotruba\TypeCoverage\Configuration\ScopeConfigurationResolver;
 use TomasVotruba\TypeCoverage\Formatter\TypeCoverageFormatter;
 
 /**
@@ -47,21 +50,25 @@ final readonly class ReturnTypeCoverageRule implements Rule
 
     /**
      * @param CollectedDataNode $node
-     * @return mixed[]
+     * @return RuleError[]
      */
     public function processNode(Node $node, Scope $scope): array
     {
+        // if only subpaths are analysed, skip as data will be false positive
+        if (! ScopeConfigurationResolver::areFullPathsAnalysed($scope)) {
+            return [];
+        }
+
         $returnSeaLevelDataByFilePath = $node->get(ReturnTypeDeclarationCollector::class);
         $typeCountAndMissingTypes = $this->collectorDataNormalizer->normalize($returnSeaLevelDataByFilePath);
 
         if ($this->configuration->showOnlyMeasure()) {
-            return [
-                sprintf(
-                    'Return type coverage is %.1f %% out of %d possible',
-                    $typeCountAndMissingTypes->getCoveragePercentage(),
-                    $typeCountAndMissingTypes->getTotalCount()
-                ),
-            ];
+            $errorMessage = sprintf(
+                'Return type coverage is %.1f %% out of %d possible',
+                $typeCountAndMissingTypes->getCoveragePercentage(),
+                $typeCountAndMissingTypes->getTotalCount()
+            );
+            return [RuleErrorBuilder::message($errorMessage)->build()];
         }
 
         if ($this->configuration->getRequiredReturnTypeLevel() === 0) {

@@ -8,9 +8,12 @@ use PhpParser\Node;
 use PHPStan\Analyser\Scope;
 use PHPStan\Node\CollectedDataNode;
 use PHPStan\Rules\Rule;
+use PHPStan\Rules\RuleError;
+use PHPStan\Rules\RuleErrorBuilder;
 use TomasVotruba\TypeCoverage\CollectorDataNormalizer;
 use TomasVotruba\TypeCoverage\Collectors\PropertyTypeDeclarationCollector;
 use TomasVotruba\TypeCoverage\Configuration;
+use TomasVotruba\TypeCoverage\Configuration\ScopeConfigurationResolver;
 use TomasVotruba\TypeCoverage\Formatter\TypeCoverageFormatter;
 
 /**
@@ -47,21 +50,26 @@ final readonly class PropertyTypeCoverageRule implements Rule
 
     /**
      * @param CollectedDataNode $node
-     * @return mixed[]
+     * @return RuleError[]
      */
     public function processNode(Node $node, Scope $scope): array
     {
+        // if only subpaths are analysed, skip as data will be false positive
+        if (! ScopeConfigurationResolver::areFullPathsAnalysed($scope)) {
+            return [];
+        }
+
         $propertyTypeDeclarationCollector = $node->get(PropertyTypeDeclarationCollector::class);
         $typeCountAndMissingTypes = $this->collectorDataNormalizer->normalize($propertyTypeDeclarationCollector);
 
         if ($this->configuration->showOnlyMeasure()) {
-            return [
-                sprintf(
-                    'Property type coverage is %.1f %% out of %d possible',
-                    $typeCountAndMissingTypes->getCoveragePercentage(),
-                    $typeCountAndMissingTypes->getTotalCount()
-                ),
-            ];
+            $errorMessage = sprintf(
+                'Property type coverage is %.1f %% out of %d possible',
+                $typeCountAndMissingTypes->getCoveragePercentage(),
+                $typeCountAndMissingTypes->getTotalCount()
+            );
+
+            return [RuleErrorBuilder::message($errorMessage)->build()];
         }
 
         if ($this->configuration->getRequiredPropertyTypeLevel() === 0) {
