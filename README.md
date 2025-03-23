@@ -43,7 +43,7 @@ final class ConferenceFactory
 
 The param type is defined as `array`.
 
-1 defined / 3 possible = 33.3 % type coverage
+1 defined / 3 possible = **33.3 % type coverage**
 
 <br>
 
