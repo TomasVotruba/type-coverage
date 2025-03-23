@@ -21,7 +21,11 @@ Instead of fixing all PHPStan errors at once, we can start with minimal require 
 
 ## How to increase type coverage?
 
-Let's look at example. We have 3 possible type declarations here - property, param and return type declarations:
+Here we have 3 possible type declarations:
+
+* property,
+* param
+* and return type
 
 ```php
 final class ConferenceFactory
