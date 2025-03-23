@@ -6,7 +6,7 @@ A PHPStan extension, to check and require minimal type coverage of PHP code.
 
 <br>
 
-The type coverage rate = total count of defined type declarations / total count of possible type declarations.
+The type coverage rate = total count of **defined** type declarations / total count of **possible** type declarations.
 
 E.g. we have 10 methods, but only 7 have defined return type = 70 % return type coverage.
 
