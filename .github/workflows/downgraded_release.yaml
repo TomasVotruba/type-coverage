@@ -27,9 +27,6 @@ jobs:
             # copy PHP 7.4 composer
             -   run: cp build/composer-php-74.json composer.json
 
-            # clear the dev files
-            -   run: rm -rf build .github tests stubs ecs.php phpstan.neon phpunit.xml
-
             # setup git user
             -
                 run: |
