@@ -55,7 +55,8 @@ final readonly class ReturnTypeCoverageRule implements Rule
     public function processNode(Node $node, Scope $scope): array
     {
         // if only subpaths are analysed, skip as data will be false positive
-        if (! ScopeConfigurationResolver::areFullPathsAnalysed($scope)) {
+        // can be overridden by allow_partial_paths option
+        if (ScopeConfigurationResolver::shouldSkipPartialPathsAnalysis($scope, $this->configuration)) {
             return [];
         }
 

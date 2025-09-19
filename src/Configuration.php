@@ -48,6 +48,11 @@ final readonly class Configuration
         return $this->parameters['declare'];
     }
 
+    public function allowPartialPaths(): bool
+    {
+        return $this->parameters['allow_partial_paths'];
+    }
+
     public function showOnlyMeasure(): bool
     {
         return $this->parameters['measure'];

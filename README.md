@@ -133,7 +133,20 @@ That's why this package only triggers if there are full paths, e.g.:
 
 ```bash
 vendor/bin/phpstan
-````
+```
+
+### Allowing Partial Path Analysis
+
+If you want to enable type coverage analysis even when running on specific subpaths, you can use the `allow_partial_paths` option:
+
+```yaml
+# phpstan.neon
+parameters:
+    type_coverage:
+        allow_partial_paths: true
+```
+
+**Warning:** When `allow_partial_paths` is enabled, the coverage percentages may not represent the actual coverage of your entire codebase, as they will only reflect the analyzed subset of files. Use this option carefully and consider the potential for misleading results.
 
 <br>
 

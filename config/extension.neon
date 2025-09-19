@@ -14,6 +14,9 @@ parametersSchema:
         property: anyOf(schema(float(), nullable()), schema(int(), nullable()))
         constant: anyOf(schema(float(), nullable()), schema(int(), nullable()))
 
+        # path validation
+        allow_partial_paths: bool()
+        
         # measure
         measure: bool()
     ])
@@ -34,6 +37,9 @@ parameters:
         param: null
         property: null
         constant: null
+
+        # path validation (disabled by default to keep existing behavior)
+        allow_partial_paths: false
 
         measure: false
 
