@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use Rector\DeadCode\Rector\ConstFetch\RemovePhpVersionIdCheckRector;
 use Rector\Config\RectorConfig;
+use Rector\DeadCode\Rector\ConstFetch\RemovePhpVersionIdCheckRector;
 
 return RectorConfig::configure()
     ->withPaths([__DIR__ . '/src', __DIR__ . '/tests'])
