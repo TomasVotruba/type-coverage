@@ -21,10 +21,7 @@ use TomasVotruba\TypeCoverage\Configuration\ScopeConfigurationResolver;
  */
 final readonly class DeclareCoverageRule implements Rule
 {
-    /**
-     * @var string
-     */
-    public const ERROR_MESSAGE = 'Out of %d possible declare(strict_types=1), only %d - %.1f %% actually have it. Add more declares to get over %s %%';
+    public const string ERROR_MESSAGE = 'Out of %d possible declare(strict_types=1), only %d - %.1f %% actually have it. Add more declares to get over %s %%';
 
     public function __construct(
         private Configuration $configuration,

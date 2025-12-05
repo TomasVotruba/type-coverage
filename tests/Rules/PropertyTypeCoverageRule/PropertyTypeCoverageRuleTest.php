@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace TomasVotruba\TypeCoverage\Tests\Rules\PropertyTypeCoverageRule;
 
 use Iterator;
+use Override;
 use PHPStan\Collectors\Collector;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
@@ -41,6 +42,7 @@ final class PropertyTypeCoverageRuleTest extends RuleTestCase
     /**
      * @return string[]
      */
+    #[Override]
     public static function getAdditionalConfigFiles(): array
     {
         return [__DIR__ . '/config/configured_rule.neon'];
@@ -54,6 +56,7 @@ final class PropertyTypeCoverageRuleTest extends RuleTestCase
     /**
      * @return Collector[]
      */
+    #[Override]
     protected function getCollectors(): array
     {
         return [self::getContainer()->getByType(PropertyTypeDeclarationCollector::class)];

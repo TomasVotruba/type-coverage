@@ -23,15 +23,9 @@ use TomasVotruba\TypeCoverage\Formatter\TypeCoverageFormatter;
  */
 final readonly class PropertyTypeCoverageRule implements Rule
 {
-    /**
-     * @var string
-     */
-    public const ERROR_MESSAGE = 'Out of %d possible property types, only %d - %.1f %% actually have it. Add more property types to get over %s %%';
+    public const string ERROR_MESSAGE = 'Out of %d possible property types, only %d - %.1f %% actually have it. Add more property types to get over %s %%';
 
-    /**
-     * @var string
-     */
-    private const IDENTIFIER = 'typeCoverage.propertyTypeCoverage';
+    private const string IDENTIFIER = 'typeCoverage.propertyTypeCoverage';
 
     public function __construct(
         private TypeCoverageFormatter $typeCoverageFormatter,

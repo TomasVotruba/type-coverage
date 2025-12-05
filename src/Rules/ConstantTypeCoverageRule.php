@@ -23,15 +23,9 @@ use TomasVotruba\TypeCoverage\Formatter\TypeCoverageFormatter;
  */
 final readonly class ConstantTypeCoverageRule implements Rule
 {
-    /**
-     * @var string
-     */
-    public const ERROR_MESSAGE = 'Out of %d possible constant types, only %d - %.1f %% actually have it. Add more constant types to get over %s %%';
+    public const string ERROR_MESSAGE = 'Out of %d possible constant types, only %d - %.1f %% actually have it. Add more constant types to get over %s %%';
 
-    /**
-     * @var string
-     */
-    private const IDENTIFIER = 'typeCoverage.constantTypeCoverage';
+    private const string IDENTIFIER = 'typeCoverage.constantTypeCoverage';
 
     public function __construct(
         private TypeCoverageFormatter $typeCoverageFormatter,
@@ -54,6 +48,11 @@ final readonly class ConstantTypeCoverageRule implements Rule
      */
     public function processNode(Node $node, Scope $scope): array
     {
+        // enable only on PHP 8.3+
+        if (PHP_VERSION_ID < 80300) {
+            return [];
+        }
+
         // if only subpaths are analysed, skip as data will be false positive
         if (! ScopeConfigurationResolver::areFullPathsAnalysed($scope)) {
             return [];

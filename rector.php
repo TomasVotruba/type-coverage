@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Rector\DeadCode\Rector\ConstFetch\RemovePhpVersionIdCheckRector;
 use Rector\Config\RectorConfig;
 
 return RectorConfig::configure()
@@ -14,10 +15,17 @@ return RectorConfig::configure()
         codingStyle: true,
         typeDeclarations: true,
         typeDeclarationDocblocks: true,
-        earlyReturn: true,
-        instanceOf: true,
         privatization: true,
-        naming: true
+        naming: true,
+        instanceOf: true,
+        earlyReturn: true
     )
     ->withImportNames(removeUnusedImports: true)
-    ->withSkip(['*/Fixture/*', '*/Source/*']);
+    ->withSkip([
+        '*/Fixture/*',
+        '*/Source/*',
+        RemovePhpVersionIdCheckRector::class => [
+            // this package is downgraded, so PHP version checks are expected
+            __DIR__ . '/src',
+        ],
+    ]);

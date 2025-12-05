@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace TomasVotruba\TypeCoverage\Tests\Rules\ConstantTypeCoverageRule;
 
 use Iterator;
+use Override;
 use PHPStan\Collectors\Collector;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
@@ -14,13 +15,6 @@ use TomasVotruba\TypeCoverage\Rules\ConstantTypeCoverageRule;
 
 final class ConstantTypeCoverageRuleTest extends RuleTestCase
 {
-    public static function setUpBeforeClass(): void
-    {
-        if (PHP_VERSION_ID < 80300) {
-            self::markTestSkipped('not working under 8.3');
-        }
-    }
-
     /**
      * @param string[] $filePaths
      * @param list<array{0: string, 1: int, 2?: string|null}> $expectedErrorsWithLines
@@ -44,6 +38,7 @@ final class ConstantTypeCoverageRuleTest extends RuleTestCase
     /**
      * @return string[]
      */
+    #[Override]
     public static function getAdditionalConfigFiles(): array
     {
         return [__DIR__ . '/config/configured_rule.neon'];
@@ -57,6 +52,7 @@ final class ConstantTypeCoverageRuleTest extends RuleTestCase
     /**
      * @return Collector[]
      */
+    #[Override]
     protected function getCollectors(): array
     {
         return [self::getContainer()->getByType(ConstantTypeDeclarationCollector::class)];
