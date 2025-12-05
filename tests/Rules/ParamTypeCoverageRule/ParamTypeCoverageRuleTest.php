@@ -24,6 +24,9 @@ final class ParamTypeCoverageRuleTest extends RuleTestCase
         $this->analyse($filePaths, $expectedErrorsWithLines);
     }
 
+    /**
+     * @return Iterator<array<array<int, array<int, mixed>>, mixed>>
+     */
     public static function provideData(): Iterator
     {
         yield [[__DIR__ . '/Fixture/SkipKnownParamType.php', __DIR__ . '/Fixture/SkipAgainKnownParamType.php'], []];

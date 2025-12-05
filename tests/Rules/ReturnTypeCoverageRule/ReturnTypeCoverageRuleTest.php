@@ -24,6 +24,9 @@ final class ReturnTypeCoverageRuleTest extends RuleTestCase
         $this->analyse($filePaths, $expectedErrorsWithLines);
     }
 
+    /**
+     * @return Iterator<array<array<int, array<int, mixed>>, mixed>>
+     */
     public static function provideData(): Iterator
     {
         yield [[__DIR__ . '/Fixture/SkipKnownReturnType.php', __DIR__ . '/Fixture/SkipAgainKnownReturnType.php'], []];

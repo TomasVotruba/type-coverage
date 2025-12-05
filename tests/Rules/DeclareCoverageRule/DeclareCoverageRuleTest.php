@@ -24,6 +24,9 @@ final class DeclareCoverageRuleTest extends RuleTestCase
         $this->analyse($filePaths, $expectedErrorsWithLines);
     }
 
+    /**
+     * @return Iterator<array<array<int, array<int, mixed>>, mixed>>
+     */
     public static function provideData(): Iterator
     {
         $expectedErrorMessage = sprintf(DeclareCoverageRule::ERROR_MESSAGE, 1, 0, 0.0, 50);
