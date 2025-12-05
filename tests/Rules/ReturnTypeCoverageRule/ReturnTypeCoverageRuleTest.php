@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace TomasVotruba\TypeCoverage\Tests\Rules\ReturnTypeCoverageRule;
 
 use Iterator;
+use Override;
 use PHPStan\Collectors\Collector;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
@@ -24,6 +25,9 @@ final class ReturnTypeCoverageRuleTest extends RuleTestCase
         $this->analyse($filePaths, $expectedErrorsWithLines);
     }
 
+    /**
+     * @return Iterator<array<array<int, array<int, mixed>>, mixed>>
+     */
     public static function provideData(): Iterator
     {
         yield [[__DIR__ . '/Fixture/SkipKnownReturnType.php', __DIR__ . '/Fixture/SkipAgainKnownReturnType.php'], []];
@@ -37,6 +41,7 @@ final class ReturnTypeCoverageRuleTest extends RuleTestCase
     /**
      * @return string[]
      */
+    #[Override]
     public static function getAdditionalConfigFiles(): array
     {
         return [__DIR__ . '/config/configured_rule.neon'];
@@ -50,6 +55,7 @@ final class ReturnTypeCoverageRuleTest extends RuleTestCase
     /**
      * @return Collector[]
      */
+    #[Override]
     protected function getCollectors(): array
     {
         return [self::getContainer()->getByType(ReturnTypeDeclarationCollector::class)];

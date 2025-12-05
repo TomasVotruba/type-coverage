@@ -5,14 +5,14 @@
     "license": "MIT",
     "keywords": ["static analysis", "phpstan-extension"],
     "require": {
-        "php": "^8.2",
-        "phpstan/phpstan": "^2.1.1"
+        "php": "^8.3",
+        "phpstan/phpstan": "^2.1.33"
     },
     "require-dev": {
         "phpstan/extension-installer": "^1.4",
-        "phpunit/phpunit": "^11.5",
-        "symplify/easy-coding-standard": "^12.5",
-        "rector/rector": "^2.0.6",
+        "phpunit/phpunit": "^12.5",
+        "phpecs/phpecs": "^2.2",
+        "rector/rector": "^2.2",
         "tracy/tracy": "^2.10",
         "tomasvotruba/unused-public": "^2.0"
     },

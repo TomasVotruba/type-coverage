@@ -23,15 +23,9 @@ use TomasVotruba\TypeCoverage\Formatter\TypeCoverageFormatter;
  */
 final readonly class ParamTypeCoverageRule implements Rule
 {
-    /**
-     * @var string
-     */
-    public const ERROR_MESSAGE = 'Out of %d possible param types, only %d - %.1f %% actually have it. Add more param types to get over %s %%';
+    public const string ERROR_MESSAGE = 'Out of %d possible param types, only %d - %.1f %% actually have it. Add more param types to get over %s %%';
 
-    /**
-     * @var string
-     */
-    private const IDENTIFIER = 'typeCoverage.paramTypeCoverage';
+    private const string IDENTIFIER = 'typeCoverage.paramTypeCoverage';
 
     public function __construct(
         private TypeCoverageFormatter $typeCoverageFormatter,

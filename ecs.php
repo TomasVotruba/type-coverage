@@ -6,6 +6,7 @@ use Symplify\EasyCodingStandard\Config\ECSConfig;
 
 return ECSConfig::configure()
     ->withPaths([__DIR__ . '/src', __DIR__ . '/tests'])
+    ->withRootFiles()
     ->withSkip([
         // these fixtures use PHP 8.3 features, we cannot check them wit lower versions
         __DIR__ . '/tests/Rules/ConstantTypeCoverageRule/Fixture/SkipKnownConstantType.php',
