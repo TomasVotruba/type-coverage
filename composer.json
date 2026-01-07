@@ -11,10 +11,10 @@
     "require-dev": {
         "phpstan/extension-installer": "^1.4",
         "phpunit/phpunit": "^12.5",
-        "phpecs/phpecs": "^2.2",
-        "rector/rector": "^2.2",
+        "symplify/easy-coding-standard": "^13.0",
+        "rector/rector": "^2.3",
         "tracy/tracy": "^2.10",
-        "tomasvotruba/unused-public": "^2.0"
+        "tomasvotruba/unused-public": "^2.2"
     },
     "autoload": {
         "psr-4": {
