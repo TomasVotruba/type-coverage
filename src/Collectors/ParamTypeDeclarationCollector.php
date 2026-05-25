@@ -7,8 +7,10 @@ namespace TomasVotruba\TypeCoverage\Collectors;
 use PhpParser\Comment\Doc;
 use PhpParser\Node;
 use PhpParser\Node\FunctionLike;
+use PhpParser\Node\Stmt\ClassMethod;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
+use PHPStan\Reflection\ClassReflection;
 
 /**
  * @see \TomasVotruba\TypeCoverage\Rules\ParamTypeCoverageRule
@@ -27,6 +29,11 @@ final class ParamTypeDeclarationCollector implements Collector
     public function processNode(Node $node, Scope $scope): ?array
     {
         if ($this->shouldSkipFunctionLike($node)) {
+            return null;
+        }
+
+        // skip methods inherited from a parent class or interface, as types are locked by LSP
+        if ($node instanceof ClassMethod && $this->isGuardedByParentMethod($scope, $node)) {
             return null;
         }
 
@@ -56,6 +63,30 @@ final class ParamTypeDeclarationCollector implements Collector
         }
 
         return $this->hasFunctionLikeCallableParam($functionLike);
+    }
+
+    private function isGuardedByParentMethod(Scope $scope, ClassMethod $classMethod): bool
+    {
+        $classReflection = $scope->getClassReflection();
+        if (! $classReflection instanceof ClassReflection) {
+            return false;
+        }
+
+        $methodName = $classMethod->name->toString();
+
+        foreach ($classReflection->getParents() as $parentClassReflection) {
+            if ($parentClassReflection->hasMethod($methodName)) {
+                return true;
+            }
+        }
+
+        foreach ($classReflection->getInterfaces() as $interfaceReflection) {
+            if ($interfaceReflection->hasMethod($methodName)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private function hasFunctionLikeCallableParam(FunctionLike $functionLike): bool
