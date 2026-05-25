@@ -7,8 +7,10 @@ namespace TomasVotruba\TypeCoverage\Collectors;
 use PhpParser\Comment\Doc;
 use PhpParser\Node;
 use PhpParser\Node\FunctionLike;
+use PhpParser\Node\Stmt\ClassMethod;
 use PHPStan\Analyser\Scope;
 use PHPStan\Collectors\Collector;
+use PHPStan\Reflection\ClassReflection;
 
 /**
  * @see \TomasVotruba\TypeCoverage\Rules\ParamTypeCoverageRule
@@ -33,16 +35,23 @@ final class ParamTypeDeclarationCollector implements Collector
         $missingTypeLines = [];
         $paramCount = count($node->getParams());
 
-        foreach ($node->getParams() as $param) {
+        foreach ($node->getParams() as $position => $param) {
             if ($param->variadic) {
                 // skip variadic
                 --$paramCount;
                 continue;
             }
 
-            if ($param->type === null) {
-                $missingTypeLines[] = $param->getLine();
+            if ($param->type !== null) {
+                continue;
             }
+
+            // parent method's param has no native type → LSP prevents adding one in child
+            if ($this->isParamGuardedByParentMethod($scope, $node, $position)) {
+                continue;
+            }
+
+            $missingTypeLines[] = $param->getLine();
         }
 
         return [$paramCount, $missingTypeLines];
@@ -68,5 +77,42 @@ final class ParamTypeDeclarationCollector implements Collector
 
         $docCommentText = $docComment->getText();
         return str_contains($docCommentText, '@param callable');
+    }
+
+    private function isParamGuardedByParentMethod(Scope $scope, FunctionLike $functionLike, int $position): bool
+    {
+        if (! $functionLike instanceof ClassMethod) {
+            return false;
+        }
+
+        $classReflection = $scope->getClassReflection();
+        if (! $classReflection instanceof ClassReflection) {
+            return false;
+        }
+
+        $methodName = $functionLike->name->toString();
+
+        foreach ($classReflection->getParents() as $parentClassReflection) {
+            if (! $parentClassReflection->hasNativeMethod($methodName)) {
+                continue;
+            }
+
+            $variants = $parentClassReflection->getNativeMethod($methodName)
+                ->getVariants();
+            if ($variants === []) {
+                continue;
+            }
+
+            $parentParameters = $variants[0]->getParameters();
+            if (! isset($parentParameters[$position])) {
+                continue;
+            }
+
+            if (! $parentParameters[$position]->hasNativeType()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
