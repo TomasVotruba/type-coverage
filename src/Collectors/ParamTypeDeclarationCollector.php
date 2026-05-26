@@ -24,7 +24,7 @@ final class ParamTypeDeclarationCollector implements Collector
 
     /**
      * @param FunctionLike $node
-     * @return mixed[]|null
+     * @return array{int, list<int>, string|null}|null
      */
     public function processNode(Node $node, Scope $scope): ?array
     {
@@ -52,7 +52,17 @@ final class ParamTypeDeclarationCollector implements Collector
             }
         }
 
-        return [$paramCount, $missingTypeLines];
+        return [$paramCount, $missingTypeLines, $this->resolveTraitFilePath($scope)];
+    }
+
+    private function resolveTraitFilePath(Scope $scope): ?string
+    {
+        if (! $scope->isInTrait()) {
+            return null;
+        }
+
+        return $scope->getTraitReflection()
+            ->getFileName();
     }
 
     private function shouldSkipFunctionLike(FunctionLike $functionLike): bool
