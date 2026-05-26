@@ -4,17 +4,26 @@ declare(strict_types=1);
 
 namespace TomasVotruba\TypeCoverage;
 
-final readonly class Configuration
+final class Configuration
 {
+    /**
+     * @var array<string, mixed>
+     * @readonly
+     */
+    private array $parameters;
+
     /**
      * @param array<string, mixed> $parameters
      */
-    public function __construct(
-        private array $parameters
-    ) {
+    public function __construct(array $parameters)
+    {
+        $this->parameters = $parameters;
     }
 
-    public function getRequiredPropertyTypeLevel(): float|int
+    /**
+     * @return float|int
+     */
+    public function getRequiredPropertyTypeLevel()
     {
         return $this->parameters['property'] ?? $this->parameters['property_type'];
     }
@@ -29,22 +38,34 @@ final readonly class Configuration
         return $this->getRequiredConstantTypeLevel() > 0;
     }
 
-    public function getRequiredConstantTypeLevel(): float|int
+    /**
+     * @return float|int
+     */
+    public function getRequiredConstantTypeLevel()
     {
         return $this->parameters['constant'] ?? $this->parameters['constant_type'];
     }
 
-    public function getRequiredParamTypeLevel(): float|int
+    /**
+     * @return float|int
+     */
+    public function getRequiredParamTypeLevel()
     {
         return $this->parameters['param'] ?? $this->parameters['param_type'];
     }
 
-    public function getRequiredReturnTypeLevel(): float|int
+    /**
+     * @return float|int
+     */
+    public function getRequiredReturnTypeLevel()
     {
         return $this->parameters['return'] ?? $this->parameters['return_type'];
     }
 
-    public function getRequiredDeclareLevel(): float|int
+    /**
+     * @return float|int
+     */
+    public function getRequiredDeclareLevel()
     {
         return $this->parameters['declare'];
     }
