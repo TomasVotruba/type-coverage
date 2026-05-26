@@ -41,6 +41,20 @@ final class ParamTypeCoverageRuleTest extends RuleTestCase
         yield [[__DIR__ . '/Fixture/UnknownParamType.php'], [[$firstErrorMessage, 9], [$thirdErrorMessage, 13]]];
     }
 
+    public function testErrorInTraitIsReportedAtTraitFile(): void
+    {
+        $classFile = __DIR__ . '/Fixture/ClassUsingTrait.php';
+        $traitFile = __DIR__ . '/Source/TraitWithMissingParamType.php';
+
+        $errors = $this->gatherAnalyserErrors([$classFile, $traitFile]);
+
+        $this->assertCount(1, $errors);
+
+        $error = $errors[0];
+        $this->assertSame($traitFile, $error->getFile());
+        $this->assertSame(9, $error->getLine());
+    }
+
     /**
      * @return string[]
      */
