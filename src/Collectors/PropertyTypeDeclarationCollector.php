@@ -88,12 +88,9 @@ final class PropertyTypeDeclarationCollector implements Collector
             return false;
         }
 
-        foreach ($classReflection->getParents() as $parentClassReflection) {
-            if ($parentClassReflection->hasProperty($propertyName)) {
-                return true;
-            }
-        }
-
-        return false;
+        return array_any(
+            $classReflection->getParents(),
+            fn (ClassReflection $parentClassReflection): bool => $parentClassReflection->hasProperty($propertyName)
+        );
     }
 }

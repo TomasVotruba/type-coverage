@@ -5,8 +5,8 @@
     "license": "MIT",
     "keywords": ["static analysis", "phpstan-extension"],
     "require": {
-        "php": "^8.3",
-        "phpstan/phpstan": "^2.1.33"
+        "php": "^8.4",
+        "phpstan/phpstan": "^2.2"
     },
     "require-dev": {
         "phpstan/extension-installer": "^1.4",
