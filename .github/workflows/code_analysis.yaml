@@ -21,6 +21,10 @@ jobs:
                         run: composer validate --ansi
 
                     -
+                        name: 'Composer Dependency Analyser'
+                        run: vendor/bin/composer-dependency-analyser
+
+                    -
                         name: 'Coding Standard'
                         run: composer fix-cs --ansi
 
