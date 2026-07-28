@@ -8,5 +8,6 @@
 >
     <testsuite name="all">
         <directory>tests</directory>
+        <directory>packages/type-perfect/tests</directory>
     </testsuite>
 </phpunit>
