@@ -32,6 +32,7 @@ final class NoArrayAccessOnObjectRule implements Rule
         'Iterator',
         'WeakMap',
         'Aws\ResultInterface',
+        'Symfony\Component\DomCrawler\AbstractUriElement',
         'Symfony\Component\Form\FormInterface',
         'Symfony\Component\OptionsResolver\Options',
     ];

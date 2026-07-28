@@ -29,6 +29,7 @@ final class NoArrayAccessOnObjectRuleTest extends RuleTestCase
         yield [__DIR__ . '/Fixture/SkipIterator.php', []];
         yield [__DIR__ . '/Fixture/SkipOnArray.php', []];
         yield [__DIR__ . '/Fixture/SkipSplFixedArray.php', []];
+        yield [__DIR__ . '/Fixture/SkipUriElement.php', []];
         yield [__DIR__ . '/Fixture/SkipWeakMap.php', []];
         yield [__DIR__ . '/Fixture/SkipXml.php', []];
         yield [__DIR__ . '/Fixture/SkipXmlElementForeach.php', []];

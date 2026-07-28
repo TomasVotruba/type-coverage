@@ -17,7 +17,8 @@
         "tracy/tracy": "^2.12",
         "tomasvotruba/unused-public": "^2.2",
         "rector/jack": "^1.0",
-        "shipmonk/composer-dependency-analyser": "^1.8"
+        "shipmonk/composer-dependency-analyser": "^1.8",
+        "symfony/dom-crawler": "^7.4"
     },
     "autoload": {
         "psr-4": {
