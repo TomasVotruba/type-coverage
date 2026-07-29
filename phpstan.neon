@@ -7,7 +7,6 @@ parameters:
 
     type_perfect:
         no_param_type_removal: true
-        no_array_access_on_object: true
         no_isset_on_object: true
         no_empty_on_object: true
 
