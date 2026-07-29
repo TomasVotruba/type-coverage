@@ -169,7 +169,20 @@ composer require rector/type-perfect --dev
 
 <br>
 
-There are 3 checks enabled out of the box. First one makes sure we don't miss a chance to use `instanceof` to make further code know about exact object type:
+Every rule is opt-in and disabled by default, so you can pick the ones that fit your project. See [Configure](#configure) below for the full list.
+
+The 3 checks below are the simplest ones to start with:
+
+```yaml
+parameters:
+    type_perfect:
+        no_isset_on_object: true
+        no_empty_on_object: true
+        no_array_access_on_object: true
+        no_param_type_removal: true
+```
+
+The first one makes sure we don't miss a chance to use `instanceof` to make further code know about exact object type:
 
 ```php
 private ?SomeType $someType = null;
@@ -202,7 +215,7 @@ if (! $this->someType instanceof SomeType) {
 
 <br>
 
-Second rule checks we use explicit object methods over magic array access:
+Second rule (`no_array_access_on_object`) checks we use explicit object methods over magic array access:
 
 ```php
 $article = new Article();
@@ -224,7 +237,7 @@ $id = $article->getId();
 
 <br>
 
-Last rule checks that all interface implementations follow the same method signature as the interface:
+Last rule (`no_param_type_removal`) checks that all interface implementations follow the same method signature as the interface:
 
 ```php
 interface SomeInterface
@@ -255,13 +268,19 @@ final class SomeClass implements SomeInterface
 
 ## Configure
 
-Next rules you can enable by configuration. We take them from the simplest to more powerful, in the same order we apply them on legacy projects.
+All rules are enabled by configuration and disabled by default. We take them from the simplest to more powerful, in the same order we apply them on legacy projects.
 
 You can enable them all at once:
 
 ```yaml
 parameters:
     type_perfect:
+        # the 3 checks above
+        no_isset_on_object: true
+        no_empty_on_object: true
+        no_array_access_on_object: true
+        no_param_type_removal: true
+
         no_mixed_property: true
         no_mixed_caller: true
         null_over_false: true

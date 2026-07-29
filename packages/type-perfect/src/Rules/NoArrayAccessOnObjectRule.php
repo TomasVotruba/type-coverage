@@ -11,12 +11,13 @@ use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleError;
 use PHPStan\Rules\RuleErrorBuilder;
 use PHPStan\Type\ObjectType;
+use Rector\TypePerfect\Configuration;
 
 /**
  * @see \Rector\TypePerfect\Tests\Rules\NoArrayAccessOnObjectRule\NoArrayAccessOnObjectRuleTest
  * @implements Rule<ArrayDimFetch>
  */
-final class NoArrayAccessOnObjectRule implements Rule
+final readonly class NoArrayAccessOnObjectRule implements Rule
 {
     /**
      * @var string
@@ -37,6 +38,11 @@ final class NoArrayAccessOnObjectRule implements Rule
         'Symfony\Component\OptionsResolver\Options',
     ];
 
+    public function __construct(
+        private Configuration $configuration,
+    ) {
+    }
+
     /**
      * @return class-string<Node>
      */
@@ -51,6 +57,10 @@ final class NoArrayAccessOnObjectRule implements Rule
      */
     public function processNode(Node $node, Scope $scope): array
     {
+        if (! $this->configuration->isNoArrayAccessOnObjectEnabled()) {
+            return [];
+        }
+
         $varType = $scope->getType($node->var);
         if (! $varType instanceof ObjectType) {
             return [];

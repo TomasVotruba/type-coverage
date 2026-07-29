@@ -13,6 +13,7 @@ use PHPStan\Rules\RuleError;
 use PHPStan\Rules\RuleErrorBuilder;
 use PHPStan\Type\MixedType;
 use PHPStan\Type\Type;
+use Rector\TypePerfect\Configuration;
 use Rector\TypePerfect\Reflection\MethodNodeAnalyser;
 
 /**
@@ -27,7 +28,8 @@ final readonly class NoParamTypeRemovalRule implements Rule
     public const ERROR_MESSAGE = 'Removing parent param type is forbidden';
 
     public function __construct(
-        private MethodNodeAnalyser $methodNodeAnalyser
+        private MethodNodeAnalyser $methodNodeAnalyser,
+        private Configuration $configuration,
     ) {
     }
 
@@ -45,6 +47,10 @@ final readonly class NoParamTypeRemovalRule implements Rule
      */
     public function processNode(Node $node, Scope $scope): array
     {
+        if (! $this->configuration->isNoParamTypeRemovalEnabled()) {
+            return [];
+        }
+
         if ($node->params === []) {
             return [];
         }

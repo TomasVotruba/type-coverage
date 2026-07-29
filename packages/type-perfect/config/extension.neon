@@ -9,6 +9,11 @@ parametersSchema:
         # replace for no_mixed
         no_mixed_property: bool()
         no_mixed_caller: bool()
+
+        no_param_type_removal: bool()
+        no_array_access_on_object: bool()
+        no_isset_on_object: bool()
+        no_empty_on_object: bool()
     ])
 
 # defaults
@@ -22,14 +27,25 @@ parameters:
         no_mixed_property: false
         no_mixed_caller: false
 
-rules:
-    # enabled by default
-    - Rector\TypePerfect\Rules\NoParamTypeRemovalRule
-    - Rector\TypePerfect\Rules\NoArrayAccessOnObjectRule
-    - Rector\TypePerfect\Rules\NoIssetOnObjectRule
-    - Rector\TypePerfect\Rules\NoEmptyOnObjectRule
+        no_param_type_removal: false
+        no_array_access_on_object: false
+        no_isset_on_object: false
+        no_empty_on_object: false
 
+rules:
     # turn on by the group name
+
+    # no_param_type_removal
+    - Rector\TypePerfect\Rules\NoParamTypeRemovalRule
+
+    # no_array_access_on_object
+    - Rector\TypePerfect\Rules\NoArrayAccessOnObjectRule
+
+    # no_isset_on_object
+    - Rector\TypePerfect\Rules\NoIssetOnObjectRule
+
+    # no_empty_on_object
+    - Rector\TypePerfect\Rules\NoEmptyOnObjectRule
 
     # narrow_param
     - Rector\TypePerfect\Rules\NarrowPublicClassMethodParamTypeRule
