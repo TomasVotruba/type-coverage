@@ -23,10 +23,7 @@ use Rector\TypePerfect\Enum\Types\ResolvedTypes;
  */
 final readonly class NarrowPublicClassMethodParamTypeRule implements Rule
 {
-    /**
-     * @var string
-     */
-    public const ERROR_MESSAGE = 'Parameters should have "%s" types as the only types passed to this method';
+    public const string ERROR_MESSAGE = 'Parameters should have "%s" types as the only types passed to this method';
 
     public function __construct(
         private Configuration $configuration
@@ -146,14 +143,19 @@ final readonly class NarrowPublicClassMethodParamTypeRule implements Rule
     }
 
     /**
-     * @param mixed[] $methodCallablesByFilePath
-     * @return mixed[]
+     * @param array<string, list<(array<string>|null)>> $methodCallablesByFilePath
+     * @return string[]
      */
     private function flattenCollectedData(array $methodCallablesByFilePath): array
     {
         $methodFirstClassCallables = [];
         foreach ($methodCallablesByFilePath as $methodCallables) {
             foreach ($methodCallables as $methodCallable) {
+                // the collector returns null for nodes it cannot resolve
+                if (! isset($methodCallable[0])) {
+                    continue;
+                }
+
                 $methodFirstClassCallables[] = $methodCallable[0];
             }
         }

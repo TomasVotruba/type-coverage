@@ -20,10 +20,7 @@ use Rector\TypePerfect\Configuration;
  */
 final readonly class NoMixedPropertyFetcherRule implements Rule
 {
-    /**
-     * @var string
-     */
-    public const ERROR_MESSAGE = 'Mixed property fetch in a "%s->..." can skip important errors. Make sure the type is known';
+    public const string ERROR_MESSAGE = 'Mixed property fetch in a "%s->..." can skip important errors. Make sure the type is known';
 
     public function __construct(
         private Printer $printer,

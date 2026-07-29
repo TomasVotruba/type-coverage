@@ -10,6 +10,7 @@ use PHPStan\Analyser\Scope;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleError;
 use PHPStan\Rules\RuleErrorBuilder;
+use Rector\TypePerfect\Configuration;
 use Rector\TypePerfect\Guard\EmptyIssetGuard;
 
 /**
@@ -18,13 +19,11 @@ use Rector\TypePerfect\Guard\EmptyIssetGuard;
  */
 final readonly class NoIssetOnObjectRule implements Rule
 {
-    /**
-     * @var string
-     */
-    public const ERROR_MESSAGE = 'Use instanceof instead of isset() on object';
+    public const string ERROR_MESSAGE = 'Use instanceof instead of isset() on object';
 
     public function __construct(
-        private EmptyIssetGuard $emptyIssetGuard
+        private EmptyIssetGuard $emptyIssetGuard,
+        private Configuration $configuration,
     ) {
     }
 
@@ -40,6 +39,10 @@ final readonly class NoIssetOnObjectRule implements Rule
      */
     public function processNode(Node $node, Scope $scope): array
     {
+        if (! $this->configuration->isNoIssetOnObjectEnabled()) {
+            return [];
+        }
+
         foreach ($node->vars as $var) {
             if ($this->emptyIssetGuard->isLegal($var, $scope)) {
                 continue;

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Rector\TypePerfect\Tests\Rules\NoEmptyOnObjectRule;
 
 use Iterator;
+use Override;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -21,6 +22,9 @@ final class NoEmptyOnObjectRuleTest extends RuleTestCase
         $this->analyse([$filePath], $expectedErrorMessagesWithLines);
     }
 
+    /**
+     * @return Iterator<array<array<int, mixed>, mixed>>
+     */
     public static function provideData(): Iterator
     {
         yield [__DIR__ . '/Fixture/EmptyOnObject.php', [[NoEmptyOnObjectRule::ERROR_MESSAGE, 19]]];
@@ -34,6 +38,7 @@ final class NoEmptyOnObjectRuleTest extends RuleTestCase
     /**
      * @return string[]
      */
+    #[Override]
     public static function getAdditionalConfigFiles(): array
     {
         return [__DIR__ . '/../../../config/extension.neon'];

@@ -1,12 +1,21 @@
 includes:
     - config/extension.neon
+    - packages/type-perfect/config/extension.neon
 
 parameters:
     level: 8
 
+    type_perfect:
+        no_param_type_removal: true
+        no_array_access_on_object: true
+        no_isset_on_object: true
+        no_empty_on_object: true
+
     paths:
         - src
         - tests
+        - packages/type-perfect/src
+        - packages/type-perfect/tests
 
     type_coverage:
         # coverage
@@ -23,6 +32,17 @@ parameters:
 
         # used in tests
         - message: '#Public constant "TomasVotruba\\TypeCoverage\\(.*?)::ERROR_MESSAGE" is never#'
+        - message: '#Public constant "Rector\\TypePerfect\\(.*?)::ERROR_MESSAGE" is never#'
+
+        # inherited from rector/type-perfect, resolving these means rewriting the rule internals
+        -
+            identifier: phpstanApi.instanceofType
+            paths:
+                - packages/type-perfect/src
+        -
+            identifier: phpstanApi.instanceofAssumption
+            paths:
+                - packages/type-perfect/src
 
         # needed to access metadata about paths
         -
