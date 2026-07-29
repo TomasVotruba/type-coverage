@@ -13,7 +13,7 @@ final class PublicClassMethodMatcher
     /**
      * @var string[]
      */
-    private const SKIPPED_TYPES = [
+    private const array SKIPPED_TYPES = [
         'PHPUnit\Framework\TestCase',
         'Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator',
     ];
@@ -25,13 +25,7 @@ final class PublicClassMethodMatcher
             return true;
         }
 
-        foreach (self::SKIPPED_TYPES as $skippedType) {
-            if ($classReflection->is($skippedType)) {
-                return true;
-            }
-        }
-
-        return false;
+        return array_any(self::SKIPPED_TYPES, fn (string $skippedType): bool => $classReflection->is($skippedType));
     }
 
     public function isUsedByParentClassOrInterface(ClassReflection $classReflection, string $methodName): bool
@@ -43,13 +37,7 @@ final class PublicClassMethodMatcher
             }
         }
 
-        foreach ($classReflection->getParents() as $parentClassReflection) {
-            if ($parentClassReflection->hasMethod($methodName)) {
-                return true;
-            }
-        }
-
-        return false;
+        return array_any($classReflection->getParents(), fn (ClassReflection $parentClassReflection): bool => $parentClassReflection->hasMethod($methodName));
     }
 
     public function shouldSkipClassMethod(ClassMethod $classMethod): bool

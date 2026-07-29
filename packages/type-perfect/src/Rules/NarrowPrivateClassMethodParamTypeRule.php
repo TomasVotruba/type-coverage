@@ -34,10 +34,7 @@ use Rector\TypePerfect\NodeFinder\MethodCallNodeFinder;
  */
 final readonly class NarrowPrivateClassMethodParamTypeRule implements Rule
 {
-    /**
-     * @var string
-     */
-    public const ERROR_MESSAGE = 'Parameter %d should use "%s" type as the only type passed to this method';
+    public const string ERROR_MESSAGE = 'Parameter %d should use "%s" type as the only type passed to this method';
 
     public function __construct(
         private Configuration $configuration,

@@ -18,10 +18,7 @@ use Rector\TypePerfect\Guard\EmptyIssetGuard;
  */
 final readonly class NoEmptyOnObjectRule implements Rule
 {
-    /**
-     * @var string
-     */
-    public const ERROR_MESSAGE = 'Use instanceof instead of empty() on object';
+    public const string ERROR_MESSAGE = 'Use instanceof instead of empty() on object';
 
     public function __construct(
         private EmptyIssetGuard $emptyIssetGuard,

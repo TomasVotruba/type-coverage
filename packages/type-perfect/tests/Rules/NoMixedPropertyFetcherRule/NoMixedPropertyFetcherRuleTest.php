@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Rector\TypePerfect\Tests\Rules\NoMixedPropertyFetcherRule;
 
 use Iterator;
+use Override;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -21,6 +22,9 @@ final class NoMixedPropertyFetcherRuleTest extends RuleTestCase
         $this->analyse([$filePath], $expectedErrorsWithLines);
     }
 
+    /**
+     * @return Iterator<array<array<int, mixed>, mixed>>
+     */
     public static function provideData(): Iterator
     {
         yield [__DIR__ . '/Fixture/SkipDynamicNameWithKnownType.php', []];
@@ -36,6 +40,7 @@ final class NoMixedPropertyFetcherRuleTest extends RuleTestCase
     /**
      * @return string[]
      */
+    #[Override]
     public static function getAdditionalConfigFiles(): array
     {
         return [__DIR__ . '/../../../config/extension.neon'];

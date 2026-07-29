@@ -22,10 +22,7 @@ use Rector\TypePerfect\Reflection\MethodNodeAnalyser;
  */
 final readonly class NoParamTypeRemovalRule implements Rule
 {
-    /**
-     * @var string
-     */
-    public const ERROR_MESSAGE = 'Removing parent param type is forbidden';
+    public const string ERROR_MESSAGE = 'Removing parent param type is forbidden';
 
     public function __construct(
         private MethodNodeAnalyser $methodNodeAnalyser,

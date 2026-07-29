@@ -23,9 +23,8 @@ final readonly class ReturnNullOverFalseRule implements Rule
 {
     /**
      * @api
-     * @var string
      */
-    public const ERROR_MESSAGE = 'Returning false in non return bool class method. Use null with type|null instead or add bool return type';
+    public const string ERROR_MESSAGE = 'Returning false in non return bool class method. Use null with type|null instead or add bool return type';
 
     private NodeFinder $nodeFinder;
 

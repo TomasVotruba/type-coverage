@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Rector\TypePerfect\Tests\Rules\NarrowPublicClassMethodParamTypeRule;
 
 use Iterator;
+use Override;
 use PHPStan\Collectors\Collector;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
@@ -24,6 +25,9 @@ final class NarrowPublicClassMethodParamTypeRuleTest extends RuleTestCase
         $this->analyse($filePaths, $expectedErrorsWithLines);
     }
 
+    /**
+     * @return Iterator<array<array<int, array<int, mixed>>, mixed>>
+     */
     public static function provideData(): Iterator
     {
         yield [[__DIR__ . '/Fixture/Generics/SkipPassedGenerics.php'], []];
@@ -173,6 +177,7 @@ final class NarrowPublicClassMethodParamTypeRuleTest extends RuleTestCase
     /**
      * @return string[]
      */
+    #[Override]
     public static function getAdditionalConfigFiles(): array
     {
         return [__DIR__ . '/../../../config/extension.neon'];
@@ -189,6 +194,7 @@ final class NarrowPublicClassMethodParamTypeRuleTest extends RuleTestCase
      *
      * @return Collector[]
      */
+    #[Override]
     protected function getCollectors(): array
     {
         return self::getContainer()->getServicesByTag('phpstan.collector');

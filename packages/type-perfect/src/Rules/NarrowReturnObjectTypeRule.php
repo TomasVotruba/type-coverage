@@ -26,10 +26,7 @@ use Rector\TypePerfect\Reflection\MethodNodeAnalyser;
  */
 final readonly class NarrowReturnObjectTypeRule implements Rule
 {
-    /**
-     * @var string
-     */
-    public const ERROR_MESSAGE = 'Provide more specific return type "%s" over abstract one';
+    public const string ERROR_MESSAGE = 'Provide more specific return type "%s" over abstract one';
 
     public function __construct(
         private ReturnNodeFinder $returnNodeFinder,

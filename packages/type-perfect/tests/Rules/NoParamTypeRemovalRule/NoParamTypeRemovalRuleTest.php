@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Rector\TypePerfect\Tests\Rules\NoParamTypeRemovalRule;
 
 use Iterator;
+use Override;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -21,6 +22,9 @@ final class NoParamTypeRemovalRuleTest extends RuleTestCase
         $this->analyse([$filePath], $expectedErrorMessagesWithLines);
     }
 
+    /**
+     * @return Iterator<array<array<int, mixed>, mixed>>
+     */
     public static function provideData(): Iterator
     {
         yield [__DIR__ . '/Fixture/SkipConstruct.php', []];
@@ -50,6 +54,7 @@ final class NoParamTypeRemovalRuleTest extends RuleTestCase
     /**
      * @return string[]
      */
+    #[Override]
     public static function getAdditionalConfigFiles(): array
     {
         return [__DIR__ . '/../../../config/extension.neon'];

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Rector\TypePerfect\Tests\Rules\NarrowPrivateClassMethodParamTypeRule;
 
 use Iterator;
+use Override;
 use PhpParser\Node\Arg;
 use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Param;
@@ -24,6 +25,9 @@ final class NarrowPrivateClassMethodParamTypeRuleTest extends RuleTestCase
         $this->analyse([$filePath], $expectedErrorsWithLines);
     }
 
+    /**
+     * @return Iterator<array<array<int, mixed>, mixed>>
+     */
     public static function provideData(): Iterator
     {
         yield [__DIR__ . '/Fixture/SkipDuplicatedCallOfSameMethodWithComment.php', []];
@@ -57,6 +61,7 @@ final class NarrowPrivateClassMethodParamTypeRuleTest extends RuleTestCase
     /**
      * @return string[]
      */
+    #[Override]
     public static function getAdditionalConfigFiles(): array
     {
         return [__DIR__ . '/../../../config/extension.neon'];

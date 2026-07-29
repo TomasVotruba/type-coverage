@@ -161,11 +161,15 @@ If you care about code quality and type safety, add these 10 rules to your CI.
 
 ## Install
 
+These rules ship with this package, so the install above is all you need:
+
 ```bash
-composer require rector/type-perfect --dev
+composer require tomasvotruba/type-coverage --dev
 ```
 
-*Note: Make sure you use [`phpstan/extension-installer`](https://github.com/phpstan/extension-installer#usage) to load the necessary service configs or include `vendor/rector/type-perfect/config/extension.neon` file.*
+*Note: Make sure you use [`phpstan/extension-installer`](https://github.com/phpstan/extension-installer#usage) to load the necessary service configs or include `vendor/tomasvotruba/type-coverage/packages/type-perfect/config/extension.neon` file.*
+
+*Migrating from `rector/type-perfect`? Remove it from your `composer.json`, the rules live here now.*
 
 <br>
 

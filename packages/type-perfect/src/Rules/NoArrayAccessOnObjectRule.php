@@ -19,15 +19,12 @@ use Rector\TypePerfect\Configuration;
  */
 final readonly class NoArrayAccessOnObjectRule implements Rule
 {
-    /**
-     * @var string
-     */
-    public const ERROR_MESSAGE = 'Use explicit methods over array access on object';
+    public const string ERROR_MESSAGE = 'Use explicit methods over array access on object';
 
     /**
      * @var string[]
      */
-    private const ALLOWED_CLASSES = [
+    private const array ALLOWED_CLASSES = [
         'SplFixedArray',
         'SimpleXMLElement',
         'Iterator',
@@ -79,12 +76,6 @@ final readonly class NoArrayAccessOnObjectRule implements Rule
 
     private function isAllowedObjectType(ObjectType $objectType): bool
     {
-        foreach (self::ALLOWED_CLASSES as $allowedClass) {
-            if ($objectType->isInstanceOf($allowedClass)->yes()) {
-                return true;
-            }
-        }
-
-        return false;
+        return array_any(self::ALLOWED_CLASSES, fn (string $allowedClass): bool => $objectType->isInstanceOf($allowedClass)->yes());
     }
 }
