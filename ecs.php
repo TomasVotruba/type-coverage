@@ -21,4 +21,4 @@ return ECSConfig::configure()
         __DIR__ . '/packages/type-perfect/tests/*/Fixture/*',
         __DIR__ . '/packages/type-perfect/tests/*/Source/*',
     ])
-    ->withPreparedSets(common: true, psr12: true, cleanCode: true, symplify: true);
+    ->withPreparedSets(common: true, psr12: true, cleanCode: true);
