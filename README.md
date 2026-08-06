@@ -83,6 +83,17 @@ The package is available on PHP 7.2+.
 
 With [PHPStan extension installer](https://github.com/phpstan/extension-installer), everything is ready to run.
 
+Without it, include both config files manually:
+
+```yaml
+# phpstan.neon
+includes:
+    - vendor/tomasvotruba/type-coverage/config/extension.neon
+    - vendor/tomasvotruba/type-coverage/packages/type-perfect/config/extension.neon
+```
+
+<br>
+
 Enable each item on their own:
 
 ```yaml
