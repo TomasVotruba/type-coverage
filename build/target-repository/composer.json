@@ -6,11 +6,13 @@
     "keywords": ["static analysis", "phpstan-extension"],
     "require": {
         "php": ">=7.2",
-        "phpstan/phpstan": "^1.8 || ^2.0"
+        "phpstan/phpstan": "^1.8 || ^2.0",
+        "webmozart/assert": "^1.11"
     },
     "autoload": {
         "psr-4": {
-            "TomasVotruba\\TypeCoverage\\": "src"
+            "TomasVotruba\\TypeCoverage\\": "src",
+            "Rector\\TypePerfect\\": "packages/type-perfect/src"
         }
     },
     "extra": {
