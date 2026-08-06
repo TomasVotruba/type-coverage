@@ -25,11 +25,12 @@ jobs:
             -   run: composer install --ansi
 
             # downgrade /src to PHP 7.2
-            -   run: vendor/bin/rector process src --config build/rector-downgrade-php-72.php --ansi
-            -   run: vendor/bin/ecs check src --fix --ansi
+            -   run: vendor/bin/rector process src packages/type-perfect/src --config build/rector-downgrade-php-72.php --ansi
+            -   run: vendor/bin/ecs check src packages/type-perfect/src --fix --ansi
 
             # clear the dev files, the vendor is not shipped as this is a phpstan extension
             -   run: rm -rf vendor tests ecs.php phpstan.neon phpunit.xml rector.php composer.lock .gitignore .editorconfig
+            -   run: rm -rf packages/type-perfect/tests
 
             # remove the original .github, to fully override it with the target repository one below
             -   run: rm -rf .github
@@ -50,7 +51,7 @@ jobs:
                     token: ${{ secrets.WORKFLOWS_TOKEN }}
 
             # remove remote files, to avoid piling up dead code in remote repository
-            -   run: rm -rf remote-repository/src remote-repository/config remote-repository/.github
+            -   run: rm -rf remote-repository/src remote-repository/config remote-repository/packages remote-repository/.github
 
             # copy the downgraded code to the remote repository
             -   run: rsync -a --exclude .git --exclude remote-repository ./ remote-repository/

@@ -1,6 +1,5 @@
 includes:
     - config/extension.neon
-    - packages/type-perfect/config/extension.neon
 
 parameters:
     level: 8
