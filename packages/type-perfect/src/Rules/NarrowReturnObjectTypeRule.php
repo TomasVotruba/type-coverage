@@ -28,6 +28,8 @@ final readonly class NarrowReturnObjectTypeRule implements Rule
 {
     public const string ERROR_MESSAGE = 'Provide more specific return type "%s" over abstract one';
 
+    private const string DOCTRINE_ARRAY_COLLECTION_CLASS = 'Doctrine\Common\Collections\ArrayCollection';
+
     public function __construct(
         private ReturnNodeFinder $returnNodeFinder,
         private MethodNodeAnalyser $methodNodeAnalyser,
@@ -131,6 +133,11 @@ final readonly class NarrowReturnObjectTypeRule implements Rule
         }
 
         if (count($type->getObjectClassReflections()) !== 1) {
+            return true;
+        }
+
+        // skip Doctrine ArrayCollection, as the abstract Collection interface is the expected return type
+        if ($type->getObjectClassNames()[0] === self::DOCTRINE_ARRAY_COLLECTION_CLASS) {
             return true;
         }
 

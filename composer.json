@@ -18,7 +18,8 @@
         "tomasvotruba/unused-public": "^2.2",
         "rector/jack": "^1.1",
         "shipmonk/composer-dependency-analyser": "^1.8",
-        "symfony/dom-crawler": "^8.1"
+        "symfony/dom-crawler": "^8.1",
+        "doctrine/collections": "^2.3"
     },
     "autoload": {
         "psr-4": {
