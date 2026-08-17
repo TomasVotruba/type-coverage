@@ -19,7 +19,8 @@
         "rector/jack": "^1.1",
         "shipmonk/composer-dependency-analyser": "^1.8",
         "symfony/dom-crawler": "^8.1",
-        "doctrine/collections": "^2.3"
+        "doctrine/collections": "^2.3",
+        "symfony/form": "^8.1"
     },
     "autoload": {
         "psr-4": {
