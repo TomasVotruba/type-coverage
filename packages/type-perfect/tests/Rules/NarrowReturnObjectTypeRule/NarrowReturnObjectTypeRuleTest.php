@@ -31,6 +31,7 @@ final class NarrowReturnObjectTypeRuleTest extends RuleTestCase
         yield [__DIR__ . '/Fixture/SkipSpecificReturnType.php', []];
         yield [__DIR__ . '/Fixture/SkipSomeContract.php', []];
         yield [__DIR__ . '/Fixture/SkipArrayCollection.php', []];
+        yield [__DIR__ . '/Fixture/SkipCollection.php', []];
         yield [__DIR__ . '/Fixture/SkipSymfonyForm.php', []];
         yield [__DIR__ . '/Fixture/SkipDateTime.php', []];
         yield [__DIR__ . '/Fixture/SkipSplObjectStorage.php', []];

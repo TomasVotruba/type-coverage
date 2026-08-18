@@ -36,6 +36,7 @@ final readonly class NarrowReturnObjectTypeRule implements Rule
      */
     private const array SKIPPED_RETURN_CLASSES = [
         'Doctrine\Common\Collections\ArrayCollection',
+        'Doctrine\Common\Collections\Collection',
         'Symfony\Component\Form\Form',
         'Symfony\Component\Form\FormInterface',
         'DateTime',
