@@ -40,6 +40,7 @@ final readonly class NarrowReturnObjectTypeRule implements Rule
         'Symfony\Component\Form\FormInterface',
         'DateTime',
         'DateTimeImmutable',
+        'SplObjectStorage',
     ];
 
     public function __construct(
