@@ -32,7 +32,10 @@
         "psr-4": {
             "TomasVotruba\\TypeCoverage\\Tests\\": "tests",
             "Rector\\TypePerfect\\Tests\\": "packages/type-perfect/tests"
-        }
+        },
+        "classmap": [
+            "stubs"
+        ]
     },
     "scripts": {
         "check-cs": "vendor/bin/ecs check --ansi",

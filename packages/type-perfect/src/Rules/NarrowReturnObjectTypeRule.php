@@ -42,6 +42,7 @@ final readonly class NarrowReturnObjectTypeRule implements Rule
         'DateTime',
         'DateTimeImmutable',
         'SplObjectStorage',
+        'Doctrine\DBAL\Schema\AbstractSchemaManager',
     ];
 
     public function __construct(
