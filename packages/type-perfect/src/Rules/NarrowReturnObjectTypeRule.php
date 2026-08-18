@@ -38,6 +38,8 @@ final readonly class NarrowReturnObjectTypeRule implements Rule
         'Doctrine\Common\Collections\ArrayCollection',
         'Symfony\Component\Form\Form',
         'Symfony\Component\Form\FormInterface',
+        'DateTime',
+        'DateTimeImmutable',
     ];
 
     public function __construct(
