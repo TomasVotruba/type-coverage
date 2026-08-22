@@ -24,7 +24,7 @@ final class ParamTypeDeclarationCollector implements Collector
 
     /**
      * @param FunctionLike $node
-     * @return array{int, list<int>, string|null}|null
+     * @return array{int, list<int>, string|null, int}|null
      */
     public function processNode(Node $node, Scope $scope): ?array
     {
@@ -52,7 +52,7 @@ final class ParamTypeDeclarationCollector implements Collector
             }
         }
 
-        return [$paramCount, $missingTypeLines, $this->resolveTraitFilePath($scope)];
+        return [$paramCount, $missingTypeLines, $this->resolveTraitFilePath($scope), $node->getStartFilePos()];
     }
 
     private function resolveTraitFilePath(Scope $scope): ?string
