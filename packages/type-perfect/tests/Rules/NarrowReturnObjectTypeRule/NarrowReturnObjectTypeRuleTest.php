@@ -36,6 +36,8 @@ final class NarrowReturnObjectTypeRuleTest extends RuleTestCase
         yield [__DIR__ . '/Fixture/SkipDateTime.php', []];
         yield [__DIR__ . '/Fixture/SkipSchemaManager.php', []];
         yield [__DIR__ . '/Fixture/SkipSplObjectStorage.php', []];
+        yield [__DIR__ . '/Fixture/SkipSameClassGenerics.php', []];
+        yield [__DIR__ . '/Fixture/SkipSameClassTemplate.php', []];
 
         $errorMessage = sprintf(NarrowReturnObjectTypeRule::ERROR_MESSAGE, SpecificControl::class);
         yield [__DIR__ . '/Fixture/SomeAbstractReturnType.php', [[$errorMessage, 12]]];
