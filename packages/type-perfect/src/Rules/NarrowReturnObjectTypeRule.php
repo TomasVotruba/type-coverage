@@ -111,7 +111,14 @@ final readonly class NarrowReturnObjectTypeRule implements Rule
             return [];
         }
 
-        $errorMessage = sprintf(self::ERROR_MESSAGE, $returnExprType->getObjectClassNames()[0]);
+        $narrowClassName = $returnExprType->getObjectClassNames()[0];
+
+        // same class, only generics or template type differ - a native return type cannot be narrowed further
+        if ($returnObjectType->getObjectClassNames() === [$narrowClassName]) {
+            return [];
+        }
+
+        $errorMessage = sprintf(self::ERROR_MESSAGE, $narrowClassName);
 
         return [
             RuleErrorBuilder::message($errorMessage)
