@@ -55,6 +55,38 @@ final class ParamTypeCoverageRuleTest extends RuleTestCase
         $this->assertSame(9, $error->getLine());
     }
 
+    public function testTraitParamIsCountedOncePerDeclaration(): void
+    {
+        $errors = $this->gatherAnalyserErrors([
+            __DIR__ . '/Fixture/ClassUsingTrait.php',
+            __DIR__ . '/Fixture/SecondClassUsingTrait.php',
+            __DIR__ . '/Source/TraitWithMissingParamType.php',
+        ]);
+
+        $this->assertCount(1, $errors);
+        $this->assertStringContainsString('Out of 1 possible param types', $errors[0]->getMessage());
+    }
+
+    public function testFunctionLikesSharingALineInATraitStayDistinct(): void
+    {
+        $traitFile = __DIR__ . '/Source/TraitWithArrowFunctionsOnOneLine.php';
+
+        $errors = $this->gatherAnalyserErrors([
+            __DIR__ . '/Fixture/ClassUsingArrowFunctionTrait.php',
+            $traitFile,
+        ]);
+
+        // the two arrow functions share line 15, so the line cannot identify a
+        // declaration; both untyped params must survive, even with one using class
+        $this->assertCount(2, $errors);
+        $this->assertStringContainsString('Out of 3 possible param types, only 1', $errors[0]->getMessage());
+
+        foreach ($errors as $error) {
+            $this->assertSame($traitFile, $error->getFile());
+            $this->assertSame(15, $error->getLine());
+        }
+    }
+
     /**
      * @return string[]
      */
