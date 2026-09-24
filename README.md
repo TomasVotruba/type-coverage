@@ -165,7 +165,7 @@ We use these sets to improve code quality of our clients' code beyond PHPStan fe
 * **They're easy to enable, even if your code does not pass level 0**
 * They're effortless to resolve and make your code instantly more solid and reliable.
 
-If you care about code quality and type safety, add these 10 rules to your CI.
+If you care about code quality and type safety, add these 8 rules to your CI.
 
 <br>
 
@@ -408,14 +408,14 @@ parameters:
         narrow_param: true
 ```
 
-In case of `private`, but also `public` method calls, our project often knows exact types that are passed in it:
+In case of `private` method calls, our project often knows exact types that are passed in it:
 
 ```php
-// in one file
-$product->addPrice(100.52);
+// in the same class
+$this->addPrice(100.52);
 
-// another file
-$product->addPrice(52.05);
+// ...
+$this->addPrice(52.05);
 ```
 
 But out of from fear and "just to be safe", we keep the `addPrice()` param type empty, `mixed` or in a docblock.
@@ -431,8 +431,8 @@ If, in 100 % cases the `float` type is passed, PHPStan knows it can be added and
 -/**
 - * @param float $price
 - */
--public function addPrice($price)
-+public function addPrice(float $price)
+-private function addPrice($price)
++private function addPrice(float $price)
 {
     $this->price = $price;
 }
