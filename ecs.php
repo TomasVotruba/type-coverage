@@ -20,5 +20,9 @@ return ECSConfig::configure()
         // fixtures assert exact error lines, formatting them would shift the lines
         __DIR__ . '/packages/type-perfect/tests/*/Fixture/*',
         __DIR__ . '/packages/type-perfect/tests/*/Source/*',
+
+        // declares two methods on a single line on purpose, to prove trait members are
+        // identified by their position and not by their line
+        __DIR__ . '/tests/Rules/ReturnTypeCoverageRule/Source/TwoMethodsOnOneLineTrait.php',
     ])
     ->withPreparedSets(common: true, psr12: true, cleanCode: true);
