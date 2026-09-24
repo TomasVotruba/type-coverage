@@ -175,6 +175,14 @@ final class NarrowPublicClassMethodParamTypeRuleTest extends RuleTestCase
             __DIR__ . '/Source/SuffixClosure/CallWithClosureSuffix.php',
         ], []];
 
+        // skip Doctrine entities and documents
+        yield [[
+            __DIR__ . '/Fixture/SkipDoctrineEntity.php',
+            __DIR__ . '/Fixture/SkipDoctrineDocument.php',
+            __DIR__ . '/Fixture/SkipDoctrineEntityAnnotation.php',
+            __DIR__ . '/Source/DoctrineMapping/CallDoctrineMapping.php',
+        ], []];
+
         yield [[__DIR__ . '/Fixture/SkipCallable.php'], []];
 
         yield [[__DIR__ . '/Fixture/SkipEnum.php'], []];

@@ -18,10 +18,28 @@ final class PublicClassMethodMatcher
         'Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator',
     ];
 
+    /**
+     * @var string[]
+     */
+    private const array DOCTRINE_MAPPING_ATTRIBUTES = [
+        'Doctrine\ORM\Mapping\Entity',
+        'Doctrine\ODM\MongoDB\Mapping\Annotations\Document',
+    ];
+
+    /**
+     * @var string[]
+     */
+    private const array DOCTRINE_MAPPING_ANNOTATIONS = ['@ORM\Entity', '@ODM\Document', '@MongoDB\Document'];
+
     public function shouldSkipClassReflection(ClassReflection $classReflection): bool
     {
         // skip interface as required, traits as unable to detect for sure
         if (! $classReflection->isClass()) {
+            return true;
+        }
+
+        // skip Doctrine entities and documents, their setters are called by hydration too
+        if ($this->isDoctrineEntityOrDocument($classReflection)) {
             return true;
         }
 
@@ -63,5 +81,26 @@ final class PublicClassMethodMatcher
 
         // skip symfony action
         return $doc instanceof Doc && str_contains($doc->getText(), '@Route');
+    }
+
+    private function isDoctrineEntityOrDocument(ClassReflection $classReflection): bool
+    {
+        $nativeReflection = $classReflection->getNativeReflection();
+
+        foreach ($nativeReflection->getAttributes() as $reflectionAttribute) {
+            if (in_array($reflectionAttribute->getName(), self::DOCTRINE_MAPPING_ATTRIBUTES, true)) {
+                return true;
+            }
+        }
+
+        $docComment = $nativeReflection->getDocComment();
+        if (! is_string($docComment)) {
+            return false;
+        }
+
+        return array_any(
+            self::DOCTRINE_MAPPING_ANNOTATIONS,
+            fn (string $annotation): bool => str_contains($docComment, $annotation)
+        );
     }
 }
