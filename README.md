@@ -157,7 +157,7 @@ We use these sets to improve code quality of our clients' code beyond PHPStan fe
 * **They're easy to enable, even if your code does not pass level 0**
 * They're effortless to resolve and make your code instantly more solid and reliable.
 
-If you care about code quality and type safety, add these 8 rules to your CI.
+If you care about code quality and type safety, add these 7 rules to your CI.
 
 <br>
 
@@ -257,7 +257,6 @@ parameters:
 
         no_mixed_property: true
         no_mixed_caller: true
-        null_over_false: true
         narrow_param: true
         narrow_return: true
 ```
@@ -266,49 +265,7 @@ Or one by one:
 
 <br>
 
-### 1. Null over False
-
-```yaml
-parameters:
-    type_perfect:
-        null_over_false: true
-```
-
-Bool types are typically used for on/off, yes/no responses. But sometimes, the `false` is misused as *no-result* response, where `null` would be more accurate:
-
-```php
-public function getProduct()
-{
-    if (...) {
-        return $product;
-    }
-
-    return false;
-}
-```
-
-:no_good:
-
-↓
-
-We should use `null` instead, as it enabled strict type declaration in form of `?Product` since PHP 7.1:
-
-```php
-public function getProduct(): ?Product
-{
-    if (...) {
-        return $product;
-    }
-
-    return null;
-}
-```
-
-:heavy_check_mark:
-
-<br>
-
-### 2. No mixed Property
+### 1. No mixed Property
 
 ```yaml
 parameters:
@@ -349,7 +306,7 @@ This rule makes sure all property fetches know their type they're called on.
 
 <br>
 
-### 3. No mixed Caller
+### 2. No mixed Caller
 
 ```yaml
 parameters:
@@ -390,7 +347,7 @@ This group makes sure methods call know their type they're called on.
 
 <br>
 
-### 4. Narrow Param Types
+### 3. Narrow Param Types
 
 The more narrow param type we have, the reliable the code is. `string` beats `mixed`, `int` beats `scalar` and `ExactObject` beats `stdClass`.
 
@@ -436,7 +393,7 @@ That's where this group comes in. It checks all the passed types, and tells us k
 
 <br>
 
-### 5. Narrow Return Types
+### 4. Narrow Return Types
 
 Last but not least, the more narrow return type, the more reliable the code.
 
