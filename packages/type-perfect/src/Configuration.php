@@ -17,7 +17,6 @@ final class Configuration
             $this->parameters['narrow_param'] = true;
             $this->parameters['narrow_return'] = true;
             $this->parameters['no_mixed'] = true;
-            $this->parameters['null_over_false'] = true;
             $this->parameters['no_param_type_removal'] = true;
             $this->parameters['no_isset_on_object'] = true;
             $this->parameters['no_empty_on_object'] = true;
@@ -50,11 +49,6 @@ final class Configuration
         }
 
         return $this->parameters['no_mixed'] ?? false;
-    }
-
-    public function isNoFalsyReturnEnabled(): bool
-    {
-        return $this->parameters['null_over_false'] ?? false;
     }
 
     public function isNoParamTypeRemovalEnabled(): bool
