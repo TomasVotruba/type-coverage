@@ -12,6 +12,12 @@ final readonly class Configuration
     public function __construct(
         private array $parameters
     ) {
+        if ($parameters['declare'] !== null) {
+            fwrite(
+                STDERR,
+                'The "type_coverage.declare" parameter is deprecated and has no effect. Remove it from your config and use SafeDeclareStrictTypesRector from Rector instead.' . PHP_EOL
+            );
+        }
     }
 
     public function getRequiredPropertyTypeLevel(): float|int
@@ -42,11 +48,6 @@ final readonly class Configuration
     public function getRequiredReturnTypeLevel(): float|int
     {
         return $this->parameters['return'] ?? $this->parameters['return_type'];
-    }
-
-    public function getRequiredDeclareLevel(): float|int
-    {
-        return $this->parameters['declare'];
     }
 
     public function showOnlyMeasure(): bool
