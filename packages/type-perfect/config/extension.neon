@@ -4,6 +4,7 @@ parametersSchema:
         narrow_param: bool()
         narrow_return: bool()
         no_mixed: bool()
+        # deprecated, no-op
         null_over_false: bool()
 
         # replace for no_mixed
@@ -21,6 +22,7 @@ parameters:
         narrow_param: false
         narrow_return: false
         no_mixed: false
+        # deprecated, no-op
         null_over_false: false
         # priority override of no_mixed
         no_mixed_property: false
@@ -51,9 +53,6 @@ rules:
     # no_mixed
     - Rector\TypePerfect\Rules\NoMixedPropertyFetcherRule
     - Rector\TypePerfect\Rules\NoMixedMethodCallerRule
-
-    # null_over_false
-    - Rector\TypePerfect\Rules\ReturnNullOverFalseRule
 
 services:
     -
