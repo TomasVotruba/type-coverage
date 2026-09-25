@@ -147,15 +147,7 @@ vendor/bin/phpstan
 
 <br>
 
-Happy coding!
-
-<br>
-
----
-
-# Type Perfect
-
-[![Downloads](https://img.shields.io/packagist/dt/rector/type-perfect.svg?style=flat-square)](https://packagist.org/packages/rector/type-perfect/stats)
+## Type Perfect Rules
 
 Next level type declaration check PHPStan rules.
 
@@ -249,7 +241,7 @@ final class SomeClass implements SomeInterface
 
 <br>
 
-## Configure
+### Configure
 
 All rules are enabled by configuration and disabled by default. We take them from the simplest to more powerful, in the same order we apply them on legacy projects.
 
@@ -274,7 +266,7 @@ Or one by one:
 
 <br>
 
-## 1. Null over False
+### 1. Null over False
 
 ```yaml
 parameters:
@@ -316,7 +308,7 @@ public function getProduct(): ?Product
 
 <br>
 
-## 2. No mixed Property
+### 2. No mixed Property
 
 ```yaml
 parameters:
@@ -357,7 +349,7 @@ This rule makes sure all property fetches know their type they're called on.
 
 <br>
 
-## 3. No mixed Caller
+### 3. No mixed Caller
 
 ```yaml
 parameters:
@@ -398,7 +390,7 @@ This group makes sure methods call know their type they're called on.
 
 <br>
 
-## 4. Narrow Param Types
+### 4. Narrow Param Types
 
 The more narrow param type we have, the reliable the code is. `string` beats `mixed`, `int` beats `scalar` and `ExactObject` beats `stdClass`.
 
@@ -444,7 +436,7 @@ That's where this group comes in. It checks all the passed types, and tells us k
 
 <br>
 
-## 5. Narrow Return Types
+### 5. Narrow Return Types
 
 Last but not least, the more narrow return type, the more reliable the code.
 
