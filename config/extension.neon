@@ -4,7 +4,6 @@ includes:
 parametersSchema:
     # see https://doc.nette.org/en/schema for configuration
     type_coverage: structure([
-        declare: anyOf(float(), int())
         # type declarations
         return_type: anyOf(float(), int())
         param_type: anyOf(float(), int())
@@ -24,7 +23,6 @@ parametersSchema:
 # default parameters
 parameters:
     type_coverage:
-        declare: 0
         # type declarations
         return_type: 99
         param_type: 99
@@ -69,14 +67,8 @@ services:
         tags:
             - phpstan.collector
 
-    -
-        class: TomasVotruba\TypeCoverage\Collectors\DeclareCollector
-        tags:
-            - phpstan.collector
-
 rules:
     - TomasVotruba\TypeCoverage\Rules\ParamTypeCoverageRule
     - TomasVotruba\TypeCoverage\Rules\ReturnTypeCoverageRule
     - TomasVotruba\TypeCoverage\Rules\PropertyTypeCoverageRule
     - TomasVotruba\TypeCoverage\Rules\ConstantTypeCoverageRule
-    - TomasVotruba\TypeCoverage\Rules\DeclareCoverageRule
