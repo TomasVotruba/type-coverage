@@ -167,9 +167,9 @@ These rules ship with the package [installed above](#install), there is nothing 
 
 <br>
 
-Every rule is opt-in and disabled by default, so you can pick the ones that fit your project. See [Configure](#configure) below for the full list.
+### Configure
 
-The 2 checks below are the simplest ones to start with:
+Every rule is opt-in and disabled by default. Enable the ones that fit your project - ordered from the simplest to the most powerful, the same order we apply them on legacy projects:
 
 ```yaml
 parameters:
@@ -177,9 +177,19 @@ parameters:
         no_isset_on_object: true
         no_empty_on_object: true
         no_param_type_removal: true
+        no_mixed_property: true
+        no_mixed_caller: true
+        narrow_param: true
+        narrow_return: true
 ```
 
-The first one makes sure we don't miss a chance to use `instanceof` to make further code know about exact object type:
+<br>
+
+### 1. No isset/empty on Object
+
+Options: `no_isset_on_object`, `no_empty_on_object`
+
+Makes sure we don't miss a chance to use `instanceof` to make further code know about exact object type:
 
 ```php
 private ?SomeType $someType = null;
@@ -212,7 +222,11 @@ if (! $this->someType instanceof SomeType) {
 
 <br>
 
-Second rule (`no_param_type_removal`) checks that all interface implementations follow the same method signature as the interface:
+### 2. No Param Type Removal
+
+Option: `no_param_type_removal`
+
+Checks that all interface implementations follow the same method signature as the interface:
 
 ```php
 interface SomeInterface
@@ -241,37 +255,9 @@ final class SomeClass implements SomeInterface
 
 <br>
 
-### Configure
+### 3. No mixed Property
 
-All rules are enabled by configuration and disabled by default. We take them from the simplest to more powerful, in the same order we apply them on legacy projects.
-
-You can enable them all at once:
-
-```yaml
-parameters:
-    type_perfect:
-        # the 2 checks above
-        no_isset_on_object: true
-        no_empty_on_object: true
-        no_param_type_removal: true
-
-        no_mixed_property: true
-        no_mixed_caller: true
-        narrow_param: true
-        narrow_return: true
-```
-
-Or one by one:
-
-<br>
-
-### 1. No mixed Property
-
-```yaml
-parameters:
-    type_perfect:
-        no_mixed_property: true
-```
+Option: `no_mixed_property`
 
 This rule focuses on PHPStan blind spot while fetching a property. If we have a property with unknown type, PHPStan is not be able to analyse it. It silently ignores it.
 
@@ -306,13 +292,9 @@ This rule makes sure all property fetches know their type they're called on.
 
 <br>
 
-### 2. No mixed Caller
+### 4. No mixed Caller
 
-```yaml
-parameters:
-    type_perfect:
-        no_mixed_caller: true
-```
+Option: `no_mixed_caller`
 
 Same as above, only for method calls:
 
@@ -347,15 +329,11 @@ This group makes sure methods call know their type they're called on.
 
 <br>
 
-### 3. Narrow Param Types
+### 5. Narrow Param Types
 
 The more narrow param type we have, the reliable the code is. `string` beats `mixed`, `int` beats `scalar` and `ExactObject` beats `stdClass`.
 
-```yaml
-parameters:
-    type_perfect:
-        narrow_param: true
-```
+Option: `narrow_param`
 
 In case of `private` method calls, our project often knows exact types that are passed in it:
 
@@ -393,15 +371,11 @@ That's where this group comes in. It checks all the passed types, and tells us k
 
 <br>
 
-### 4. Narrow Return Types
+### 6. Narrow Return Types
 
 Last but not least, the more narrow return type, the more reliable the code.
 
-```yaml
-parameters:
-    type_perfect:
-        narrow_return: true
-```
+Option: `narrow_return`
 
 Where does it help? Let's say we have 2 types of talks, that do have different behavior:
 
