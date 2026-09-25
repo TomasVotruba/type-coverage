@@ -4,6 +4,8 @@ includes:
 parametersSchema:
     # see https://doc.nette.org/en/schema for configuration
     type_coverage: structure([
+        # deprecated, no-op
+        declare: anyOf(schema(float(), nullable()), schema(int(), nullable()))
         # type declarations
         return_type: anyOf(float(), int())
         param_type: anyOf(float(), int())
@@ -23,6 +25,8 @@ parametersSchema:
 # default parameters
 parameters:
     type_coverage:
+        # deprecated, no-op
+        declare: null
         # type declarations
         return_type: 99
         param_type: 99

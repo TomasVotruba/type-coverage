@@ -12,6 +12,12 @@ final readonly class Configuration
     public function __construct(
         private array $parameters
     ) {
+        if ($parameters['declare'] !== null) {
+            fwrite(
+                STDERR,
+                'The "type_coverage.declare" parameter is deprecated and has no effect. Remove it from your config and use SafeDeclareStrictTypesRector from Rector instead.' . PHP_EOL
+            );
+        }
     }
 
     public function getRequiredPropertyTypeLevel(): float|int
