@@ -78,6 +78,10 @@ final readonly class NarrowReturnObjectTypeRule implements Rule
             return [];
         }
 
+        if ($this->isOverridableProtectedMethod($node, $scope)) {
+            return [];
+        }
+
         $returnObjectType = new ObjectType($node->returnType->toString());
         if ($this->shouldSkipReturnObjectType($returnObjectType)) {
             return [];
@@ -136,6 +140,28 @@ final readonly class NarrowReturnObjectTypeRule implements Rule
 
         // cannot be more precise if final class
         return $classReflection->isFinal();
+    }
+
+    /**
+     * A protected method on a non-final class can be overridden by a child returning a sibling type,
+     * so its return type is a contract that narrowing here would break.
+     */
+    private function isOverridableProtectedMethod(ClassMethod $classMethod, Scope $scope): bool
+    {
+        if (! $classMethod->isProtected()) {
+            return false;
+        }
+
+        if ($classMethod->isFinal()) {
+            return false;
+        }
+
+        $classReflection = $scope->getClassReflection();
+        if (! $classReflection instanceof ClassReflection) {
+            return false;
+        }
+
+        return ! $classReflection->isFinal();
     }
 
     private function shouldSkipScope(Scope $scope): bool
