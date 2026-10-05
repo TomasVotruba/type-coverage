@@ -7,7 +7,7 @@
     "require": {
         "php": "^8.4",
         "phpstan/phpstan": "^2.2",
-        "webmozart/assert": "^1.11 || ^2.1"
+        "entropy/entropy": "^0.4.23"
     },
     "require-dev": {
         "phpstan/extension-installer": "^1.4",
