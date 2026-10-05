@@ -21,17 +21,38 @@ use TomasVotruba\TypeCoverage\Formatter\TypeCoverageFormatter;
  *
  * @implements Rule<CollectedDataNode>
  */
-final readonly class ParamTypeCoverageRule implements Rule
+final class ParamTypeCoverageRule implements Rule
 {
-    public const string ERROR_MESSAGE = 'Out of %d possible param types, only %d - %.1f %% actually have it. Add more param types to get over %s %%';
+    /**
+     * @readonly
+     */
+    private TypeCoverageFormatter $typeCoverageFormatter;
 
-    private const string IDENTIFIER = 'typeCoverage.paramTypeCoverage';
+    /**
+     * @readonly
+     */
+    private Configuration $configuration;
 
-    public function __construct(
-        private TypeCoverageFormatter $typeCoverageFormatter,
-        private Configuration $configuration,
-        private CollectorDataNormalizer $collectorDataNormalizer,
-    ) {
+    /**
+     * @readonly
+     */
+    private CollectorDataNormalizer $collectorDataNormalizer;
+
+    /**
+     * @var string
+     */
+    public const ERROR_MESSAGE = 'Out of %d possible param types, only %d - %.1f %% actually have it. Add more param types to get over %s %%';
+
+    /**
+     * @var string
+     */
+    private const IDENTIFIER = 'typeCoverage.paramTypeCoverage';
+
+    public function __construct(TypeCoverageFormatter $typeCoverageFormatter, Configuration $configuration, CollectorDataNormalizer $collectorDataNormalizer)
+    {
+        $this->typeCoverageFormatter = $typeCoverageFormatter;
+        $this->configuration = $configuration;
+        $this->collectorDataNormalizer = $collectorDataNormalizer;
     }
 
     /**

@@ -5,7 +5,7 @@
     "license": "MIT",
     "keywords": ["static analysis", "phpstan-extension"],
     "require": {
-        "php": "^8.4",
+        "php": ">=7.4",
         "phpstan/phpstan": "^2.2",
         "webmozart/assert": "^1.11 || ^2.1"
     },

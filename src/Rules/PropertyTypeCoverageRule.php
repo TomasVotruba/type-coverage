@@ -21,17 +21,38 @@ use TomasVotruba\TypeCoverage\Formatter\TypeCoverageFormatter;
  *
  * @implements Rule<CollectedDataNode>
  */
-final readonly class PropertyTypeCoverageRule implements Rule
+final class PropertyTypeCoverageRule implements Rule
 {
-    public const string ERROR_MESSAGE = 'Out of %d possible property types, only %d - %.1f %% actually have it. Add more property types to get over %s %%';
+    /**
+     * @readonly
+     */
+    private TypeCoverageFormatter $typeCoverageFormatter;
 
-    private const string IDENTIFIER = 'typeCoverage.propertyTypeCoverage';
+    /**
+     * @readonly
+     */
+    private Configuration $configuration;
 
-    public function __construct(
-        private TypeCoverageFormatter $typeCoverageFormatter,
-        private Configuration $configuration,
-        private CollectorDataNormalizer $collectorDataNormalizer,
-    ) {
+    /**
+     * @readonly
+     */
+    private CollectorDataNormalizer $collectorDataNormalizer;
+
+    /**
+     * @var string
+     */
+    public const ERROR_MESSAGE = 'Out of %d possible property types, only %d - %.1f %% actually have it. Add more property types to get over %s %%';
+
+    /**
+     * @var string
+     */
+    private const IDENTIFIER = 'typeCoverage.propertyTypeCoverage';
+
+    public function __construct(TypeCoverageFormatter $typeCoverageFormatter, Configuration $configuration, CollectorDataNormalizer $collectorDataNormalizer)
+    {
+        $this->typeCoverageFormatter = $typeCoverageFormatter;
+        $this->configuration = $configuration;
+        $this->collectorDataNormalizer = $collectorDataNormalizer;
     }
 
     /**

@@ -16,14 +16,27 @@ use Rector\TypePerfect\Guard\EmptyIssetGuard;
 /**
  * @implements Rule<Empty_>
  */
-final readonly class NoEmptyOnObjectRule implements Rule
+final class NoEmptyOnObjectRule implements Rule
 {
-    public const string ERROR_MESSAGE = 'Use instanceof instead of empty() on object';
+    /**
+     * @readonly
+     */
+    private EmptyIssetGuard $emptyIssetGuard;
 
-    public function __construct(
-        private EmptyIssetGuard $emptyIssetGuard,
-        private Configuration $configuration,
-    ) {
+    /**
+     * @readonly
+     */
+    private Configuration $configuration;
+
+    /**
+     * @var string
+     */
+    public const ERROR_MESSAGE = 'Use instanceof instead of empty() on object';
+
+    public function __construct(EmptyIssetGuard $emptyIssetGuard, Configuration $configuration)
+    {
+        $this->emptyIssetGuard = $emptyIssetGuard;
+        $this->configuration = $configuration;
     }
 
     public function getNodeType(): string

@@ -16,11 +16,12 @@ parameters:
         - packages/type-perfect/tests
 
     type_coverage:
-        # type declarations
-        return_type: 99.9
-        param_type: 100
+        # lowered since the source is downgraded to PHP 7.4, where union
+        # return/param types and typed constants cannot be native declarations
+        return_type: 96
+        param_type: 99
         property_type: 100
-        constant_type: 100
+        constant_type: 0
 
     ignoreErrors:
         - identifier: missingType.generics
@@ -51,14 +52,6 @@ parameters:
         -
             message: '#PHPStan\\DependencyInjection\\MemoizingContainer#'
             identifier: phpstanApi.class
-
-        # on purpose with dynamic PHP version
-        -
-            identifier: smaller.alwaysFalse
-            paths:
-                - src/Rules/ConstantTypeCoverageRule.php
-                - src/Collectors/ConstantTypeDeclarationCollector.php
-                - src/Configuration.php
 
     excludePaths:
         - "*/Fixture/*"

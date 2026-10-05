@@ -19,14 +19,27 @@ use Rector\TypePerfect\Configuration;
  * @see \Rector\TypePerfect\Tests\Rules\NoMixedMethodCallerRule\NoMixedMethodCallerRuleTest
  * @implements Rule<MethodCall>
  */
-final readonly class NoMixedMethodCallerRule implements Rule
+final class NoMixedMethodCallerRule implements Rule
 {
-    public const string ERROR_MESSAGE = 'Mixed variable in a `%s->...()` can skip important errors. Make sure the type is known';
+    /**
+     * @readonly
+     */
+    private Printer $printer;
 
-    public function __construct(
-        private Printer $printer,
-        private Configuration $configuration,
-    ) {
+    /**
+     * @readonly
+     */
+    private Configuration $configuration;
+
+    /**
+     * @var string
+     */
+    public const ERROR_MESSAGE = 'Mixed variable in a `%s->...()` can skip important errors. Make sure the type is known';
+
+    public function __construct(Printer $printer, Configuration $configuration)
+    {
+        $this->printer = $printer;
+        $this->configuration = $configuration;
     }
 
     /**

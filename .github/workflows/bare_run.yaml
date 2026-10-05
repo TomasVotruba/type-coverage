@@ -1,0 +1,30 @@
+name: Bare Run on various PHP versions
+
+on:
+    pull_request: null
+    push:
+        branches:
+            - main
+
+jobs:
+    bare_run:
+        runs-on: ubuntu-latest
+
+        strategy:
+            fail-fast: false
+            matrix:
+                php_version: ['7.4', '8.2', '8.5']
+
+        steps:
+            -   uses: actions/checkout@v4
+
+            -   uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ matrix.php_version }}
+                    coverage: none
+
+            # verify sources parse on the target PHP version
+            -   run: find src packages/type-perfect/src -name '*.php' -print0 | xargs -0 -n1 -P4 php -l
+
+            # install prod dependencies only; dev tooling targets 8.x and is irrelevant here
+            -   run: composer install --no-dev --ignore-platform-reqs --ansi
