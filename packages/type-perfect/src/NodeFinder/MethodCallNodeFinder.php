@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Rector\TypePerfect\NodeFinder;
 
+use Entropy\Validation\Assert;
 use PhpParser\Node;
 use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Stmt\Class_;
@@ -12,7 +13,6 @@ use PHPStan\Analyser\Scope;
 use PHPStan\Reflection\ClassReflection;
 use Rector\TypePerfect\Printer\NodeComparator;
 use Rector\TypePerfect\Reflection\ReflectionParser;
-use Webmozart\Assert\Assert;
 
 final readonly class MethodCallNodeFinder
 {
@@ -54,6 +54,7 @@ final readonly class MethodCallNodeFinder
 
         Assert::allIsInstanceOf($methodCalls, MethodCall::class);
 
+        /** @var MethodCall[] $methodCalls */
         return $methodCalls;
     }
 }
