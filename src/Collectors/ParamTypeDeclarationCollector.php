@@ -90,10 +90,15 @@ final class ParamTypeDeclarationCollector implements Collector
             }
         }
 
-        return array_any(
-            $classReflection->getInterfaces(),
-            fn (ClassReflection $classReflection): bool => $classReflection->hasMethod($methodName)
-        );
+        $found = false;
+        foreach ($classReflection->getInterfaces() as $classReflection) {
+            if ($classReflection->hasMethod($methodName)) {
+                $found = true;
+                break;
+            }
+        }
+
+        return $found;
     }
 
     private function hasFunctionLikeCallableParam(FunctionLike $functionLike): bool
@@ -105,6 +110,6 @@ final class ParamTypeDeclarationCollector implements Collector
         }
 
         $docCommentText = $docComment->getText();
-        return str_contains($docCommentText, '@param callable');
+        return strpos($docCommentText, '@param callable') !== false;
     }
 }

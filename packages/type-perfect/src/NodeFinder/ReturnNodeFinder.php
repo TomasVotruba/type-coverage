@@ -12,9 +12,9 @@ use PhpParser\Node\Stmt\Return_;
 use PhpParser\NodeTraverser;
 use Rector\TypePerfect\NodeVisitor\CallableNodeVisitor;
 
-final readonly class ReturnNodeFinder
+final class ReturnNodeFinder
 {
-    public function findOnlyReturnsExpr(ClassMethod $classMethod): Expr|null
+    public function findOnlyReturnsExpr(ClassMethod $classMethod): ?Expr
     {
         $returns = $this->findReturnsWithValues($classMethod);
         if (count($returns) !== 1) {

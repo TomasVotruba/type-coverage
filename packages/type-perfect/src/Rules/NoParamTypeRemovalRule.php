@@ -20,14 +20,27 @@ use Rector\TypePerfect\Reflection\MethodNodeAnalyser;
  * @see \Rector\TypePerfect\Tests\Rules\ForbiddenParamTypeRemovalRule\ForbiddenParamTypeRemovalRuleTest
  * @implements Rule<ClassMethod>
  */
-final readonly class NoParamTypeRemovalRule implements Rule
+final class NoParamTypeRemovalRule implements Rule
 {
-    public const string ERROR_MESSAGE = 'Removing parent param type is forbidden';
+    /**
+     * @readonly
+     */
+    private MethodNodeAnalyser $methodNodeAnalyser;
 
-    public function __construct(
-        private MethodNodeAnalyser $methodNodeAnalyser,
-        private Configuration $configuration,
-    ) {
+    /**
+     * @readonly
+     */
+    private Configuration $configuration;
+
+    /**
+     * @var string
+     */
+    public const ERROR_MESSAGE = 'Removing parent param type is forbidden';
+
+    public function __construct(MethodNodeAnalyser $methodNodeAnalyser, Configuration $configuration)
+    {
+        $this->methodNodeAnalyser = $methodNodeAnalyser;
+        $this->configuration = $configuration;
     }
 
     /**

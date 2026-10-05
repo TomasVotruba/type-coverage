@@ -75,7 +75,7 @@ This technique is very simple to start even on legacy project. Also, you're now 
 composer require tomasvotruba/type-coverage --dev
 ```
 
-The package is available on PHP 7.2+.
+The package is available on PHP 7.4+.
 
 <br>
 

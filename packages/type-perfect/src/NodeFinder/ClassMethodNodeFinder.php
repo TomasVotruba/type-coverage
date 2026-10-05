@@ -12,11 +12,16 @@ use PHPStan\Analyser\Scope;
 use PHPStan\Reflection\ClassReflection;
 use Rector\TypePerfect\Reflection\ReflectionParser;
 
-final readonly class ClassMethodNodeFinder
+final class ClassMethodNodeFinder
 {
-    public function __construct(
-        private ReflectionParser $reflectionParser,
-    ) {
+    /**
+     * @readonly
+     */
+    private ReflectionParser $reflectionParser;
+
+    public function __construct(ReflectionParser $reflectionParser)
+    {
+        $this->reflectionParser = $reflectionParser;
     }
 
     public function findByMethodCall(MethodCall $methodCall, Scope $scope): ?ClassMethod

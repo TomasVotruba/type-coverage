@@ -7,11 +7,16 @@ namespace Rector\TypePerfect\Printer;
 use PhpParser\Node;
 use PHPStan\Node\Printer\Printer;
 
-final readonly class NodeComparator
+final class NodeComparator
 {
-    public function __construct(
-        private Printer $printer
-    ) {
+    /**
+     * @readonly
+     */
+    private Printer $printer;
+
+    public function __construct(Printer $printer)
+    {
+        $this->printer = $printer;
     }
 
     public function areNodesEqual(Node $firstNode, Node $secondNode): bool

@@ -24,9 +24,27 @@ use Rector\TypePerfect\Reflection\MethodNodeAnalyser;
  *
  * @implements Rule<ClassMethod>
  */
-final readonly class NarrowReturnObjectTypeRule implements Rule
+final class NarrowReturnObjectTypeRule implements Rule
 {
-    public const string ERROR_MESSAGE = 'Provide more specific return type "%s" over abstract one';
+    /**
+     * @readonly
+     */
+    private ReturnNodeFinder $returnNodeFinder;
+
+    /**
+     * @readonly
+     */
+    private MethodNodeAnalyser $methodNodeAnalyser;
+
+    /**
+     * @readonly
+     */
+    private Configuration $configuration;
+
+    /**
+     * @var string
+     */
+    public const ERROR_MESSAGE = 'Provide more specific return type "%s" over abstract one';
 
     /**
      * These concrete classes are commonly returned behind an abstract interface/type on purpose,
@@ -34,7 +52,7 @@ final readonly class NarrowReturnObjectTypeRule implements Rule
      *
      * @var string[]
      */
-    private const array SKIPPED_RETURN_CLASSES = [
+    private const SKIPPED_RETURN_CLASSES = [
         'Doctrine\Common\Collections\ArrayCollection',
         'Doctrine\Common\Collections\Collection',
         'Symfony\Component\Form\Form',
@@ -45,11 +63,11 @@ final readonly class NarrowReturnObjectTypeRule implements Rule
         'Doctrine\DBAL\Schema\AbstractSchemaManager',
     ];
 
-    public function __construct(
-        private ReturnNodeFinder $returnNodeFinder,
-        private MethodNodeAnalyser $methodNodeAnalyser,
-        private Configuration $configuration
-    ) {
+    public function __construct(ReturnNodeFinder $returnNodeFinder, MethodNodeAnalyser $methodNodeAnalyser, Configuration $configuration)
+    {
+        $this->returnNodeFinder = $returnNodeFinder;
+        $this->methodNodeAnalyser = $methodNodeAnalyser;
+        $this->configuration = $configuration;
     }
 
     /**
