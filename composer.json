@@ -15,12 +15,12 @@
         "symplify/easy-coding-standard": "^13.2",
         "rector/rector": "^2.5",
         "tracy/tracy": "^2.12",
-        "tomasvotruba/unused-public": "^2.2",
         "rector/jack": "^1.1",
         "shipmonk/composer-dependency-analyser": "^1.8",
         "symfony/dom-crawler": "^8.1",
         "doctrine/collections": "^2.3",
-        "symfony/form": "^8.1"
+        "symfony/form": "^8.1",
+        "shipmonk/dead-code-detector": "^1.4"
     },
     "autoload": {
         "psr-4": {
