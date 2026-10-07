@@ -26,13 +26,17 @@ final class ConstantTypeDeclarationCollector implements Collector
 
     /**
      * @param ClassConstantsNode $node
-     * @return array{int, list<int>, string|null}
+     * @return array{count: int, missingLines: list<int>, traitFilePath: string|null}
      */
     public function processNode(Node $node, Scope $scope): array
     {
         // enable only on PHP 8.3+
         if (PHP_VERSION_ID < 80300) {
-            return [0, [], null];
+            return [
+                'count' => 0,
+                'missingLines' => [],
+                'traitFilePath' => null,
+            ];
         }
 
         $constantCount = count($node->getConstants());
@@ -60,7 +64,11 @@ final class ConstantTypeDeclarationCollector implements Collector
                 ->getFileName();
         }
 
-        return [$constantCount, $missingTypeLines, $traitFilePath];
+        return [
+            'count' => $constantCount,
+            'missingLines' => $missingTypeLines,
+            'traitFilePath' => $traitFilePath,
+        ];
     }
 
     private function isGuardedByParentClassConstant(Scope $scope, ClassConst $classConst): bool

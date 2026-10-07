@@ -27,7 +27,7 @@ final class PropertyTypeDeclarationCollector implements Collector
 
     /**
      * @param InClassNode $node
-     * @return array{int, list<int>, string|null}
+     * @return array{count: int, missingLines: list<int>, traitFilePath: string|null}
      */
     public function processNode(Node $node, Scope $scope): array
     {
@@ -63,7 +63,11 @@ final class PropertyTypeDeclarationCollector implements Collector
                 ->getFileName();
         }
 
-        return [$propertyCount, $missingTypeLines, $traitFilePath];
+        return [
+            'count' => $propertyCount,
+            'missingLines' => $missingTypeLines,
+            'traitFilePath' => $traitFilePath,
+        ];
     }
 
     private function isPropertyDocTyped(Property $property): bool
