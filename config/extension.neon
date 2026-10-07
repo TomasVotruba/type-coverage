@@ -11,7 +11,8 @@ parametersSchema:
         param_type: anyOf(float(), int())
         property_type: anyOf(float(), int())
         constant_type: anyOf(float(), int())
-        print_suggestions: bool()
+        # deprecated, no-op
+        print_suggestions: schema(bool(), nullable())
         # aliases to avoid typos
         return: anyOf(schema(float(), nullable()), schema(int(), nullable()))
         param: anyOf(schema(float(), nullable()), schema(int(), nullable()))
@@ -32,8 +33,8 @@ parameters:
         param_type: 99
         property_type: 99
         constant_type: 99
-        # default, yet deprecated
-        print_suggestions: true
+        # deprecated, no-op
+        print_suggestions: null
         # aliases
         return: null
         param: null
