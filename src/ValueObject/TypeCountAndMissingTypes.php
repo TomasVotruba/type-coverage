@@ -56,20 +56,9 @@ final class TypeCountAndMissingTypes
             return 100.0;
         }
 
-        $relative = 100 * ($this->getTypedCount() / $this->totalCount);
+        $relative = 100 * ($this->getFilledCount() / $this->totalCount);
 
         // round down with one decimal, to make error message clear that required value is not reached yet
         return floor($relative * 10) / 10;
-    }
-
-    private function getTypedCount(): int
-    {
-        $missingCount = 0;
-
-        foreach ($this->missingTypeLinesByFilePath as $missingTypeLines) {
-            $missingCount += count($missingTypeLines);
-        }
-
-        return $this->totalCount - $missingCount;
     }
 }

@@ -25,6 +25,13 @@ final class Configuration
                 'The "type_coverage.declare" parameter is deprecated and has no effect. Remove it from your config and use SafeDeclareStrictTypesRector from Rector instead.' . PHP_EOL
             );
         }
+
+        if ($parameters['print_suggestions'] !== null) {
+            fwrite(
+                STDERR,
+                'The "type_coverage.print_suggestions" parameter is deprecated and has no effect. Type coverage issues are always reported at their exact file and line. Remove it from your config.' . PHP_EOL
+            );
+        }
     }
 
     /**
