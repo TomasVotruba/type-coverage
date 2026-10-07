@@ -21,7 +21,7 @@ final class ReturnTypeDeclarationCollector implements Collector
 
     /**
      * @param ClassMethod $node
-     * @return array{int, list<int>, string|null, int}|null
+     * @return array{count: int, missingLines: list<int>, traitFilePath: string|null, startFilePos: int}|null
      */
     public function processNode(Node $node, Scope $scope): ?array
     {
@@ -47,6 +47,11 @@ final class ReturnTypeDeclarationCollector implements Collector
             $missingTypeLines[] = $node->getLine();
         }
 
-        return [1, $missingTypeLines, $traitFilePath, $node->getStartFilePos()];
+        return [
+            'count' => 1,
+            'missingLines' => $missingTypeLines,
+            'traitFilePath' => $traitFilePath,
+            'startFilePos' => $node->getStartFilePos(),
+        ];
     }
 }
