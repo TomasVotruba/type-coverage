@@ -4,40 +4,14 @@ declare(strict_types=1);
 
 namespace TomasVotruba\TypeCoverage\Rules;
 
-use PhpParser\Node;
-use PHPStan\Analyser\Scope;
-use PHPStan\Node\CollectedDataNode;
-use PHPStan\Rules\Rule;
-use PHPStan\Rules\RuleError;
-use PHPStan\Rules\RuleErrorBuilder;
-use TomasVotruba\TypeCoverage\CollectorDataNormalizer;
+use PHPStan\Collectors\Collector;
 use TomasVotruba\TypeCoverage\Collectors\ConstantTypeDeclarationCollector;
-use TomasVotruba\TypeCoverage\Configuration;
-use TomasVotruba\TypeCoverage\Configuration\ScopeConfigurationResolver;
-use TomasVotruba\TypeCoverage\Formatter\TypeCoverageFormatter;
 
 /**
  * @see \TomasVotruba\TypeCoverage\Tests\Rules\ConstantTypeCoverageRule\ConstantTypeCoverageRuleTest
- *
- * @implements Rule<CollectedDataNode>
  */
-final class ConstantTypeCoverageRule implements Rule
+final class ConstantTypeCoverageRule extends AbstractTypeCoverageRule
 {
-    /**
-     * @readonly
-     */
-    private TypeCoverageFormatter $typeCoverageFormatter;
-
-    /**
-     * @readonly
-     */
-    private Configuration $configuration;
-
-    /**
-     * @readonly
-     */
-    private CollectorDataNormalizer $collectorDataNormalizer;
-
     /**
      * @var string
      */
@@ -48,59 +22,42 @@ final class ConstantTypeCoverageRule implements Rule
      */
     private const IDENTIFIER = 'typeCoverage.constantTypeCoverage';
 
-    public function __construct(TypeCoverageFormatter $typeCoverageFormatter, Configuration $configuration, CollectorDataNormalizer $collectorDataNormalizer)
+    /**
+     * @return class-string<Collector>
+     */
+    protected function getCollectorClass(): string
     {
-        $this->typeCoverageFormatter = $typeCoverageFormatter;
-        $this->configuration = $configuration;
-        $this->collectorDataNormalizer = $collectorDataNormalizer;
+        return ConstantTypeDeclarationCollector::class;
     }
 
-    /**
-     * @return class-string<Node>
-     */
-    public function getNodeType(): string
+    protected function getErrorMessage(): string
     {
-        return CollectedDataNode::class;
+        return self::ERROR_MESSAGE;
     }
 
-    /**
-     * @param CollectedDataNode $node
-     * @return RuleError[]
-     */
-    public function processNode(Node $node, Scope $scope): array
+    protected function getIdentifier(): string
     {
-        // enable only on PHP 8.3+
-        if (PHP_VERSION_ID < 80300) {
-            return [];
-        }
+        return self::IDENTIFIER;
+    }
 
-        // if only subpaths are analysed, skip as data will be false positive
-        if (! ScopeConfigurationResolver::areFullPathsAnalysed($scope)) {
-            return [];
-        }
+    protected function getMeasureMessage(): string
+    {
+        return 'Class constant type coverage is %.1f %% out of %d possible';
+    }
 
-        $constantTypeDeclarationCollector = $node->get(ConstantTypeDeclarationCollector::class);
-        $typeCountAndMissingTypes = $this->collectorDataNormalizer->normalize($constantTypeDeclarationCollector);
+    protected function getRequiredTypeLevel(): float
+    {
+        return (float) $this->configuration->getRequiredConstantTypeLevel();
+    }
 
-        if ($this->configuration->showOnlyMeasure()) {
-            $errorMessage = sprintf(
-                'Class constant type coverage is %.1f %% out of %d possible',
-                $typeCountAndMissingTypes->getCoveragePercentage(),
-                $typeCountAndMissingTypes->getTotalCount()
-            );
+    protected function shouldSkip(): bool
+    {
+        // constant types are available only on PHP 8.3+
+        return PHP_VERSION_ID < 80300;
+    }
 
-            return [RuleErrorBuilder::message($errorMessage)->build()];
-        }
-
-        if (! $this->configuration->isConstantTypeCoverageEnabled()) {
-            return [];
-        }
-
-        return $this->typeCoverageFormatter->formatErrors(
-            self::ERROR_MESSAGE,
-            self::IDENTIFIER,
-            $this->configuration->getRequiredConstantTypeLevel(),
-            $typeCountAndMissingTypes
-        );
+    protected function isEnabled(): bool
+    {
+        return $this->configuration->isConstantTypeCoverageEnabled();
     }
 }

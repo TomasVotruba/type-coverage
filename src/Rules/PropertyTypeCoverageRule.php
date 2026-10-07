@@ -4,40 +4,14 @@ declare(strict_types=1);
 
 namespace TomasVotruba\TypeCoverage\Rules;
 
-use PhpParser\Node;
-use PHPStan\Analyser\Scope;
-use PHPStan\Node\CollectedDataNode;
-use PHPStan\Rules\Rule;
-use PHPStan\Rules\RuleError;
-use PHPStan\Rules\RuleErrorBuilder;
-use TomasVotruba\TypeCoverage\CollectorDataNormalizer;
+use PHPStan\Collectors\Collector;
 use TomasVotruba\TypeCoverage\Collectors\PropertyTypeDeclarationCollector;
-use TomasVotruba\TypeCoverage\Configuration;
-use TomasVotruba\TypeCoverage\Configuration\ScopeConfigurationResolver;
-use TomasVotruba\TypeCoverage\Formatter\TypeCoverageFormatter;
 
 /**
  * @see \TomasVotruba\TypeCoverage\Tests\Rules\PropertyTypeCoverageRule\PropertyTypeCoverageRuleTest
- *
- * @implements Rule<CollectedDataNode>
  */
-final class PropertyTypeCoverageRule implements Rule
+final class PropertyTypeCoverageRule extends AbstractTypeCoverageRule
 {
-    /**
-     * @readonly
-     */
-    private TypeCoverageFormatter $typeCoverageFormatter;
-
-    /**
-     * @readonly
-     */
-    private Configuration $configuration;
-
-    /**
-     * @readonly
-     */
-    private CollectorDataNormalizer $collectorDataNormalizer;
-
     /**
      * @var string
      */
@@ -48,54 +22,31 @@ final class PropertyTypeCoverageRule implements Rule
      */
     private const IDENTIFIER = 'typeCoverage.propertyTypeCoverage';
 
-    public function __construct(TypeCoverageFormatter $typeCoverageFormatter, Configuration $configuration, CollectorDataNormalizer $collectorDataNormalizer)
+    /**
+     * @return class-string<Collector>
+     */
+    protected function getCollectorClass(): string
     {
-        $this->typeCoverageFormatter = $typeCoverageFormatter;
-        $this->configuration = $configuration;
-        $this->collectorDataNormalizer = $collectorDataNormalizer;
+        return PropertyTypeDeclarationCollector::class;
     }
 
-    /**
-     * @return class-string<Node>
-     */
-    public function getNodeType(): string
+    protected function getErrorMessage(): string
     {
-        return CollectedDataNode::class;
+        return self::ERROR_MESSAGE;
     }
 
-    /**
-     * @param CollectedDataNode $node
-     * @return RuleError[]
-     */
-    public function processNode(Node $node, Scope $scope): array
+    protected function getIdentifier(): string
     {
-        // if only subpaths are analysed, skip as data will be false positive
-        if (! ScopeConfigurationResolver::areFullPathsAnalysed($scope)) {
-            return [];
-        }
+        return self::IDENTIFIER;
+    }
 
-        $propertyTypeDeclarationCollector = $node->get(PropertyTypeDeclarationCollector::class);
-        $typeCountAndMissingTypes = $this->collectorDataNormalizer->normalize($propertyTypeDeclarationCollector);
+    protected function getMeasureMessage(): string
+    {
+        return 'Property type coverage is %.1f %% out of %d possible';
+    }
 
-        if ($this->configuration->showOnlyMeasure()) {
-            $errorMessage = sprintf(
-                'Property type coverage is %.1f %% out of %d possible',
-                $typeCountAndMissingTypes->getCoveragePercentage(),
-                $typeCountAndMissingTypes->getTotalCount()
-            );
-
-            return [RuleErrorBuilder::message($errorMessage)->build()];
-        }
-
-        if ($this->configuration->getRequiredPropertyTypeLevel() === 0) {
-            return [];
-        }
-
-        return $this->typeCoverageFormatter->formatErrors(
-            self::ERROR_MESSAGE,
-            self::IDENTIFIER,
-            $this->configuration->getRequiredPropertyTypeLevel(),
-            $typeCountAndMissingTypes
-        );
+    protected function getRequiredTypeLevel(): float
+    {
+        return (float) $this->configuration->getRequiredPropertyTypeLevel();
     }
 }
