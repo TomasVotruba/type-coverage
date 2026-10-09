@@ -30,6 +30,7 @@ final class NoMixedMethodCallerRuleTest extends RuleTestCase
         yield [__DIR__ . '/Fixture/SkipKnownCallerType.php', []];
         yield [__DIR__ . '/Fixture/SkipMockObject.php', []];
         yield [__DIR__ . '/Fixture/SkipPHPUnitMock.php', []];
+        yield [__DIR__ . '/Fixture/SkipArrayDimFetchCaller.php', []];
 
         $errorMessage = sprintf(NoMixedMethodCallerRule::ERROR_MESSAGE, '$someType');
         yield [__DIR__ . '/Fixture/MagicMethodName.php', [[$errorMessage, 11]]];

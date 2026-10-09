@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Rector\TypePerfect\Rules;
 
 use PhpParser\Node;
+use PhpParser\Node\Expr\ArrayDimFetch;
 use PhpParser\Node\Expr\MethodCall;
 use PHPStan\Analyser\Scope;
 use PHPStan\Node\Printer\Printer;
@@ -57,6 +58,11 @@ final class NoMixedMethodCallerRule implements Rule
     public function processNode(Node $node, Scope $scope): array
     {
         if (! $this->configuration->isNoMixedCallerEnabled()) {
+            return [];
+        }
+
+        // calls on array dim fetch are already messy, skip
+        if ($node->var instanceof ArrayDimFetch) {
             return [];
         }
 
